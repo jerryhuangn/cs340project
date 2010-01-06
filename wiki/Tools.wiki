@@ -14,4 +14,4 @@ The tools that I have currently:
   *[http://ankhsvn.open.collab.net/ AnkhSVN] for Visual Studio SVN connectivity.
   *[http://tortoisesvn.tigris.org/ TortoiseSVN] for native Windows SVN connectivity
 
-==== please refer to the WikiSyntax for help with editing this page =====
+==== please refer to the [http://code.google.com/p/support/wiki/WikiSyntax WikiSyntax] for help with editing this page =====
