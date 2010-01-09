@@ -4,7 +4,7 @@
 = Group Member Info =
 
 || ||TJ Young||Stephen Quebe||Ben Dilt||Joel Day||
-||Email||[mailto:thetjyoung@gmail.com]||squebe@byu.edu||BeanDog@gmail.com||joel.day@byu.net||
+||Email||[mailto:thetjyoung@gmail.comthetjyoung@gmail.com]||[mailto:squebe@byu.edu squebe@byu.edu]||[mailto:BeanDog@gmail.com BeanDog@gmail.com]||[mailto:joel.day@byu.net joel.day@byu.net]||
 
 
 = Required Objects =
