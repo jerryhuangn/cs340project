@@ -3,8 +3,8 @@
 
 = Group Member Info =
 
-||||TJ Young||Stephen Quebe||Ben Dilt||Joel Day||
-||Email||thetjyoung@gmail.com||squebe@byu.edu||BeanDog@gmail.com||joel.day@byu.net
+|| ||TJ Young||Stephen Quebe||Ben Dilt||Joel Day||
+||Email||thetjyoung@gmail.com||squebe@byu.edu||BeanDog@gmail.com||joel.day@byu.net||
 
 
 = Required Objects =
