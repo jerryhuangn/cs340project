@@ -1,0 +1,29 @@
+#summary The required information about the project.
+#labels Featured,Phase-Requirements
+
+= Group Member Info =
+
+||||TJ Young||Stephen Quebe||Ben Dilt||Joel Day||
+||Email||thetjyoung@gmail.com||squebe@byu.edu||BeanDog@gmail.com||joel.day@byu.net
+
+
+= Required Objects =
+
+== IDE ==
+  * The IDE that we are using for this project is [http://msdn.microsoft.com/en-us/vstudio/default.aspx Microsoft Visual Studio 2008]
+
+== Testing ==
+  * Visual Studio has built in [http://msdn.microsoft.com/en-us/library/ms379625(VS.80).aspx Unit Testing] capabilities.
+
+== Style Checking == 
+  * Visual Studio auto-formats all the lines of code using the *'Ctrl-E, D'* hotkey strokes.  We will use that for all spacing and indentating.
+  * We have agreed on the [http://en.wikipedia.org/wiki/Naming_convention_(programming)#Microsoft.27s_.NET Microsoft's .NET] conventions for variable and method naming.
+
+== Code Versioning == 
+  * Google Code supports Subversion
+
+== Test Coverage ==
+  * There are several (free) options that we can go with.  Here are some that I found
+    # [http://sourceforge.net/projects/partcover/ PartCover]
+    # [http://code.msdn.microsoft.com/mag200909SyncCover/Release/ProjectReleases.aspx?ReleaseId=3128 SyncCover]
+  * I have [http://www.red-gate.com/products/ants_performance_profiler/index.htm Ants Profiler] which does code coverage as well as several other things.  It's over kill, but is still an option
