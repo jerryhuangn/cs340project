@@ -3,9 +3,13 @@ Part one of this huge abstract project
 = Need To Have =
 
 *Project Plan
+
 *Code
+
 *Javadoc (or whatever for C#)
+
 *Style Guidelines
+
 *Testing
 
 
