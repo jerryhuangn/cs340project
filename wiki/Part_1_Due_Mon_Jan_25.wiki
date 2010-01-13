@@ -4,7 +4,15 @@ Part one of this huge abstract project
 
 *Project Plan
 
+The goal of phase one of the project is to establish an interface into Distributed Communication(?) of Command Objects between nodes in a HyPEER Web (TM)
+
 *Code
+
+This was how we were planning on splitting the first part up
+||TJ Young||Stephen Quebe||Ben Dilt||Joel Day||
+||CMD Obj||Socket Comms||Reflection||Serialization||
+
+If any one part ends up taking more than a few hours to do, stop and we will re-divide that piece.
 
 *Javadoc (or whatever for C#)
 
@@ -13,7 +21,9 @@ Part one of this huge abstract project
 *Testing
 
 
-UML Diagram
+*UML Diagram
+
+We need to figure out how we are going to collaborate on this.  Any suggestions?
 
 = What It Is =
 
