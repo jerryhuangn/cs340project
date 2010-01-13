@@ -1,0 +1,19 @@
+Part one of this huge abstract project
+
+= Need To Have =
+
+*Project Plan
+*Code
+*Javadoc (or whatever for C#)
+*Style Guidelines
+*Testing
+
+
+UML Diagram
+
+= What It Is =
+
+== Use Case ==
+X.C(....);
+
+with object X and command C we want to invoke a command C whether X is on the current machine or not.  If x is on the current machine C is invoked directly. Otherwise the machine containing X is found C is executed on that machine and the result is returned.
