@@ -153,7 +153,7 @@ namespace cs340project
         /// Gets or sets my name.
         /// </summary>
         /// <value>My name.</value>
-        public PersonName MyName { get; set; }
+        public virtual PersonName MyName { get; set; }
         /// <summary>
         /// Gets or sets the age.
         /// </summary>
@@ -190,7 +190,7 @@ namespace cs340project
         /// <exception cref="T:System.Security.SecurityException">
         /// The caller does not have the required permission.
         /// </exception>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue("MyName", MyName);
             info.AddValue("Age", Age);
