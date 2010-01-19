@@ -6,6 +6,9 @@ using System.Reflection;
 using Microsoft.CSharp;
 using System.CodeDom.Compiler;
 using System.Windows.Forms;
+using System.Runtime.Serialization;
+using System.Net.Sockets;
+using System.IO;
 
 namespace cs340project
 {
@@ -14,6 +17,7 @@ namespace cs340project
         string server = null;
         int port = -1;
         int id = -1;
+        string app = "TODO: Make a way to have multiple apps";
 
         public Proxy(string server, int port, int id)
         {
@@ -23,9 +27,18 @@ namespace cs340project
         }
 
         public void InvokeAsync(string method, params object[] parameters) {
+            App.Command cmd = new App.Command(id, method, parameters);
+            TcpClient client = App.GetApp(app).Connect(server, port);
+
+            //TODO: Make this even more asynchronous
+            Serializer.BinarySerializeObject(client.GetStream(), cmd);
         }
 
         public object Invoke(string method, params object[] parameters) {
+            //First, just send off our command:
+            InvokeAsync(method, parameters);
+
+            //
             return null;
         }
     }
@@ -34,12 +47,16 @@ namespace cs340project
     /// The Proxifier class takes the type of another class, and produces a new class named
     /// [ClassName]Proxy (e.g. PersonProxy) that duplicates the public interface of that
     /// class in an inherited class.
+    /// 
+    /// The class to by proxified must be ISerializable, so we can send it to disk or over
+    /// the network.
     /// </summary>
     class Proxifier
     {
         static Dictionary<Type, Type> ProxyTypes = new Dictionary<Type, Type>();
 
-        public static T GetProxy<T>(string server, int port, int id) {
+        public static T GetProxy<T>(string server, int port, int id) where T : ISerializable
+        {
             Type proxy = Proxifier.CreateProxy(typeof(T));
             return (T)Activator.CreateInstance(proxy, server, port, id);
         }
