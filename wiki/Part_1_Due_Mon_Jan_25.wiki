@@ -3,7 +3,7 @@ Part one of the project
 = Requirements =
 
   * Group Document
-    * the RequiredInformation has all the information about our group
+    * the RequiredInformation wiki has all the information about our group
 
   * Project Plan
     * [http://spreadsheets.google.com/ccc?key=0AnkkEN92PFDldGxkYXRjTHhYS2hqZm5FYVNIbW9iYVE&hl=en Google doc that has all of the Project Planning]
