@@ -2,9 +2,10 @@ Part one of this huge abstract project
 
 = Need To Have =
 
-* Group Document
+  * Group Document
+the RequiredInformation has all the information about our group
 
-* Project Plan
+  * Project Plan
 
 [http://spreadsheets.google.com/ccc?key=0AnkkEN92PFDldGxkYXRjTHhYS2hqZm5FYVNIbW9iYVE&hl=en Google doc that has all of the Project Planning]
 
@@ -32,4 +33,3 @@ Ok, finally we talked about the proxy pattern.  He asked if we had created some 
 
 
 Finally, we need to have a Use Case diagram, UML diagram, and a specification's page. I can get the Use Case and the UML diagrams done, and once we get a little closer to being done with this first part, I'll work on those exclusively.  Ben has done a great job of creating a framework and now all we need to do is finish implementing the methods.
-
