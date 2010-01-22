@@ -1,14 +1,18 @@
-Part one of this huge abstract project
+Part one of the project
 
-= Need To Have =
+= Requirements =
 
   * Group Document
-the RequiredInformation has all the information about our group
+    * the RequiredInformation has all the information about our group
 
   * Project Plan
+    * [http://spreadsheets.google.com/ccc?key=0AnkkEN92PFDldGxkYXRjTHhYS2hqZm5FYVNIbW9iYVE&hl=en Google doc that has all of the Project Planning]
 
-[http://spreadsheets.google.com/ccc?key=0AnkkEN92PFDldGxkYXRjTHhYS2hqZm5FYVNIbW9iYVE&hl=en Google doc that has all of the Project Planning]
+  * Class Diagram
+    * Link to Class Diagram Picture
 
+  * Use Case Diagram
+    * Link to Use Case Diagram
 
 = What It Is =
 
@@ -16,20 +20,3 @@ the RequiredInformation has all the information about our group
 X.C(....);
 
 with object X and command C we want to invoke a command C whether X is on the current machine or not.  If x is on the current machine C is invoked directly. Otherwise the machine containing X is found C is executed on that machine and the result is returned.
-
-
-= UPDATE =
-So I went and got some help from the TA today (1/20/10) and we talked about what the requirements for this first part are and how we can show that we have fulfilled them.  We used the white board so I took a picture and now I'm going to attempt to remember what it all means.
-
-http://cs340project.googlecode.com/files/GetAttachment.jpg
-
-The TA started at the bottom and then worked his way up.  At the bottom he said that we need to be able to "send" (void) and "send/receive" (return Obj) over some kind of communication layer.  TCP and sockets was suggested.
-
-The middle part was where most of the explaining went on.  He said that the requirement that we need to accomplish is create some kind of "location independent" system of objects inwhich the exposed interface to the programmer should be the same between the local and proxy values (he went into the in detail, and I'll talk about that in a sec). It also needs to be able to display something that proves that there was some kind of transmission between the computers (or applications) over some kind of socket.
-
-The top part was an example of what needs to be turned in.  On the left is the main "server" application and on the right is a "node" application.  The server has a button, a dropdown box, and a debug console (textArea).  The node only has the debug console.  The server has objects A and B, while the node has C and D.  They are all of the same type and they all have a method called "DoSomething()" that returns a string (or void if testing non-sync).  All of the objects (A-D) are known about on both the server and the node, and the dropdown is populated with the name of the objects.  When the botton on the server is pressed, the selected value in the dropdown decides which object has the "DoSomething()" invoked on them.  If it's A or B, then only the server's console will update and show the actions and results, but if C or D are selected then the server's console will report that a command object has been sent over a port and then will report the results of the command object (unless void).  The node's console will report that a command object was received, what it said, the actions taken and the results, then it will send back the results of "DoSomething()" over the socket (unless void) and then go back to listening.  The only communication that can be sent from server to node is a CmdObj, and the only communication back is of the return type.
-
-Ok, finally we talked about the proxy pattern.  He asked if we had created some kind of proxy object for the test class.  I said that we had a general "Proxifier" that took in a type and returned a proxy version of that type.  He said that would be the way that _he_ would do it, but Dr. Woodfield is wanting us to make a specific proxy class for every type of object that is stored across the system. I guess we have to implement a specific number of Patterns in our project and we'll be graded on how we implement them.  What we are doing with the generic proxifier, the TA doesn't believe qualifies as a proper implementation of the proxy pattern. So we'll need to see if Dr. Woodfield will count it.
-
-
-Finally, we need to have a Use Case diagram, UML diagram, and a specification's page. I can get the Use Case and the UML diagrams done, and once we get a little closer to being done with this first part, I'll work on those exclusively.  Ben has done a great job of creating a framework and now all we need to do is finish implementing the methods.
