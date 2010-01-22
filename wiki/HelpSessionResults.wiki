@@ -1,4 +1,6 @@
-#The results of the help session with the TA
+#summary The results of the help session with the TA.
+
+= TA Help Session =
 
 So I went and got some help from the TA today (1/20/10) and we talked about what the requirements for this first part are and how we can show that we have fulfilled them.  We used the white board so I took a picture and now I'm going to attempt to remember what it all means.
 
