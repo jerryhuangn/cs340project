@@ -8,6 +8,7 @@ using System.CodeDom.Compiler;
 using System.Runtime.Serialization;
 using System.Net.Sockets;
 using System.IO;
+using System.Windows.Forms;
 
 namespace cs340project
 {
@@ -17,16 +18,22 @@ namespace cs340project
         int port = -1;
         int id = -1;
         string app = "Test";
+        Dictionary<string, object> responses = new Dictionary<string, object>();
+
+        class WaitingForResponse { }
 
         public Proxy(string server, int port, int id)
         {
             this.server = server;
             this.port = port;
             this.id = id;
+
+            App.GetApp(app).Network.ResponseReceived += new NetworkHub.NetworkHubResponseEvent(Network_ResponseReceived);
         }
 
         public App.Command InvokeAsync(string method, params object[] parameters) {
             App.Command cmd = new App.Command(id, method, parameters);
+            responses[cmd.Id] = new WaitingForResponse();
             App.GetApp(app).Network.SendObject(server, port, cmd);
             return cmd;
         }
@@ -35,9 +42,18 @@ namespace cs340project
             //First, just send off our command:
             App.Command cmd = InvokeAsync(method, parameters);
 
-            //TODO: Wait for a reply to cmd.Id
+            //Wait for a reply to cmd.Id
+            while (responses[cmd.Id] is WaitingForResponse)
+                Application.DoEvents();
 
-            return null;
+            object ret = responses[cmd.Id];
+            responses.Remove(cmd.Id);
+            return ret;
+        }
+
+        void Network_ResponseReceived(TcpClient client, App.Response cmd)
+        {
+            responses[cmd.Id] = cmd.ReturnValue;
         }
     }
 

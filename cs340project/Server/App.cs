@@ -43,6 +43,7 @@ namespace cs340project
         void Network_CommandReceived(TcpClient client, App.Command cmd)
         {
             Response ret = new Response(cmd.Id, RunCommand(cmd));
+            Network.SendObject(((IPEndPoint)client.Client.RemoteEndPoint).Address.ToString(), ((IPEndPoint)client.Client.RemoteEndPoint).Port, ret);
         }
 
 

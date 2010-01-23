@@ -23,13 +23,14 @@ namespace cs340project
             App.Network.Disconnected += new NetworkHub.NetworkHubClientEvent(Network_Disconnected);
             App.Network.MessageReceived += new NetworkHub.NetworkHubMessageEvent(Network_MessageReceived);
             App.Network.CommandReceived += new NetworkHub.NetworkHubCommandEvent(Network_CommandReceived);
-
+            App.Network.ResponseReceived += new NetworkHub.NetworkHubResponseEvent(Network_ResponseReceived);
             App.AddObject(new Person());
             App.AddObject(new Person());
             App.AddObject(new Person());
             App.AddObject(new Person());
             App.AddObject(new Person());
         }
+
 
         #region Log output
 
@@ -39,8 +40,16 @@ namespace cs340project
             {
                 txtOutput.AppendText((((IPEndPoint)client.Client.RemoteEndPoint).Address.ToString()) + ":" + cmd.ObjectId+"."+cmd.Name+"(");
                 foreach (object o in cmd.Parameters)
-                    txtOutput.AppendText(o.ToString() + ",");
+                    txtOutput.AppendText((o==null ? "null" : o.ToString()) + ",");
                 txtOutput.AppendText(")" + Environment.NewLine);
+            }));
+        }
+        void Network_ResponseReceived(System.Net.Sockets.TcpClient client, App.Response cmd)
+        {
+            Invoke(new ThreadStart(() =>
+            {
+                if(cmd.ReturnValue != null)
+                    txtOutput.AppendText((((IPEndPoint)client.Client.RemoteEndPoint).Address.ToString()) + ":Responded with " + cmd.ReturnValue.ToString() + Environment.NewLine);
             }));
         }
 
@@ -80,6 +89,8 @@ namespace cs340project
             Person remote = Proxifier.GetProxy<Person>("127.0.0.1", 10000, 2);
             remote.Age = 15;
             remote.MyName = new PersonName("Ben", "Dilts", "Beandog");
+
+            txtOutput.AppendText("Remote says Age is now " + remote.Age + Environment.NewLine);
         }
     }
 }
