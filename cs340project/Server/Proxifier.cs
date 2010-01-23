@@ -5,7 +5,6 @@ using System.Text;
 using System.Reflection;
 using Microsoft.CSharp;
 using System.CodeDom.Compiler;
-using System.Windows.Forms;
 using System.Runtime.Serialization;
 using System.Net.Sockets;
 using System.IO;
@@ -17,7 +16,7 @@ namespace cs340project
         string server = null;
         int port = -1;
         int id = -1;
-        string app = "TODO: Make a way to have multiple apps";
+        string app = "Test";
 
         public Proxy(string server, int port, int id)
         {
@@ -26,19 +25,18 @@ namespace cs340project
             this.id = id;
         }
 
-        public void InvokeAsync(string method, params object[] parameters) {
+        public App.Command InvokeAsync(string method, params object[] parameters) {
             App.Command cmd = new App.Command(id, method, parameters);
-            TcpClient client = App.GetApp(app).Connect(server, port);
-
-            //TODO: Make this even more asynchronous
-            Serializer.BinarySerializeObject(client.GetStream(), cmd);
+            App.GetApp(app).Network.SendObject(server, port, cmd);
+            return cmd;
         }
 
         public object Invoke(string method, params object[] parameters) {
             //First, just send off our command:
-            InvokeAsync(method, parameters);
+            App.Command cmd = InvokeAsync(method, parameters);
 
-            //
+            //TODO: Wait for a reply to cmd.Id
+
             return null;
         }
     }
@@ -51,11 +49,11 @@ namespace cs340project
     /// The class to by proxified must be ISerializable, so we can send it to disk or over
     /// the network.
     /// </summary>
-    class Proxifier
+    public class Proxifier
     {
         static Dictionary<Type, Type> ProxyTypes = new Dictionary<Type, Type>();
 
-        public static T GetProxy<T>(string server, int port, int id) where T : ISerializable
+        public static T GetProxy<T>(string server, int port, int id)
         {
             Type proxy = Proxifier.CreateProxy(typeof(T));
             return (T)Activator.CreateInstance(proxy, server, port, id);
@@ -72,7 +70,8 @@ namespace cs340project
                 CodeDomProvider compiler = CodeDomProvider.CreateProvider("C#");
                 CompilerParameters parameters = new CompilerParameters();
                 parameters.GenerateInMemory = true;
-                parameters.ReferencedAssemblies.Add(Application.ExecutablePath);
+                parameters.ReferencedAssemblies.Add(Assembly.GetAssembly(original).Location);
+                parameters.ReferencedAssemblies.Add(Assembly.GetExecutingAssembly().Location);
                 CompilerResults result = compiler.CompileAssemblyFromSource(parameters, new string[] { code });
                 ret = result.CompiledAssembly.GetType(original.Namespace + "." + original.Name + "Proxy");
 
