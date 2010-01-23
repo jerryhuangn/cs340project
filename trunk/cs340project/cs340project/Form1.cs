@@ -7,19 +7,79 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System.Net;
+using System.Threading;
 
 namespace cs340project
 {
     public partial class Form1 : Form
     {
+        App App = App.GetApp("Test");
+
         public Form1()
         {
             InitializeComponent();
+            App.Network.NewConnection += new NetworkHub.NetworkHubClientEvent(Network_NewConnection);
+            App.Network.Disconnected += new NetworkHub.NetworkHubClientEvent(Network_Disconnected);
+            App.Network.MessageReceived += new NetworkHub.NetworkHubMessageEvent(Network_MessageReceived);
+            App.Network.CommandReceived += new NetworkHub.NetworkHubCommandEvent(Network_CommandReceived);
+
+            App.AddObject(new Person());
+            App.AddObject(new Person());
+            App.AddObject(new Person());
+            App.AddObject(new Person());
+            App.AddObject(new Person());
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        #region Log output
+
+        void Network_CommandReceived(System.Net.Sockets.TcpClient client, App.Command cmd)
         {
-            Person p = Proxifier.GetProxy<Person>("127.0.0.1", 31415, 1);
+            Invoke(new ThreadStart(() =>
+            {
+                txtOutput.AppendText((((IPEndPoint)client.Client.RemoteEndPoint).Address.ToString()) + ":" + cmd.ObjectId+"."+cmd.Name+"(");
+                foreach (object o in cmd.Parameters)
+                    txtOutput.AppendText(o.ToString() + ",");
+                txtOutput.AppendText(")" + Environment.NewLine);
+            }));
+        }
+
+        void Network_MessageReceived(System.Net.Sockets.TcpClient client, string msg)
+        {
+            Invoke(new ThreadStart(() =>
+            {
+                txtOutput.AppendText((((IPEndPoint)client.Client.RemoteEndPoint).Address.ToString()) + ":" + msg + Environment.NewLine);
+            }));
+        }
+
+        void Network_Disconnected(System.Net.Sockets.TcpClient client)
+        {
+            Invoke(new ThreadStart(() =>
+            {
+                txtOutput.AppendText("Disconnected from server at " + (((IPEndPoint)client.Client.RemoteEndPoint).Address.ToString()) + Environment.NewLine);
+            }));
+        }
+
+        void Network_NewConnection(System.Net.Sockets.TcpClient client)
+        {
+            Invoke(new ThreadStart(() =>
+            {
+                txtOutput.AppendText("Connected to server at " + (((IPEndPoint)client.Client.RemoteEndPoint).Address.ToString()) + Environment.NewLine);
+            }));
+        }
+
+        #endregion
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            App.Network.Listen(10000);
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Person remote = Proxifier.GetProxy<Person>("127.0.0.1", 10000, 2);
+            remote.Age = 15;
+            remote.MyName = new PersonName("Ben", "Dilts", "Beandog");
         }
     }
 }
