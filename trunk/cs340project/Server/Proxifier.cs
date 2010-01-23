@@ -12,6 +12,11 @@ using System.Windows.Forms;
 
 namespace cs340project
 {
+    /// <summary>
+    /// A Proxy is a generic type that allows for an object
+    /// to reside on another <see cref="App"/> and be accessed by the 
+    /// local <see cref="App"/>
+    /// </summary>
     public class Proxy
     {
         string server = null;
@@ -22,6 +27,12 @@ namespace cs340project
 
         class WaitingForResponse { }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Proxy"/> class.
+        /// </summary>
+        /// <param name="server">The server for the <see cref="Proxy"/>. Can be either IP or Fully Qualified Domain Name</param>
+        /// <param name="port">The port the <see cref="Proxy"/> communicates over.</param>
+        /// <param name="id">The id of the <see cref="Proxy"/>.</param>
         public Proxy(string server, int port, int id)
         {
             this.server = server;
@@ -31,6 +42,12 @@ namespace cs340project
             App.GetApp(app).Network.ResponseReceived += new NetworkHub.NetworkHubResponseEvent(Network_ResponseReceived);
         }
 
+        /// <summary>
+        /// Invokes the asynchronous communication of the object on its <see cref="Proxy"/>.
+        /// </summary>
+        /// <param name="method">The method to be invoked.</param>
+        /// <param name="parameters">The parameters for the method being invoked.</param>
+        /// <returns></returns>
         public App.Command InvokeAsync(string method, params object[] parameters) {
             App.Command cmd = new App.Command(id, method, parameters);
             responses[cmd.Id] = new WaitingForResponse();
@@ -38,6 +55,12 @@ namespace cs340project
             return cmd;
         }
 
+        /// <summary>
+        /// Invokes the specified method.
+        /// </summary>
+        /// <param name="method">The method to be invoked.</param>
+        /// <param name="parameters">The parameters for the method.</param>
+        /// <returns></returns>
         public object Invoke(string method, params object[] parameters) {
             //First, just send off our command:
             App.Command cmd = InvokeAsync(method, parameters);
@@ -51,6 +74,11 @@ namespace cs340project
             return ret;
         }
 
+        /// <summary>
+        /// Methode that handles the response received from the Network Communication.
+        /// </summary>
+        /// <param name="client">The <see cref="TcpClient"/> client.</param>
+        /// <param name="cmd">The <see cref="App.Command"/> object that holds the commands to execute.</param>
         void Network_ResponseReceived(TcpClient client, App.Response cmd)
         {
             responses[cmd.Id] = cmd.ReturnValue;
@@ -69,12 +97,26 @@ namespace cs340project
     {
         static Dictionary<Type, Type> ProxyTypes = new Dictionary<Type, Type>();
 
+        /// <summary>
+        /// Creates a <see cref="Proxy"/> class for the object of type T.
+        /// </summary>
+        /// <typeparam name="T">The type of object to be proxified</typeparam>
+        /// <param name="server">The server for the <see cref="Proxy"/>. Can be either IP or Fully Qualified Domain Name</param>
+        /// <param name="port">The port the <see cref="Proxy"/> communicates over.</param>
+        /// <param name="id">The id of the <see cref="Proxy"/>.</param>
+        /// <returns>A <see cref="Proxy"/> of type T</returns>
         public static T GetProxy<T>(string server, int port, int id)
         {
             Type proxy = Proxifier.CreateProxy(typeof(T));
             return (T)Activator.CreateInstance(proxy, server, port, id);
         }
 
+        /// <summary>
+        /// Creates the proxy using Reflection.
+        /// </summary>
+        /// <param name="original">The original type.</param>
+        /// <returns>A new type that contains all the same methods and properties
+        /// as the original type, only overridden to utilies the <see cref="Proxy"/> class</returns>
         static Type CreateProxy(Type original)
         {
             Type ret;
@@ -96,6 +138,12 @@ namespace cs340project
             return ret;
         }
 
+        /// <summary>
+        /// Creates the  code for the <see cref="Proxy"/> class.
+        /// </summary>
+        /// <param name="original">The original type.</param>
+        /// <returns>A string that contains all the source code to create a proxy
+        /// class containing the same structure as the original Type.</returns>
         static string CreateProxyCode(Type original) {
             StringBuilder ret = new StringBuilder();
 

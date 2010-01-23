@@ -9,6 +9,9 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace cs340project
 {
+    /// <summary>
+    /// The class that handles all the network communication
+    /// </summary>
     public class NetworkHub
     {
         Dictionary<string, TcpClient> clients = new Dictionary<string, TcpClient>();
@@ -19,6 +22,10 @@ namespace cs340project
         TcpListener listener = null;
         const int listenBacklogLength = 32;
 
+        /// <summary>
+        /// Listens on the specified port.
+        /// </summary>
+        /// <param name="port">The port to attach a <see cref="TcpListener"/>.</param>
         public void Listen(int port)
         {
             this.port = port;
@@ -37,6 +44,10 @@ namespace cs340project
         Dictionary<string, MemoryStream> clientMemoryStreams = new Dictionary<string, MemoryStream>();
         const int clientBufferSize = 1024;
 
+        /// <summary>
+        /// Setups the <see cref="TcpClient"/>.
+        /// </summary>
+        /// <param name="client">The <see cref="TcpClient"/>.</param>
         void SetupClient(TcpClient client)
         {
             string IP = GetClientIP(client);
@@ -58,6 +69,11 @@ namespace cs340project
         public delegate void NetworkHubMessageEvent(TcpClient client, string msg);
         public event NetworkHubMessageEvent MessageReceived = null;
 
+        /// <summary>
+        /// Tests to see if an object is ready to read.
+        /// </summary>
+        /// <param name="IP">The IP address of the <see cref="App"/> that is sending a <see cref="App.Command"/> object.</param>
+        /// <returns>The length of the <see cref="App.Command"/> object being sent over the IP address</returns>
         int? ObjectReadyToRead(string IP)
         {
             if (clientMemoryStreams[IP].Length >= 4)
@@ -71,7 +87,11 @@ namespace cs340project
             return null;
         }
 
-        
+
+        /// <summary>
+        /// Called when [read].
+        /// </summary>
+        /// <param name="result">The result of the [read].</param>
         void OnRead(IAsyncResult result)
         {
             TcpClient client = (TcpClient)result.AsyncState;
@@ -92,6 +112,12 @@ namespace cs340project
             }
         }
 
+        /// <summary>
+        /// Checks for messages on the specified IP.
+        /// </summary>
+        /// <param name="client">The <see cref="TcpClient"/>.</param>
+        /// <param name="IP">The IP.</param>
+        /// <returns></returns>
         private bool CheckForMessage(TcpClient client, string IP)
         {
             int? length = ObjectReadyToRead(IP);
@@ -134,6 +160,12 @@ namespace cs340project
             return false;
         }
 
+        /// <summary>
+        /// Sends an object over the given IP and port.
+        /// </summary>
+        /// <param name="IP">The IP.</param>
+        /// <param name="port">The port.</param>
+        /// <param name="o">The object to send.</param>
         public void SendObject(string IP, int port, object o)
         {
             try
@@ -153,10 +185,19 @@ namespace cs340project
             catch { } //No biggie, we just got disconnected.
         }
 
+        /// <summary>
+        /// Gets the client IP.
+        /// </summary>
+        /// <param name="client">The client.</param>
+        /// <returns>The IP address of the client</returns>
         string GetClientIP(TcpClient client) {
             return ((IPEndPoint)client.Client.RemoteEndPoint).Address.ToString();
         }
 
+        /// <summary>
+        /// Accepts the specified result.
+        /// </summary>
+        /// <param name="result">The result.</param>
         void Accept(IAsyncResult result)
         {
             try
@@ -181,6 +222,12 @@ namespace cs340project
 
         #region Making outgoing connections
 
+        /// <summary>
+        /// Connects the specified IP.
+        /// </summary>
+        /// <param name="IP">The IP.</param>
+        /// <param name="port">The port.</param>
+        /// <returns></returns>
         TcpClient Connect(string IP, int port)
         {
             TcpClient client = null;
@@ -217,6 +264,10 @@ namespace cs340project
 
         #region Disconnecting from other servers
 
+        /// <summary>
+        /// Disconnects the specified client.
+        /// </summary>
+        /// <param name="client">The client.</param>
         private void Disconnect(TcpClient client)
         {
             string IP = ((IPEndPoint)client.Client.RemoteEndPoint).Address.ToString();

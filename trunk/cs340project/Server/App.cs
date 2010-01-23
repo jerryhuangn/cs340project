@@ -9,12 +9,23 @@ using System.Reflection;
 
 namespace cs340project
 {
+    /// <summary>
+    /// Class that contains all the information
+    /// for a single node in the Application.
+    /// </summary>
     public class App
     {
         #region Factory
 
         static Dictionary<string, App> apps = new Dictionary<string, App>();
 
+        /// <summary>
+        /// Gets the <see cref="App"/> with the supplied name. If there is no
+        /// <see cref="App"/> with the supplied name, then a new instance of the 
+        /// <see cref="App"/> class is initialized and returned.
+        /// </summary>
+        /// <param name="name">The name of the <see cref="App"/>.</param>
+        /// <returns>the <see cref="App"/> with the given name</returns>
         public static App GetApp(string name)
         {
             App ret;
@@ -32,6 +43,10 @@ namespace cs340project
         public NetworkHub Network;
         public string Name;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="App"/> class.
+        /// </summary>
+        /// <param name="name">The name of the <see cref="App"/>.</param>
         private App(string name)
         {
             Name = name;
@@ -40,6 +55,11 @@ namespace cs340project
             Network.CommandReceived += new NetworkHub.NetworkHubCommandEvent(Network_CommandReceived);
         }
 
+        /// <summary>
+        /// Methode that handles the <see cref="App.Command"/> object received from the Network Communication.
+        /// </summary>
+        /// <param name="client">The <see cref="TcpClient"/> client.</param>
+        /// <param name="cmd">The <see cref="App.Command"/> object that holds the commands to execute.</param>
         void Network_CommandReceived(TcpClient client, App.Command cmd)
         {
             Response ret = new Response(cmd.Id, RunCommand(cmd));
@@ -51,6 +71,10 @@ namespace cs340project
 
         List<object> objects = new List<object>();
 
+        /// <summary>
+        /// The object that holds the commands to be sent 
+        /// back and forth from the nodes in the application.
+        /// </summary>
         [Serializable]
         public class Command
         {
@@ -59,6 +83,12 @@ namespace cs340project
             public object[] Parameters;
             public string Id;
 
+            /// <summary>
+            /// Initializes a new instance of the <see cref="Command"/> class.
+            /// </summary>
+            /// <param name="id">The id.</param>
+            /// <param name="name">The name.</param>
+            /// <param name="p">The p.</param>
             public Command(int? id, string name, object[] p)
             {
                 ObjectId = id;
@@ -68,12 +98,20 @@ namespace cs340project
             }
         }
 
+        /// <summary>
+        /// A class that holds the values for a response from the Network Communication
+        /// </summary>
         [Serializable]
         public class Response
         {
             public string Id;
             public object ReturnValue;
 
+            /// <summary>
+            /// Initializes a new instance of the <see cref="Response"/> class.
+            /// </summary>
+            /// <param name="id">The id of the <see cref="Proxy"/> object.</param>
+            /// <param name="ret">The return object.</param>
             public Response(string id, object ret)
             {
                 Id = id;
@@ -81,6 +119,11 @@ namespace cs340project
             }
         }
 
+        /// <summary>
+        /// Runs the command from the <see cref="App.Command"/> object.
+        /// </summary>
+        /// <param name="cmd">The <see cref="App.Command"/> object.</param>
+        /// <returns></returns>
         public object RunCommand(Command cmd)
         {
             if (objects.Count <= cmd.ObjectId || objects[(int)cmd.ObjectId] == null)
@@ -90,7 +133,7 @@ namespace cs340project
             Type type = target.GetType();
 
             List<Type> paramTypes = new List<Type>();
-            foreach(object p in cmd.Parameters)
+            foreach (object p in cmd.Parameters)
                 paramTypes.Add(p.GetType());
 
             MethodInfo method = type.GetMethod(cmd.Name, paramTypes.ToArray());
@@ -99,6 +142,10 @@ namespace cs340project
 
         #endregion
 
+        /// <summary>
+        /// Adds the object to the List inside of the <see cref="App"/>.
+        /// </summary>
+        /// <param name="o">The object to be added.</param>
         public void AddObject(object o)
         {
             objects.Add(o);
