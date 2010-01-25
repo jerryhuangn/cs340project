@@ -88,7 +88,8 @@ namespace UnitTesting
             string server = string.Empty; // TODO: Initialize to an appropriate value
             int port = 0; // TODO: Initialize to an appropriate value
             int id = 0; // TODO: Initialize to an appropriate value
-            Proxy target = new Proxy(server, port, id); // TODO: Initialize to an appropriate value
+            string AppName = "Test";
+            Proxy target = new Proxy(server, port, AppName, id); // TODO: Initialize to an appropriate value
             string method = string.Empty; // TODO: Initialize to an appropriate value
             object[] parameters = null; // TODO: Initialize to an appropriate value
             App.Command expected = null; // TODO: Initialize to an appropriate value
@@ -107,7 +108,8 @@ namespace UnitTesting
             string server = string.Empty; // TODO: Initialize to an appropriate value
             int port = 0; // TODO: Initialize to an appropriate value
             int id = 0; // TODO: Initialize to an appropriate value
-            Proxy target = new Proxy(server, port, id); // TODO: Initialize to an appropriate value
+            string AppName = "Test";
+            Proxy target = new Proxy(server, port, AppName, id); // TODO: Initialize to an appropriate value
             string method = string.Empty; // TODO: Initialize to an appropriate value
             object[] parameters = null; // TODO: Initialize to an appropriate value
             object expected = null; // TODO: Initialize to an appropriate value
@@ -126,7 +128,8 @@ namespace UnitTesting
             string server = string.Empty; // TODO: Initialize to an appropriate value
             int port = 0; // TODO: Initialize to an appropriate value
             int id = 0; // TODO: Initialize to an appropriate value
-            Proxy target = new Proxy(server, port, id);
+            string AppName = "Test";
+            Proxy target = new Proxy(server, port, AppName, id);
             Assert.Inconclusive("TODO: Implement code to verify target");
         }
     }
