@@ -33,11 +33,12 @@ namespace cs340project
         /// <param name="server">The server for the <see cref="Proxy"/>. Can be either IP or Fully Qualified Domain Name</param>
         /// <param name="port">The port the <see cref="Proxy"/> communicates over.</param>
         /// <param name="id">The id of the <see cref="Proxy"/>.</param>
-        public Proxy(string server, int port, int id)
+        public Proxy(string server, int port, string AppName, int id)
         {
             this.server = server;
             this.port = port;
             this.id = id;
+            this.app = AppName;
 
             App.GetApp(app).Network.ResponseReceived += new NetworkHub.NetworkHubResponseEvent(Network_ResponseReceived);
         }
@@ -105,10 +106,10 @@ namespace cs340project
         /// <param name="port">The port the <see cref="Proxy"/> communicates over.</param>
         /// <param name="id">The id of the <see cref="Proxy"/>.</param>
         /// <returns>A <see cref="Proxy"/> of type T</returns>
-        public static T GetProxy<T>(string server, int port, int id)
+        public static T GetProxy<T>(string server, int port, string AppName, int id)
         {
             Type proxy = Proxifier.CreateProxy(typeof(T));
-            return (T)Activator.CreateInstance(proxy, server, port, id);
+            return (T)Activator.CreateInstance(proxy, server, port, AppName, id);
         }
 
         /// <summary>
@@ -154,9 +155,9 @@ namespace cs340project
             ret.AppendLine("\t{");
 
             ret.AppendLine("\t\tProxy proxy = null;");
-            ret.AppendLine("\t\tpublic " + original.Name + "Proxy(string server, int port, int id)");
+            ret.AppendLine("\t\tpublic " + original.Name + "Proxy(string server, int port, string AppName, int id)");
             ret.AppendLine("\t\t{");
-            ret.AppendLine("\t\t\tproxy = new Proxy(server, port, id);");
+            ret.AppendLine("\t\t\tproxy = new Proxy(server, port, AppName, id);");
             ret.AppendLine("\t\t}");
 
 

@@ -1,6 +1,7 @@
 ﻿using cs340project;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Net.Sockets;
+using System;
 
 namespace UnitTesting
 {
@@ -70,10 +71,13 @@ namespace UnitTesting
         [TestMethod()]
         public void RunCommandTest()
         {
-            PrivateObject param0 = null; // TODO: Initialize to an appropriate value
-            App_Accessor target = new App_Accessor(param0); // TODO: Initialize to an appropriate value
-            App.Command cmd = null; // TODO: Initialize to an appropriate value
-            object expected = null; // TODO: Initialize to an appropriate value
+            App_Accessor target = new App_Accessor("test");
+            PrivateObject param0 = new PrivateObject(target);
+            Nullable<int> id = new Nullable<int>(0); //TODO: initialize to proper value
+            string name = null; //TODO: initialize to proper value
+            object[] p = null; //TODO: initialize to proper value 
+            App.Command cmd = new App.Command(id,name,p);
+            object expected = null; //initialize to proper return value
             object actual;
             actual = target.RunCommand(cmd);
             Assert.AreEqual(expected, actual);

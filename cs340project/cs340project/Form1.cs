@@ -86,7 +86,7 @@ namespace cs340project
 
         private void button2_Click(object sender, EventArgs e)
         {
-            Person remote = Proxifier.GetProxy<Person>("127.0.0.1", 10000, 2);
+            Person remote = Proxifier.GetProxy<Person>("127.0.0.1", 10000, "Test", 2);
             remote.Age = 15;
             remote.MyName = new PersonName("Ben", "Dilts", "Beandog");
 

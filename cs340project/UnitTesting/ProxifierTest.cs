@@ -72,9 +72,10 @@ namespace UnitTesting
             string server = string.Empty; // TODO: Initialize to an appropriate value
             int port = 0; // TODO: Initialize to an appropriate value
             int id = 0; // TODO: Initialize to an appropriate value
+            string AppName = "Test";
             T expected = default(T); // TODO: Initialize to an appropriate value
             T actual;
-            actual = Proxifier.GetProxy<T>(server, port, id);
+            actual = Proxifier.GetProxy<T>(server, port, AppName, id);
             Assert.AreEqual(expected, actual);
             Assert.Inconclusive("Verify the correctness of this test method.");
         }
