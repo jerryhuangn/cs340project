@@ -74,10 +74,10 @@ namespace UnitTesting
             string name = "Name"; // TODO: Initialize to an appropriate value
             object[] p = {"Parameters"}; // TODO: Initialize to an appropriate value
             App.Command target = new App.Command(id, name, p);
-            Assert.AreEqual(id, target.Id);
+            Assert.AreEqual(id, target.ObjectId);
             Assert.AreEqual(name, target.Name);
             Assert.AreEqual(p, target.Parameters);
-            Assert.Inconclusive("TODO: Implement code to verify target");
+            //Assert.Inconclusive("TODO: Implement code to verify target");
         }
     }
 }
