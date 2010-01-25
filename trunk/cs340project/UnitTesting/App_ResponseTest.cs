@@ -68,10 +68,12 @@ namespace UnitTesting
         [TestMethod()]
         public void App_ResponseConstructorTest()
         {
-            string id = string.Empty; // TODO: Initialize to an appropriate value
-            object ret = null; // TODO: Initialize to an appropriate value
+            string id = "ID";
+            object ret = "RetObject";
             App.Response target = new App.Response(id, ret);
-            Assert.Inconclusive("TODO: Implement code to verify target");
+            Assert.AreEqual(id, target.Id);
+            Assert.AreEqual(ret, target.ReturnValue);
+            //Assert.Inconclusive("TODO: Implement code to verify target");
         }
     }
 }
