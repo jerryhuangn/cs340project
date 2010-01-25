@@ -70,10 +70,13 @@ namespace UnitTesting
         [TestMethod()]
         public void App_CommandConstructorTest()
         {
-            Nullable<int> id = new Nullable<int>(); // TODO: Initialize to an appropriate value
-            string name = string.Empty; // TODO: Initialize to an appropriate value
-            object[] p = null; // TODO: Initialize to an appropriate value
+            Nullable<int> id = new Nullable<int>(0); // TODO: Initialize to an appropriate value
+            string name = "Name"; // TODO: Initialize to an appropriate value
+            object[] p = {"Parameters"}; // TODO: Initialize to an appropriate value
             App.Command target = new App.Command(id, name, p);
+            Assert.AreEqual(id, target.Id);
+            Assert.AreEqual(name, target.Name);
+            Assert.AreEqual(p, target.Parameters);
             Assert.Inconclusive("TODO: Implement code to verify target");
         }
     }
