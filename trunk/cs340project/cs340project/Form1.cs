@@ -91,6 +91,7 @@ namespace cs340project
             remote.MyName = new PersonName("Ben", "Dilts", "Beandog");
 
             txtOutput.AppendText("Remote says Age is now " + remote.Age + Environment.NewLine);
+            txtOutput.AppendText("Remote says Nick is now " + remote.MyName.Nick + Environment.NewLine);
         }
     }
 }
