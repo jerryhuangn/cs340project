@@ -68,13 +68,13 @@ namespace UnitTesting
         [TestMethod()]
         public void MyNameTest()
         {
-            Person target = new Person(); // TODO: Initialize to an appropriate value
-            PersonName expected = null; // TODO: Initialize to an appropriate value
+            Person target = new Person();
+            PersonName expected = new PersonName("First", "Last", "Nick");
             PersonName actual;
             target.MyName = expected;
             actual = target.MyName;
             Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
+            //Assert.Inconclusive("Verify the correctness of this test method.");
         }
 
         /// <summary>
@@ -83,13 +83,13 @@ namespace UnitTesting
         [TestMethod()]
         public void AgeTest()
         {
-            Person target = new Person(); // TODO: Initialize to an appropriate value
-            uint expected = 0; // TODO: Initialize to an appropriate value
+            Person target = new Person();
+            uint expected = 0;
             uint actual;
             target.Age = expected;
             actual = target.Age;
             Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
+            //Assert.Inconclusive("Verify the correctness of this test method.");
         }
 
         /// <summary>

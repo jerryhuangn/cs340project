@@ -69,14 +69,15 @@ namespace UnitTesting
         [DeploymentItem("cs340project.exe")]
         public void NickTest()
         {
-            PrivateObject param0 = null; // TODO: Initialize to an appropriate value
-            PersonName_Accessor target = new PersonName_Accessor(param0); // TODO: Initialize to an appropriate value
-            string expected = string.Empty; // TODO: Initialize to an appropriate value
+            PersonName target = new PersonName(null, null, null);
+            PrivateObject param0 = new PrivateObject(target);
+            string expected = "Nick";
             string actual;
-            target.Nick = expected;
+            param0.SetProperty("Nick", expected);
+            //target.Nick = expected;
             actual = target.Nick;
             Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
+            //Assert.Inconclusive("Verify the correctness of this test method.");
         }
 
         /// <summary>
@@ -86,14 +87,14 @@ namespace UnitTesting
         [DeploymentItem("cs340project.exe")]
         public void LastTest()
         {
-            PrivateObject param0 = null; // TODO: Initialize to an appropriate value
-            PersonName_Accessor target = new PersonName_Accessor(param0); // TODO: Initialize to an appropriate value
-            string expected = string.Empty; // TODO: Initialize to an appropriate value
+            PersonName target = new PersonName(null, null, null);
+            PrivateObject param0 = new PrivateObject(target);
+            string expected = "Last";
             string actual;
-            target.Last = expected;
+            param0.SetProperty("Last", expected);
             actual = target.Last;
             Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
+            //Assert.Inconclusive("Verify the correctness of this test method.");
         }
 
         /// <summary>
@@ -103,14 +104,14 @@ namespace UnitTesting
         [DeploymentItem("cs340project.exe")]
         public void FirstTest()
         {
-            PrivateObject param0 = null; // TODO: Initialize to an appropriate value
-            PersonName_Accessor target = new PersonName_Accessor(param0); // TODO: Initialize to an appropriate value
-            string expected = string.Empty; // TODO: Initialize to an appropriate value
+            PersonName target = new PersonName(null, null, null);
+            PrivateObject param0 = new PrivateObject(target);
+            string expected = "First"; 
             string actual;
-            target.First = expected;
+            param0.SetProperty("First", expected);
             actual = target.First;
             Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
+            //Assert.Inconclusive("Verify the correctness of this test method.");
         }
 
         /// <summary>
@@ -119,11 +120,20 @@ namespace UnitTesting
         [TestMethod()]
         public void PersonNameConstructorTest()
         {
-            string first = string.Empty; // TODO: Initialize to an appropriate value
-            string last = string.Empty; // TODO: Initialize to an appropriate value
-            string nick = string.Empty; // TODO: Initialize to an appropriate value
+            string first = "First";
+            string firstActual;
+            string last = "Last";
+            string lastActual;
+            string nick = "Nick";
+            string nickActual;
             PersonName target = new PersonName(first, last, nick);
-            Assert.Inconclusive("TODO: Implement code to verify target");
+            firstActual = target.First;
+            lastActual = target.Last;
+            nickActual = target.Nick;
+            Assert.AreEqual(first, firstActual);
+            Assert.AreEqual(last, lastActual);
+            Assert.AreEqual(nick, nickActual);
+            //Assert.Inconclusive("TODO: Implement code to verify target");
         }
     }
 }
