@@ -1,0 +1,467 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestRun id="2daac30b-c8c6-4c0b-a02b-97d8a7d962d8" name="tj@XPSHIZZLE 2010-01-24 22:02:07" runUser="XPSHIZZLE\tj" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2006">
+  <TestRunConfiguration name="Local Test Run" id="5d34651d-14c5-44b4-924e-f479f289f99c">
+    <Description>This is a default test run configuration for a local test run.</Description>
+    <Deployment userDeploymentRoot="C:\Users\tj\Desktop\cs340project\cs340project\TestResults" useDefaultDeploymentRoot="false" runDeploymentRoot="C:\Users\tj\Desktop\cs340project\cs340project\TestResults\tj_XPSHIZZLE 2010-01-24 22_02_07">
+      <DeploymentItem filename="C:\Users\tj\Desktop\cs340project\cs340project\Server\bin\Debug\Server.dll" />
+      <DeploymentItem filename="C:\Users\tj\Desktop\cs340project\cs340project\cs340project\bin\Debug\cs340project.exe" />
+    </Deployment>
+    <TestTypeSpecific />
+  </TestRunConfiguration>
+  <ResultSummary outcome="Failed">
+    <Counters total="22" executed="21" error="0" failed="10" timeout="0" aborted="1" inconclusive="4" passedButRunAborted="6" notRunnable="0" notExecuted="1" disconnected="0" warning="0" passed="0" completed="0" inProgress="0" pending="0" />
+  </ResultSummary>
+  <Times creation="2010-01-24T22:02:07.5833157-07:00" queuing="2010-01-24T22:02:08.3633277-07:00" start="2010-01-24T22:02:08.4658292-07:00" finish="2010-01-24T22:02:25.1645983-07:00" />
+  <TestDefinitions>
+    <UnitTest name="MyNameTest" storage="c:\users\tj\desktop\cs340project\cs340project\unittesting\bin\debug\unittesting.dll" id="b1d759de-a9df-e98a-e0dc-ecc5cc22adcf">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <Execution id="6820ee01-eb04-4a15-9dff-49240cb205f8" />
+      <TestMethod codeBase="C:\Users\tj\Desktop\cs340project\cs340project\UnitTesting\bin\Debug\UnitTesting.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="UnitTesting.PersonTest, UnitTesting" name="MyNameTest" />
+    </UnitTest>
+    <UnitTest name="ProxyConstructorTest" storage="c:\users\tj\desktop\cs340project\cs340project\unittesting\bin\debug\unittesting.dll" id="c7c5382e-9f9d-7db1-78d0-6da772ada96f">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <TestMethod codeBase="C:\Users\tj\Desktop\cs340project\cs340project\UnitTesting\bin\Debug\UnitTesting.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="UnitTesting.ProxyTest, UnitTesting" name="ProxyConstructorTest" />
+    </UnitTest>
+    <UnitTest name="GetAppTest" storage="c:\users\tj\desktop\cs340project\cs340project\unittesting\bin\debug\unittesting.dll" id="63b4d1a4-86a1-7201-e8be-a62b70a2e4a2">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <Execution id="0cd0a06b-e8bb-4a5b-b45f-8883a7c4ee73" />
+      <TestMethod codeBase="C:\Users\tj\Desktop\cs340project\cs340project\UnitTesting\bin\Debug\UnitTesting.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="UnitTesting.AppTest, UnitTesting" name="GetAppTest" />
+    </UnitTest>
+    <UnitTest name="App_CommandConstructorTest" storage="c:\users\tj\desktop\cs340project\cs340project\unittesting\bin\debug\unittesting.dll" id="1849cd97-e971-9c37-12ab-060f8c40d010">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <Execution id="1dd84546-21cd-4662-8545-4edf4f732c86" />
+      <TestMethod codeBase="C:\Users\tj\Desktop\cs340project\cs340project\UnitTesting\bin\Debug\UnitTesting.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="UnitTesting.App_CommandTest, UnitTesting" name="App_CommandConstructorTest" />
+    </UnitTest>
+    <UnitTest name="CreateProxyTest" storage="c:\users\tj\desktop\cs340project\cs340project\unittesting\bin\debug\unittesting.dll" id="3940fb75-397d-9756-9bd8-7b31d0c643a8">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <DeploymentItems>
+        <DeploymentItem filename="Server.dll" />
+      </DeploymentItems>
+      <Execution id="daa4243e-b8f0-44b6-8f71-59d752997d75" />
+      <TestMethod codeBase="C:\Users\tj\Desktop\cs340project\cs340project\UnitTesting\bin\Debug\UnitTesting.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="UnitTesting.ProxifierTest, UnitTesting" name="CreateProxyTest" />
+    </UnitTest>
+    <UnitTest name="PersonConstructorTest" storage="c:\users\tj\desktop\cs340project\cs340project\unittesting\bin\debug\unittesting.dll" id="5ca94332-198e-b22f-c346-e5e0098cf2af">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <Execution id="49d68830-1170-4d06-9695-10e1444d6013" />
+      <TestMethod codeBase="C:\Users\tj\Desktop\cs340project\cs340project\UnitTesting\bin\Debug\UnitTesting.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="UnitTesting.PersonTest, UnitTesting" name="PersonConstructorTest" />
+    </UnitTest>
+    <UnitTest name="LastTest" storage="c:\users\tj\desktop\cs340project\cs340project\unittesting\bin\debug\unittesting.dll" id="f5ce004b-caac-531c-5c20-af683258bc14">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <DeploymentItems>
+        <DeploymentItem filename="cs340project.exe" />
+      </DeploymentItems>
+      <Execution id="43785f89-209e-4451-a7e8-c72892c2a55c" />
+      <TestMethod codeBase="C:\Users\tj\Desktop\cs340project\cs340project\UnitTesting\bin\Debug\UnitTesting.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="UnitTesting.PersonNameTest, UnitTesting" name="LastTest" />
+    </UnitTest>
+    <UnitTest name="AgeTest" storage="c:\users\tj\desktop\cs340project\cs340project\unittesting\bin\debug\unittesting.dll" id="a415cad6-bba8-153b-4b33-0a759bf19cce">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <Execution id="076d11b1-9138-48ea-821e-93dff911cb07" />
+      <TestMethod codeBase="C:\Users\tj\Desktop\cs340project\cs340project\UnitTesting\bin\Debug\UnitTesting.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="UnitTesting.PersonTest, UnitTesting" name="AgeTest" />
+    </UnitTest>
+    <UnitTest name="InvokeAsyncTest" storage="c:\users\tj\desktop\cs340project\cs340project\unittesting\bin\debug\unittesting.dll" id="66d8be9f-7727-8ad8-0be2-1086ff8c6448">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <Execution id="1a02dd6e-6ece-4954-b031-fa0b19157bab" />
+      <TestMethod codeBase="C:\Users\tj\Desktop\cs340project\cs340project\UnitTesting\bin\Debug\UnitTesting.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="UnitTesting.ProxyTest, UnitTesting" name="InvokeAsyncTest" />
+    </UnitTest>
+    <UnitTest name="AppConstructorTest" storage="c:\users\tj\desktop\cs340project\cs340project\unittesting\bin\debug\unittesting.dll" id="730ecb85-abbd-4258-50fd-0bcc79608446">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <DeploymentItems>
+        <DeploymentItem filename="Server.dll" />
+      </DeploymentItems>
+      <Execution id="4332db25-3a76-476f-84d7-58abbfa22a38" />
+      <TestMethod codeBase="C:\Users\tj\Desktop\cs340project\cs340project\UnitTesting\bin\Debug\UnitTesting.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="UnitTesting.AppTest, UnitTesting" name="AppConstructorTest" />
+    </UnitTest>
+    <UnitTest name="NickTest" storage="c:\users\tj\desktop\cs340project\cs340project\unittesting\bin\debug\unittesting.dll" id="f73e5cb3-6129-8dee-c994-fb86c5a820dc">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <DeploymentItems>
+        <DeploymentItem filename="cs340project.exe" />
+      </DeploymentItems>
+      <Execution id="3155960a-51ef-4df2-ab65-18b8e30983cd" />
+      <TestMethod codeBase="C:\Users\tj\Desktop\cs340project\cs340project\UnitTesting\bin\Debug\UnitTesting.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="UnitTesting.PersonNameTest, UnitTesting" name="NickTest" />
+    </UnitTest>
+    <UnitTest name="CreateProxyCodeTest" storage="c:\users\tj\desktop\cs340project\cs340project\unittesting\bin\debug\unittesting.dll" id="a6af233d-5c77-a196-0571-3e2f60ca6923">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <DeploymentItems>
+        <DeploymentItem filename="Server.dll" />
+      </DeploymentItems>
+      <Execution id="5ccb1e7e-f706-4249-b39f-b42c74e38b57" />
+      <TestMethod codeBase="C:\Users\tj\Desktop\cs340project\cs340project\UnitTesting\bin\Debug\UnitTesting.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="UnitTesting.ProxifierTest, UnitTesting" name="CreateProxyCodeTest" />
+    </UnitTest>
+    <UnitTest name="App_ResponseConstructorTest" storage="c:\users\tj\desktop\cs340project\cs340project\unittesting\bin\debug\unittesting.dll" id="db858951-75a0-bed6-3fb2-2048ddbd5b39">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <Execution id="37ef1804-5f4f-4e5f-9dae-8908d1db4f2d" />
+      <TestMethod codeBase="C:\Users\tj\Desktop\cs340project\cs340project\UnitTesting\bin\Debug\UnitTesting.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="UnitTesting.App_ResponseTest, UnitTesting" name="App_ResponseConstructorTest" />
+    </UnitTest>
+    <UnitTest name="Network_CommandReceivedTest" storage="c:\users\tj\desktop\cs340project\cs340project\unittesting\bin\debug\unittesting.dll" id="56fa609f-2f52-924c-529a-7c7aa1483dcc">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <DeploymentItems>
+        <DeploymentItem filename="Server.dll" />
+      </DeploymentItems>
+      <Execution id="b3758e28-fbe3-442e-923f-19efc0ffd3d1" />
+      <TestMethod codeBase="C:\Users\tj\Desktop\cs340project\cs340project\UnitTesting\bin\Debug\UnitTesting.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="UnitTesting.AppTest, UnitTesting" name="Network_CommandReceivedTest" />
+    </UnitTest>
+    <UnitTest name="PersonNameConstructorTest" storage="c:\users\tj\desktop\cs340project\cs340project\unittesting\bin\debug\unittesting.dll" id="1db9521d-c38f-fadb-5107-75c30e0c9de5">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <Execution id="76426576-2191-43c1-b74a-a6c0e38dc196" />
+      <TestMethod codeBase="C:\Users\tj\Desktop\cs340project\cs340project\UnitTesting\bin\Debug\UnitTesting.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="UnitTesting.PersonNameTest, UnitTesting" name="PersonNameConstructorTest" />
+    </UnitTest>
+    <UnitTest name="RunCommandTest" storage="c:\users\tj\desktop\cs340project\cs340project\unittesting\bin\debug\unittesting.dll" id="8c9dbde8-6722-1318-bdac-a026ed4bb1fa">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <Execution id="f8ce38a7-cb24-4eef-987a-7861d733fc01" />
+      <TestMethod codeBase="C:\Users\tj\Desktop\cs340project\cs340project\UnitTesting\bin\Debug\UnitTesting.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="UnitTesting.AppTest, UnitTesting" name="RunCommandTest" />
+    </UnitTest>
+    <UnitTest name="AddObjectTest" storage="c:\users\tj\desktop\cs340project\cs340project\unittesting\bin\debug\unittesting.dll" id="5c424612-2e07-4702-a1f6-55ea56af99cf">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <Execution id="f9f95632-adb1-4d3d-a631-f99ca65066b1" />
+      <TestMethod codeBase="C:\Users\tj\Desktop\cs340project\cs340project\UnitTesting\bin\Debug\UnitTesting.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="UnitTesting.AppTest, UnitTesting" name="AddObjectTest" />
+    </UnitTest>
+    <UnitTest name="GetProxyTest" storage="c:\users\tj\desktop\cs340project\cs340project\unittesting\bin\debug\unittesting.dll" id="683d7b11-8f37-6824-c67d-df8fe868b02f">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <Execution id="de65ca3a-efeb-40ae-9a96-cf420b6ff63f" />
+      <TestMethod codeBase="C:\Users\tj\Desktop\cs340project\cs340project\UnitTesting\bin\Debug\UnitTesting.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="UnitTesting.ProxifierTest, UnitTesting" name="GetProxyTest" />
+    </UnitTest>
+    <UnitTest name="ProxifierConstructorTest" storage="c:\users\tj\desktop\cs340project\cs340project\unittesting\bin\debug\unittesting.dll" id="627c4da3-dea1-3689-40a2-0bf0428012b1">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <Execution id="f9902607-d591-4cd2-ac42-85348439706a" />
+      <TestMethod codeBase="C:\Users\tj\Desktop\cs340project\cs340project\UnitTesting\bin\Debug\UnitTesting.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="UnitTesting.ProxifierTest, UnitTesting" name="ProxifierConstructorTest" />
+    </UnitTest>
+    <UnitTest name="InvokeTest" storage="c:\users\tj\desktop\cs340project\cs340project\unittesting\bin\debug\unittesting.dll" id="e6771e7a-94a8-1d80-9bdf-2abc3a024bab">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <Execution id="a7f5b5a1-0785-4080-a5af-e36bf9d0b036" />
+      <TestMethod codeBase="C:\Users\tj\Desktop\cs340project\cs340project\UnitTesting\bin\Debug\UnitTesting.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="UnitTesting.ProxyTest, UnitTesting" name="InvokeTest" />
+    </UnitTest>
+    <UnitTest name="FirstTest" storage="c:\users\tj\desktop\cs340project\cs340project\unittesting\bin\debug\unittesting.dll" id="21066473-71a8-cfe2-d286-052ffd2fff86">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <DeploymentItems>
+        <DeploymentItem filename="cs340project.exe" />
+      </DeploymentItems>
+      <Execution id="f5a53714-7f7e-473b-b31f-df26502fc1e4" />
+      <TestMethod codeBase="C:\Users\tj\Desktop\cs340project\cs340project\UnitTesting\bin\Debug\UnitTesting.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="UnitTesting.PersonNameTest, UnitTesting" name="FirstTest" />
+    </UnitTest>
+    <UnitTest name="Network_ResponseReceivedTest" storage="c:\users\tj\desktop\cs340project\cs340project\unittesting\bin\debug\unittesting.dll" id="eb34f4df-4372-47da-cae9-856d79d02100">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <DeploymentItems>
+        <DeploymentItem filename="Server.dll" />
+      </DeploymentItems>
+      <Execution id="c39ba383-29ea-451f-9d3b-d265adb15bf0" />
+      <TestMethod codeBase="C:\Users\tj\Desktop\cs340project\cs340project\UnitTesting\bin\Debug\UnitTesting.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="UnitTesting.ProxyTest, UnitTesting" name="Network_ResponseReceivedTest" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <TestEntries>
+    <TestEntry testId="1849cd97-e971-9c37-12ab-060f8c40d010" executionId="1dd84546-21cd-4662-8545-4edf4f732c86" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="db858951-75a0-bed6-3fb2-2048ddbd5b39" executionId="37ef1804-5f4f-4e5f-9dae-8908d1db4f2d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="8c9dbde8-6722-1318-bdac-a026ed4bb1fa" executionId="f8ce38a7-cb24-4eef-987a-7861d733fc01" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="56fa609f-2f52-924c-529a-7c7aa1483dcc" executionId="b3758e28-fbe3-442e-923f-19efc0ffd3d1" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="63b4d1a4-86a1-7201-e8be-a62b70a2e4a2" executionId="0cd0a06b-e8bb-4a5b-b45f-8883a7c4ee73" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="5c424612-2e07-4702-a1f6-55ea56af99cf" executionId="f9f95632-adb1-4d3d-a631-f99ca65066b1" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="730ecb85-abbd-4258-50fd-0bcc79608446" executionId="4332db25-3a76-476f-84d7-58abbfa22a38" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="f73e5cb3-6129-8dee-c994-fb86c5a820dc" executionId="3155960a-51ef-4df2-ab65-18b8e30983cd" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="f5ce004b-caac-531c-5c20-af683258bc14" executionId="43785f89-209e-4451-a7e8-c72892c2a55c" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="21066473-71a8-cfe2-d286-052ffd2fff86" executionId="f5a53714-7f7e-473b-b31f-df26502fc1e4" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="1db9521d-c38f-fadb-5107-75c30e0c9de5" executionId="76426576-2191-43c1-b74a-a6c0e38dc196" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="b1d759de-a9df-e98a-e0dc-ecc5cc22adcf" executionId="6820ee01-eb04-4a15-9dff-49240cb205f8" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="a415cad6-bba8-153b-4b33-0a759bf19cce" executionId="076d11b1-9138-48ea-821e-93dff911cb07" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="5ca94332-198e-b22f-c346-e5e0098cf2af" executionId="49d68830-1170-4d06-9695-10e1444d6013" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="683d7b11-8f37-6824-c67d-df8fe868b02f" executionId="de65ca3a-efeb-40ae-9a96-cf420b6ff63f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="a6af233d-5c77-a196-0571-3e2f60ca6923" executionId="5ccb1e7e-f706-4249-b39f-b42c74e38b57" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="3940fb75-397d-9756-9bd8-7b31d0c643a8" executionId="daa4243e-b8f0-44b6-8f71-59d752997d75" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="627c4da3-dea1-3689-40a2-0bf0428012b1" executionId="f9902607-d591-4cd2-ac42-85348439706a" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="eb34f4df-4372-47da-cae9-856d79d02100" executionId="c39ba383-29ea-451f-9d3b-d265adb15bf0" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="66d8be9f-7727-8ad8-0be2-1086ff8c6448" executionId="1a02dd6e-6ece-4954-b031-fa0b19157bab" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e6771e7a-94a8-1d80-9bdf-2abc3a024bab" executionId="a7f5b5a1-0785-4080-a5af-e36bf9d0b036" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="c7c5382e-9f9d-7db1-78d0-6da772ada96f" executionId="4d8dd7ec-f860-4129-9465-64286c25ea18" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <Results>
+    <UnitTestResult executionId="1dd84546-21cd-4662-8545-4edf4f732c86" testId="1849cd97-e971-9c37-12ab-060f8c40d010" testName="App_CommandConstructorTest" computerName="XPSHIZZLE" duration="00:00:00.0088357" startTime="2010-01-24T22:02:08.4808295-07:00" endTime="2010-01-24T22:02:08.7258332-07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.AreEqual failed. Expected:&lt;0 (System.Int32)&gt;. Actual:&lt;2c1a40c1-5f6e-4dfd-93fc-21b3232fe3eb (System.String)&gt;. </Message>
+          <StackTrace>   at UnitTesting.App_CommandTest.App_CommandConstructorTest() in C:\Users\tj\Desktop\cs340project\cs340project\UnitTesting\App_CommandTest.cs:line 77
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="37ef1804-5f4f-4e5f-9dae-8908d1db4f2d" testId="db858951-75a0-bed6-3fb2-2048ddbd5b39" testName="App_ResponseConstructorTest" computerName="XPSHIZZLE" duration="00:00:00.0016303" startTime="2010-01-24T22:02:08.7283333-07:00" endTime="2010-01-24T22:02:08.7383334-07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Inconclusive" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.Inconclusive failed. TODO: Implement code to verify target</Message>
+          <StackTrace>   at UnitTesting.App_ResponseTest.App_ResponseConstructorTest() in C:\Users\tj\Desktop\cs340project\cs340project\UnitTesting\App_ResponseTest.cs:line 74
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="f8ce38a7-cb24-4eef-987a-7861d733fc01" testId="8c9dbde8-6722-1318-bdac-a026ed4bb1fa" testName="RunCommandTest" computerName="XPSHIZZLE" duration="00:00:00.0505366" startTime="2010-01-24T22:02:08.7408335-07:00" endTime="2010-01-24T22:02:08.7983343-07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+      <Output>
+        <ErrorInfo>
+          <Message>Test method UnitTesting.AppTest.RunCommandTest threw exception:  System.NullReferenceException: Object reference not set to an instance of an object..</Message>
+          <StackTrace>   at cs340project.App_Accessor.RunCommand(Command cmd)
+   at UnitTesting.AppTest.RunCommandTest() in C:\Users\tj\Desktop\cs340project\cs340project\UnitTesting\AppTest.cs:line 78
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="b3758e28-fbe3-442e-923f-19efc0ffd3d1" testId="56fa609f-2f52-924c-529a-7c7aa1483dcc" testName="Network_CommandReceivedTest" computerName="XPSHIZZLE" duration="00:00:00.0016307" startTime="2010-01-24T22:02:08.8008344-07:00" endTime="2010-01-24T22:02:08.8083345-07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+      <Output>
+        <ErrorInfo>
+          <Message>Test method UnitTesting.AppTest.Network_CommandReceivedTest threw exception:  System.NullReferenceException: Object reference not set to an instance of an object..</Message>
+          <StackTrace>   at cs340project.App_Accessor.Network_CommandReceived(TcpClient client, Command cmd)
+   at UnitTesting.AppTest.Network_CommandReceivedTest() in C:\Users\tj\Desktop\cs340project\cs340project\UnitTesting\AppTest.cs:line 94
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="0cd0a06b-e8bb-4a5b-b45f-8883a7c4ee73" testId="63b4d1a4-86a1-7201-e8be-a62b70a2e4a2" testName="GetAppTest" computerName="XPSHIZZLE" duration="00:00:00.0033691" startTime="2010-01-24T22:02:08.8108345-07:00" endTime="2010-01-24T22:02:08.8183347-07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.AreEqual failed. Expected:&lt;(null)&gt;. Actual:&lt;cs340project.App&gt;. </Message>
+          <StackTrace>   at UnitTesting.AppTest.GetAppTest() in C:\Users\tj\Desktop\cs340project\cs340project\UnitTesting\AppTest.cs:line 108
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="f9f95632-adb1-4d3d-a631-f99ca65066b1" testId="5c424612-2e07-4702-a1f6-55ea56af99cf" testName="AddObjectTest" computerName="XPSHIZZLE" duration="00:00:00.0015090" startTime="2010-01-24T22:02:08.8183347-07:00" endTime="2010-01-24T22:02:08.8283348-07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+      <Output>
+        <ErrorInfo>
+          <Message>Test method UnitTesting.AppTest.AddObjectTest threw exception:  System.NullReferenceException: Object reference not set to an instance of an object..</Message>
+          <StackTrace>   at cs340project.App_Accessor.AddObject(Object o)
+   at UnitTesting.AppTest.AddObjectTest() in C:\Users\tj\Desktop\cs340project\cs340project\UnitTesting\AppTest.cs:line 121
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="4332db25-3a76-476f-84d7-58abbfa22a38" testId="730ecb85-abbd-4258-50fd-0bcc79608446" testName="AppConstructorTest" computerName="XPSHIZZLE" duration="00:00:00.0014422" startTime="2010-01-24T22:02:08.8283348-07:00" endTime="2010-01-24T22:02:08.8358349-07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Inconclusive" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.Inconclusive failed. TODO: Implement code to verify target</Message>
+          <StackTrace>   at UnitTesting.AppTest.AppConstructorTest() in C:\Users\tj\Desktop\cs340project\cs340project\UnitTesting\AppTest.cs:line 134
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="3155960a-51ef-4df2-ab65-18b8e30983cd" testId="f73e5cb3-6129-8dee-c994-fb86c5a820dc" testName="NickTest" computerName="XPSHIZZLE" duration="00:00:00.0053188" startTime="2010-01-24T22:02:08.8358349-07:00" endTime="2010-01-24T22:02:08.8508352-07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="PassedButRunAborted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+      <Output>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="43785f89-209e-4451-a7e8-c72892c2a55c" testId="f5ce004b-caac-531c-5c20-af683258bc14" testName="LastTest" computerName="XPSHIZZLE" duration="00:00:00.0004903" startTime="2010-01-24T22:02:08.8533352-07:00" endTime="2010-01-24T22:02:08.8558352-07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="PassedButRunAborted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+      <Output>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="f5a53714-7f7e-473b-b31f-df26502fc1e4" testId="21066473-71a8-cfe2-d286-052ffd2fff86" testName="FirstTest" computerName="XPSHIZZLE" duration="00:00:00.0004927" startTime="2010-01-24T22:02:08.8558352-07:00" endTime="2010-01-24T22:02:08.8608353-07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="PassedButRunAborted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+      <Output>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="76426576-2191-43c1-b74a-a6c0e38dc196" testId="1db9521d-c38f-fadb-5107-75c30e0c9de5" testName="PersonNameConstructorTest" computerName="XPSHIZZLE" duration="00:00:00.0004193" startTime="2010-01-24T22:02:08.8633353-07:00" endTime="2010-01-24T22:02:08.8658354-07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="PassedButRunAborted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+      <Output>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="6820ee01-eb04-4a15-9dff-49240cb205f8" testId="b1d759de-a9df-e98a-e0dc-ecc5cc22adcf" testName="MyNameTest" computerName="XPSHIZZLE" duration="00:00:00.0008267" startTime="2010-01-24T22:02:08.8683354-07:00" endTime="2010-01-24T22:02:08.8708355-07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="PassedButRunAborted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+      <Output>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="076d11b1-9138-48ea-821e-93dff911cb07" testId="a415cad6-bba8-153b-4b33-0a759bf19cce" testName="AgeTest" computerName="XPSHIZZLE" duration="00:00:00.0004107" startTime="2010-01-24T22:02:08.8708355-07:00" endTime="2010-01-24T22:02:08.8783356-07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="PassedButRunAborted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+      <Output>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="49d68830-1170-4d06-9695-10e1444d6013" testId="5ca94332-198e-b22f-c346-e5e0098cf2af" testName="PersonConstructorTest" computerName="XPSHIZZLE" duration="00:00:00.0009821" startTime="2010-01-24T22:02:08.8808356-07:00" endTime="2010-01-24T22:02:08.8858357-07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Inconclusive" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.Inconclusive failed. TODO: Implement code to verify target</Message>
+          <StackTrace>   at UnitTesting.PersonTest.PersonConstructorTest() in C:\Users\tj\Desktop\cs340project\cs340project\UnitTesting\PersonTest.cs:line 102
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="de65ca3a-efeb-40ae-9a96-cf420b6ff63f" testId="683d7b11-8f37-6824-c67d-df8fe868b02f" testName="GetProxyTest" computerName="XPSHIZZLE" duration="00:00:00.1151909" startTime="2010-01-24T22:02:08.8858357-07:00" endTime="2010-01-24T22:02:09.0083376-07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+      <Output>
+        <DebugTrace>using System;
+namespace Microsoft.VisualStudio.TestTools.UnitTesting
+{
+	class GenericParameterHelperProxy : Microsoft.VisualStudio.TestTools.UnitTesting.GenericParameterHelper
+	{
+		Proxy proxy = null;
+		public GenericParameterHelperProxy(string server, int port, int id)
+		{
+			proxy = new Proxy(server, port, id);
+		}
+		public override System.Boolean Equals(System.Object obj)
+		{
+			return (System.Boolean)this.proxy.Invoke("Equals", obj);
+		}
+		public override System.Int32 GetHashCode()
+		{
+			return (System.Int32)this.proxy.Invoke("GetHashCode");
+		}
+		public override System.Int32 CompareTo(System.Object obj)
+		{
+			return (System.Int32)this.proxy.Invoke("CompareTo", obj);
+		}
+		public override System.Collections.IEnumerator GetEnumerator()
+		{
+			return (System.Collections.IEnumerator)this.proxy.Invoke("GetEnumerator");
+		}
+		public override System.Object Clone()
+		{
+			return (System.Object)this.proxy.Invoke("Clone");
+		}
+		public override System.String ToString()
+		{
+			return (System.String)this.proxy.Invoke("ToString");
+		}
+	}
+}
+
+</DebugTrace>
+        <ErrorInfo>
+          <Message>Test method UnitTesting.ProxifierTest.GetProxyTest threw exception:  System.IO.FileNotFoundException: Could not load file or assembly 'file:///C:\Users\tj\AppData\Local\Temp\agwe79ii.dll' or one of its dependencies. The system cannot find the file specified.WRN: Assembly binding logging is turned OFF.
+To enable assembly bind failure logging, set the registry value [HKLM\Software\Microsoft\Fusion!EnableLog] (DWORD) to 1.
+Note: There is some performance penalty associated with assembly bind failure logging.
+To turn this feature off, remove the registry value [HKLM\Software\Microsoft\Fusion!EnableLog].
+.</Message>
+          <StackTrace>    at System.Reflection.Assembly._nLoad(AssemblyName fileName, String codeBase, Evidence assemblySecurity, Assembly locationHint, StackCrawlMark&amp; stackMark, Boolean throwOnFileNotFound, Boolean forIntrospection)
+   at System.Reflection.Assembly.nLoad(AssemblyName fileName, String codeBase, Evidence assemblySecurity, Assembly locationHint, StackCrawlMark&amp; stackMark, Boolean throwOnFileNotFound, Boolean forIntrospection)
+   at System.Reflection.Assembly.InternalLoad(AssemblyName assemblyRef, Evidence assemblySecurity, StackCrawlMark&amp; stackMark, Boolean forIntrospection)
+   at System.Reflection.Assembly.Load(AssemblyName assemblyRef, Evidence assemblySecurity)
+   at System.CodeDom.Compiler.CompilerResults.get_CompiledAssembly()
+   at cs340project.Proxifier.CreateProxy(Type original) in C:\Users\tj\Desktop\cs340project\cs340project\Server\Proxifier.cs:line 134
+   at cs340project.Proxifier.GetProxy[T](String server, Int32 port, Int32 id) in C:\Users\tj\Desktop\cs340project\cs340project\Server\Proxifier.cs:line 110
+   at UnitTesting.ProxifierTest.GetProxyTestHelper[T]() in C:\Users\tj\Desktop\cs340project\cs340project\UnitTesting\ProxifierTest.cs:line 77
+   at UnitTesting.ProxifierTest.GetProxyTest() in C:\Users\tj\Desktop\cs340project\cs340project\UnitTesting\ProxifierTest.cs:line 85
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="5ccb1e7e-f706-4249-b39f-b42c74e38b57" testId="a6af233d-5c77-a196-0571-3e2f60ca6923" testName="CreateProxyCodeTest" computerName="XPSHIZZLE" duration="00:00:00.0061616" startTime="2010-01-24T22:02:09.0083376-07:00" endTime="2010-01-24T22:02:09.0208378-07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+      <Output>
+        <ErrorInfo>
+          <Message>Test method UnitTesting.ProxifierTest.CreateProxyCodeTest threw exception:  System.NullReferenceException: Object reference not set to an instance of an object..</Message>
+          <StackTrace>    at cs340project.Proxifier.CreateProxyCode(Type original) in C:\Users\tj\Desktop\cs340project\cs340project\Server\Proxifier.cs:line 151
+   at cs340project.Proxifier_Accessor.CreateProxyCode(Type original)
+   at UnitTesting.ProxifierTest.CreateProxyCodeTest() in C:\Users\tj\Desktop\cs340project\cs340project\UnitTesting\ProxifierTest.cs:line 98
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="daa4243e-b8f0-44b6-8f71-59d752997d75" testId="3940fb75-397d-9756-9bd8-7b31d0c643a8" testName="CreateProxyTest" computerName="XPSHIZZLE" duration="00:00:00.0019832" startTime="2010-01-24T22:02:09.0208378-07:00" endTime="2010-01-24T22:02:09.0333380-07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+      <Output>
+        <ErrorInfo>
+          <Message>Test method UnitTesting.ProxifierTest.CreateProxyTest threw exception:  System.ArgumentNullException: Value cannot be null.
+Parameter name: key.</Message>
+          <StackTrace>    at System.ThrowHelper.ThrowArgumentNullException(ExceptionArgument argument)
+   at System.Collections.Generic.Dictionary`2.FindEntry(TKey key)
+   at System.Collections.Generic.Dictionary`2.TryGetValue(TKey key, TValue&amp; value)
+   at cs340project.Proxifier.CreateProxy(Type original) in C:\Users\tj\Desktop\cs340project\cs340project\Server\Proxifier.cs:line 123
+   at cs340project.Proxifier_Accessor.CreateProxy(Type original)
+   at UnitTesting.ProxifierTest.CreateProxyTest() in C:\Users\tj\Desktop\cs340project\cs340project\UnitTesting\ProxifierTest.cs:line 113
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="f9902607-d591-4cd2-ac42-85348439706a" testId="627c4da3-dea1-3689-40a2-0bf0428012b1" testName="ProxifierConstructorTest" computerName="XPSHIZZLE" duration="00:00:00.0011048" startTime="2010-01-24T22:02:09.0358380-07:00" endTime="2010-01-24T22:02:09.0433381-07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Inconclusive" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.Inconclusive failed. TODO: Implement code to verify target</Message>
+          <StackTrace>   at UnitTesting.ProxifierTest.ProxifierConstructorTest() in C:\Users\tj\Desktop\cs340project\cs340project\UnitTesting\ProxifierTest.cs:line 125
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="c39ba383-29ea-451f-9d3b-d265adb15bf0" testId="eb34f4df-4372-47da-cae9-856d79d02100" testName="Network_ResponseReceivedTest" computerName="XPSHIZZLE" duration="00:00:00.0021917" startTime="2010-01-24T22:02:09.0458382-07:00" endTime="2010-01-24T22:02:09.0558383-07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+      <Output>
+        <ErrorInfo>
+          <Message>Test method UnitTesting.ProxyTest.Network_ResponseReceivedTest threw exception:  System.NullReferenceException: Object reference not set to an instance of an object..</Message>
+          <StackTrace>   at cs340project.Proxy_Accessor.Network_ResponseReceived(TcpClient client, Response cmd)
+   at UnitTesting.ProxyTest.Network_ResponseReceivedTest() in C:\Users\tj\Desktop\cs340project\cs340project\UnitTesting\ProxyTest.cs:line 78
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="1a02dd6e-6ece-4954-b031-fa0b19157bab" testId="66d8be9f-7727-8ad8-0be2-1086ff8c6448" testName="InvokeAsyncTest" computerName="XPSHIZZLE" duration="00:00:00.0070732" startTime="2010-01-24T22:02:09.0558383-07:00" endTime="2010-01-24T22:02:09.0683385-07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.AreEqual failed. Expected:&lt;(null)&gt;. Actual:&lt;cs340project.App+Command&gt;. </Message>
+          <StackTrace>   at UnitTesting.ProxyTest.InvokeAsyncTest() in C:\Users\tj\Desktop\cs340project\cs340project\UnitTesting\ProxyTest.cs:line 97
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="a7f5b5a1-0785-4080-a5af-e36bf9d0b036" testId="e6771e7a-94a8-1d80-9bdf-2abc3a024bab" testName="InvokeTest" computerName="XPSHIZZLE" duration="00:00:11.0726700" startTime="2010-01-24T22:02:09.0733386-07:00" endTime="2010-01-24T22:02:20.1460086-07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Aborted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+      <Output>
+        <ErrorInfo>
+          <Message>User aborted test run.</Message>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="4d8dd7ec-f860-4129-9465-64286c25ea18" testId="c7c5382e-9f9d-7db1-78d0-6da772ada96f" testName="ProxyConstructorTest" computerName="XPSHIZZLE" duration="00:00:00" startTime="0001-01-01T00:00:00.0000000-07:00" endTime="0001-01-01T00:00:00.0000000-07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="NotExecuted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+    </UnitTestResult>
+  </Results>
+</TestRun>

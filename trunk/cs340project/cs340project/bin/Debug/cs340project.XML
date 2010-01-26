@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>cs340project</name>
+    </assembly>
+    <members>
+        <member name="F:cs340project.Form1.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:cs340project.Form1.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:cs340project.Form1.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:cs340project.PersonName">
+            <summary>
+            Person Name Class.  Holds different names for a Person
+            </summary>
+        </member>
+        <member name="M:cs340project.PersonName.#ctor(System.String,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:cs340project.PersonName"/> class.
+            </summary>
+        </member>
+        <member name="P:cs340project.PersonName.First">
+            <summary>
+            Gets or sets the first name.
+            </summary>
+            <value>The first name.</value>
+        </member>
+        <member name="P:cs340project.PersonName.Last">
+            <summary>
+            Gets or sets the last name.
+            </summary>
+            <value>The last name.</value>
+        </member>
+        <member name="P:cs340project.PersonName.Nick">
+            <summary>
+            Gets or sets the nick name.
+            </summary>
+            <value>The nick name.</value>
+        </member>
+        <member name="T:cs340project.Person">
+            <summary>
+            A Person.  Serializable Data
+            </summary>
+        </member>
+        <member name="M:cs340project.Person.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:cs340project.Person"/> class.
+            </summary>
+        </member>
+        <member name="P:cs340project.Person.MyName">
+            <summary>
+            Gets or sets my name.
+            </summary>
+            <value>My name.</value>
+        </member>
+        <member name="P:cs340project.Person.Age">
+            <summary>
+            Gets or sets the age.
+            </summary>
+            <value>The age.</value>
+        </member>
+        <member name="M:cs340project.Program.Main">
+            <summary>
+            The main entry point for the application.
+            </summary>
+        </member>
+        <member name="T:cs340project.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:cs340project.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:cs340project.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+    </members>
+</doc>

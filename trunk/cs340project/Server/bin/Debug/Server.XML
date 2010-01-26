@@ -1,0 +1,222 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Server</name>
+    </assembly>
+    <members>
+        <member name="T:cs340project.Proxy">
+            <summary>
+            A Proxy is a generic type that allows for an object
+            to reside on another <see cref="T:cs340project.App"/> and be accessed by the 
+            local <see cref="T:cs340project.App"/>
+            </summary>
+        </member>
+        <member name="M:cs340project.Proxy.#ctor(System.String,System.Int32,System.String,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:cs340project.Proxy"/> class.
+            </summary>
+            <param name="server">The server for the <see cref="T:cs340project.Proxy"/>. Can be either IP or Fully Qualified Domain Name</param>
+            <param name="port">The port the <see cref="T:cs340project.Proxy"/> communicates over.</param>
+            <param name="id">The id of the <see cref="T:cs340project.Proxy"/>.</param>
+        </member>
+        <member name="M:cs340project.Proxy.InvokeAsync(System.String,System.Object[])">
+            <summary>
+            Invokes the asynchronous communication of the object on its <see cref="T:cs340project.Proxy"/>.
+            </summary>
+            <param name="method">The method to be invoked.</param>
+            <param name="parameters">The parameters for the method being invoked.</param>
+            <returns></returns>
+        </member>
+        <member name="M:cs340project.Proxy.Invoke(System.String,System.Object[])">
+            <summary>
+            Invokes the specified method.
+            </summary>
+            <param name="method">The method to be invoked.</param>
+            <param name="parameters">The parameters for the method.</param>
+            <returns></returns>
+        </member>
+        <member name="M:cs340project.Proxy.Network_ResponseReceived(System.Net.Sockets.TcpClient,cs340project.App.Response)">
+            <summary>
+            Methode that handles the response received from the Network Communication.
+            </summary>
+            <param name="client">The <see cref="T:System.Net.Sockets.TcpClient"/> client.</param>
+            <param name="cmd">The <see cref="T:cs340project.App.Command"/> object that holds the commands to execute.</param>
+        </member>
+        <member name="T:cs340project.Proxifier">
+            <summary>
+            The Proxifier class takes the type of another class, and produces a new class named
+            [ClassName]Proxy (e.g. PersonProxy) that duplicates the public interface of that
+            class in an inherited class.
+            
+            The class to by proxified must be ISerializable, so we can send it to disk or over
+            the network.
+            </summary>
+        </member>
+        <member name="M:cs340project.Proxifier.GetProxy``1(System.String,System.Int32,System.String,System.Int32)">
+            <summary>
+            Creates a <see cref="T:cs340project.Proxy"/> class for the object of type T.
+            </summary>
+            <typeparam name="T">The type of object to be proxified</typeparam>
+            <param name="server">The server for the <see cref="T:cs340project.Proxy"/>. Can be either IP or Fully Qualified Domain Name</param>
+            <param name="port">The port the <see cref="T:cs340project.Proxy"/> communicates over.</param>
+            <param name="id">The id of the <see cref="T:cs340project.Proxy"/>.</param>
+            <returns>A <see cref="T:cs340project.Proxy"/> of type T</returns>
+        </member>
+        <member name="M:cs340project.Proxifier.CreateProxy(System.Type)">
+            <summary>
+            Creates the proxy using Reflection.
+            </summary>
+            <param name="original">The original type.</param>
+            <returns>A new type that contains all the same methods and properties
+            as the original type, only overridden to utilies the <see cref="T:cs340project.Proxy"/> class</returns>
+        </member>
+        <member name="M:cs340project.Proxifier.CreateProxyCode(System.Type)">
+            <summary>
+            Creates the  code for the <see cref="T:cs340project.Proxy"/> class.
+            </summary>
+            <param name="original">The original type.</param>
+            <returns>A string that contains all the source code to create a proxy
+            class containing the same structure as the original Type.</returns>
+        </member>
+        <member name="T:cs340project.NetworkHub">
+            <summary>
+            The class that handles all the network communication
+            </summary>
+        </member>
+        <member name="M:cs340project.NetworkHub.Listen(System.Int32)">
+            <summary>
+            Listens on the specified port.
+            </summary>
+            <param name="port">The port to attach a <see cref="T:System.Net.Sockets.TcpListener"/>.</param>
+        </member>
+        <member name="M:cs340project.NetworkHub.SetupClient(System.Net.Sockets.TcpClient)">
+            <summary>
+            Setups the <see cref="T:System.Net.Sockets.TcpClient"/>.
+            </summary>
+            <param name="client">The <see cref="T:System.Net.Sockets.TcpClient"/>.</param>
+        </member>
+        <member name="M:cs340project.NetworkHub.ObjectReadyToRead(System.String)">
+            <summary>
+            Tests to see if an object is ready to read.
+            </summary>
+            <param name="IP">The IP address of the <see cref="T:cs340project.App"/> that is sending a <see cref="T:cs340project.App.Command"/> object.</param>
+            <returns>The length of the <see cref="T:cs340project.App.Command"/> object being sent over the IP address</returns>
+        </member>
+        <member name="M:cs340project.NetworkHub.OnRead(System.IAsyncResult)">
+            <summary>
+            Called when [read].
+            </summary>
+            <param name="result">The result of the [read].</param>
+        </member>
+        <member name="M:cs340project.NetworkHub.CheckForMessage(System.Net.Sockets.TcpClient,System.String)">
+            <summary>
+            Checks for messages on the specified IP.
+            </summary>
+            <param name="client">The <see cref="T:System.Net.Sockets.TcpClient"/>.</param>
+            <param name="IP">The IP.</param>
+            <returns></returns>
+        </member>
+        <member name="M:cs340project.NetworkHub.SendObject(System.String,System.Int32,System.Object)">
+            <summary>
+            Sends an object over the given IP and port.
+            </summary>
+            <param name="IP">The IP.</param>
+            <param name="port">The port.</param>
+            <param name="o">The object to send.</param>
+        </member>
+        <member name="M:cs340project.NetworkHub.GetClientIP(System.Net.Sockets.TcpClient)">
+            <summary>
+            Gets the client IP.
+            </summary>
+            <param name="client">The client.</param>
+            <returns>The IP address of the client</returns>
+        </member>
+        <member name="M:cs340project.NetworkHub.Accept(System.IAsyncResult)">
+            <summary>
+            Accepts the specified result.
+            </summary>
+            <param name="result">The result.</param>
+        </member>
+        <member name="M:cs340project.NetworkHub.Connect(System.String,System.Int32)">
+            <summary>
+            Connects the specified IP.
+            </summary>
+            <param name="IP">The IP.</param>
+            <param name="port">The port.</param>
+            <returns></returns>
+        </member>
+        <member name="M:cs340project.NetworkHub.Disconnect(System.Net.Sockets.TcpClient)">
+            <summary>
+            Disconnects the specified client.
+            </summary>
+            <param name="client">The client.</param>
+        </member>
+        <member name="T:cs340project.App">
+            <summary>
+            Class that contains all the information
+            for a single node in the Application.
+            </summary>
+        </member>
+        <member name="M:cs340project.App.GetApp(System.String)">
+            <summary>
+            Gets the <see cref="T:cs340project.App"/> with the supplied name. If there is no
+            <see cref="T:cs340project.App"/> with the supplied name, then a new instance of the 
+            <see cref="T:cs340project.App"/> class is initialized and returned.
+            </summary>
+            <param name="name">The name of the <see cref="T:cs340project.App"/>.</param>
+            <returns>the <see cref="T:cs340project.App"/> with the given name</returns>
+        </member>
+        <member name="M:cs340project.App.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:cs340project.App"/> class.
+            </summary>
+            <param name="name">The name of the <see cref="T:cs340project.App"/>.</param>
+        </member>
+        <member name="M:cs340project.App.Network_CommandReceived(System.Net.Sockets.TcpClient,cs340project.App.Command)">
+            <summary>
+            Methode that handles the <see cref="T:cs340project.App.Command"/> object received from the Network Communication.
+            </summary>
+            <param name="client">The <see cref="T:System.Net.Sockets.TcpClient"/> client.</param>
+            <param name="cmd">The <see cref="T:cs340project.App.Command"/> object that holds the commands to execute.</param>
+        </member>
+        <member name="M:cs340project.App.RunCommand(cs340project.App.Command)">
+            <summary>
+            Runs the command from the <see cref="T:cs340project.App.Command"/> object.
+            </summary>
+            <param name="cmd">The <see cref="T:cs340project.App.Command"/> object.</param>
+            <returns></returns>
+        </member>
+        <member name="M:cs340project.App.AddObject(System.Object)">
+            <summary>
+            Adds the object to the List inside of the <see cref="T:cs340project.App"/>.
+            </summary>
+            <param name="o">The object to be added.</param>
+        </member>
+        <member name="T:cs340project.App.Command">
+            <summary>
+            The object that holds the commands to be sent 
+            back and forth from the nodes in the application.
+            </summary>
+        </member>
+        <member name="M:cs340project.App.Command.#ctor(System.Nullable{System.Int32},System.String,System.Object[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:cs340project.App.Command"/> class.
+            </summary>
+            <param name="id">The id.</param>
+            <param name="name">The name.</param>
+            <param name="p">The p.</param>
+        </member>
+        <member name="T:cs340project.App.Response">
+            <summary>
+            A class that holds the values for a response from the Network Communication
+            </summary>
+        </member>
+        <member name="M:cs340project.App.Response.#ctor(System.String,System.Object)">
+            <summary>
+            Initializes a new instance of the <see cref="T:cs340project.App.Response"/> class.
+            </summary>
+            <param name="id">The id of the <see cref="T:cs340project.Proxy"/> object.</param>
+            <param name="ret">The return object.</param>
+        </member>
+    </members>
+</doc>
