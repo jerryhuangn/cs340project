@@ -1,0 +1,202 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>UnitTesting</name>
+    </assembly>
+    <members>
+        <member name="T:UnitTesting.ProxifierTest">
+             <summary>
+            This is a test class for ProxifierTest and is intended
+            to contain all ProxifierTest Unit Tests
+            </summary>
+        </member>
+        <member name="M:UnitTesting.ProxifierTest.GetProxyTestHelper``1">
+             <summary>
+            A test for GetProxy
+            </summary>
+        </member>
+        <member name="M:UnitTesting.ProxifierTest.CreateProxyCodeTest">
+             <summary>
+            A test for CreateProxyCode
+            </summary>
+        </member>
+        <member name="M:UnitTesting.ProxifierTest.CreateProxyTest">
+             <summary>
+            A test for CreateProxy
+            </summary>
+        </member>
+        <member name="M:UnitTesting.ProxifierTest.ProxifierConstructorTest">
+             <summary>
+            A test for Proxifier Constructor
+            </summary>
+        </member>
+        <member name="P:UnitTesting.ProxifierTest.TestContext">
+             <summary>
+            Gets or sets the test context which provides
+            information about and functionality for the current test run.
+            </summary>
+        </member>
+        <member name="T:UnitTesting.PersonNameTest">
+             <summary>
+            This is a test class for PersonNameTest and is intended
+            to contain all PersonNameTest Unit Tests
+            </summary>
+        </member>
+        <member name="M:UnitTesting.PersonNameTest.NickTest">
+             <summary>
+            A test for Nick
+            </summary>
+        </member>
+        <member name="M:UnitTesting.PersonNameTest.LastTest">
+             <summary>
+            A test for Last
+            </summary>
+        </member>
+        <member name="M:UnitTesting.PersonNameTest.FirstTest">
+             <summary>
+            A test for First
+            </summary>
+        </member>
+        <member name="M:UnitTesting.PersonNameTest.PersonNameConstructorTest">
+             <summary>
+            A test for PersonName Constructor
+            </summary>
+        </member>
+        <member name="P:UnitTesting.PersonNameTest.TestContext">
+             <summary>
+            Gets or sets the test context which provides
+            information about and functionality for the current test run.
+            </summary>
+        </member>
+        <member name="T:UnitTesting.ProxyTest">
+             <summary>
+            This is a test class for ProxyTest and is intended
+            to contain all ProxyTest Unit Tests
+            </summary>
+        </member>
+        <member name="M:UnitTesting.ProxyTest.Network_ResponseReceivedTest">
+             <summary>
+            A test for Network_ResponseReceived
+            </summary>
+        </member>
+        <member name="M:UnitTesting.ProxyTest.InvokeAsyncTest">
+             <summary>
+            A test for InvokeAsync
+            </summary>
+        </member>
+        <member name="M:UnitTesting.ProxyTest.InvokeTest">
+             <summary>
+            A test for Invoke
+            </summary>
+        </member>
+        <member name="M:UnitTesting.ProxyTest.ProxyConstructorTest">
+             <summary>
+            A test for Proxy Constructor
+            </summary>
+        </member>
+        <member name="P:UnitTesting.ProxyTest.TestContext">
+             <summary>
+            Gets or sets the test context which provides
+            information about and functionality for the current test run.
+            </summary>
+        </member>
+        <member name="T:UnitTesting.App_ResponseTest">
+             <summary>
+            This is a test class for App_ResponseTest and is intended
+            to contain all App_ResponseTest Unit Tests
+            </summary>
+        </member>
+        <member name="M:UnitTesting.App_ResponseTest.App_ResponseConstructorTest">
+             <summary>
+            A test for Response Constructor
+            </summary>
+        </member>
+        <member name="P:UnitTesting.App_ResponseTest.TestContext">
+             <summary>
+            Gets or sets the test context which provides
+            information about and functionality for the current test run.
+            </summary>
+        </member>
+        <member name="T:UnitTesting.App_CommandTest">
+             <summary>
+            This is a test class for App_CommandTest and is intended
+            to contain all App_CommandTest Unit Tests
+            </summary>
+        </member>
+        <member name="M:UnitTesting.App_CommandTest.App_CommandConstructorTest">
+             <summary>
+            A test for Command Constructor
+            </summary>
+        </member>
+        <member name="P:UnitTesting.App_CommandTest.TestContext">
+             <summary>
+            Gets or sets the test context which provides
+            information about and functionality for the current test run.
+            </summary>
+        </member>
+        <member name="T:UnitTesting.AppTest">
+             <summary>
+            This is a test class for AppTest and is intended
+            to contain all AppTest Unit Tests
+            </summary>
+        </member>
+        <member name="M:UnitTesting.AppTest.RunCommandTest">
+             <summary>
+            A test for RunCommand
+            </summary>
+        </member>
+        <member name="M:UnitTesting.AppTest.Network_CommandReceivedTest">
+             <summary>
+            A test for Network_CommandReceived
+            </summary>
+        </member>
+        <member name="M:UnitTesting.AppTest.GetAppTest">
+             <summary>
+            A test for GetApp
+            </summary>
+        </member>
+        <member name="M:UnitTesting.AppTest.AddObjectTest">
+             <summary>
+            A test for AddObject
+            </summary>
+        </member>
+        <member name="M:UnitTesting.AppTest.AppConstructorTest">
+             <summary>
+            A test for App Constructor
+            </summary>
+        </member>
+        <member name="P:UnitTesting.AppTest.TestContext">
+             <summary>
+            Gets or sets the test context which provides
+            information about and functionality for the current test run.
+            </summary>
+        </member>
+        <member name="T:UnitTesting.PersonTest">
+             <summary>
+            This is a test class for PersonTest and is intended
+            to contain all PersonTest Unit Tests
+            </summary>
+        </member>
+        <member name="M:UnitTesting.PersonTest.MyNameTest">
+             <summary>
+            A test for MyName
+            </summary>
+        </member>
+        <member name="M:UnitTesting.PersonTest.AgeTest">
+             <summary>
+            A test for Age
+            </summary>
+        </member>
+        <member name="M:UnitTesting.PersonTest.PersonConstructorTest">
+             <summary>
+            A test for Person Constructor
+            </summary>
+        </member>
+        <member name="P:UnitTesting.PersonTest.TestContext">
+             <summary>
+            Gets or sets the test context which provides
+            information about and functionality for the current test run.
+            </summary>
+        </member>
+    </members>
+</doc>

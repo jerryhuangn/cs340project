@@ -1,0 +1,5 @@
+C:\Users\tj\Desktop\cs340project\cs340project\Server\bin\Debug\Server.dll
+C:\Users\tj\Desktop\cs340project\cs340project\Server\bin\Debug\Server.pdb
+C:\Users\tj\Desktop\cs340project\cs340project\Server\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\tj\Desktop\cs340project\cs340project\Server\obj\Debug\Server.dll
+C:\Users\tj\Desktop\cs340project\cs340project\Server\obj\Debug\Server.pdb

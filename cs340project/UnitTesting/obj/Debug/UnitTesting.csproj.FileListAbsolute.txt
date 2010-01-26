@@ -1,0 +1,16 @@
+C:\Users\tj\Desktop\cs340project\cs340project\UnitTesting\bin\Debug\UnitTesting.XML
+C:\Users\tj\Desktop\cs340project\cs340project\UnitTesting\bin\Debug\UnitTesting.dll
+C:\Users\tj\Desktop\cs340project\cs340project\UnitTesting\bin\Debug\UnitTesting.pdb
+C:\Users\tj\Desktop\cs340project\cs340project\UnitTesting\bin\Debug\cs340project.exe
+C:\Users\tj\Desktop\cs340project\cs340project\UnitTesting\bin\Debug\Server.dll
+C:\Users\tj\Desktop\cs340project\cs340project\UnitTesting\bin\Debug\cs340project.pdb
+C:\Users\tj\Desktop\cs340project\cs340project\UnitTesting\bin\Debug\cs340project.xml
+C:\Users\tj\Desktop\cs340project\cs340project\UnitTesting\bin\Debug\Server.pdb
+C:\Users\tj\Desktop\cs340project\cs340project\UnitTesting\bin\Debug\Server.xml
+C:\Users\tj\Desktop\cs340project\cs340project\UnitTesting\bin\Debug\Server_Accessor.dll
+C:\Users\tj\Desktop\cs340project\cs340project\UnitTesting\bin\Debug\cs340project_Accessor.dll
+C:\Users\tj\Desktop\cs340project\cs340project\UnitTesting\bin\Debug\Server_Accessor.pdb
+C:\Users\tj\Desktop\cs340project\cs340project\UnitTesting\bin\Debug\cs340project_Accessor.pdb
+C:\Users\tj\Desktop\cs340project\cs340project\UnitTesting\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\tj\Desktop\cs340project\cs340project\UnitTesting\obj\Debug\UnitTesting.dll
+C:\Users\tj\Desktop\cs340project\cs340project\UnitTesting\obj\Debug\UnitTesting.pdb
