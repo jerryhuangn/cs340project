@@ -71,8 +71,8 @@ namespace UnitTesting
             Person target = new Person();
             PersonName expected = new PersonName("First", "Last", "Nick");
             PersonName actual;
-            target.MyName = expected;
-            actual = target.MyName;
+            target.Name = expected;
+            actual = target.Name;
             Assert.AreEqual(expected, actual);
             //Assert.Inconclusive("Verify the correctness of this test method.");
         }

@@ -53,12 +53,19 @@ namespace cs340project
         /// Gets or sets my name.
         /// </summary>
         /// <value>My name.</value>
-        public virtual PersonName MyName { get; set; }
+        public virtual PersonName Name { get; set; }
         /// <summary>
         /// Gets or sets the age.
         /// </summary>
         /// <value>The age.</value>
         public virtual uint Age { get; set; }
+
+        public virtual int[] DoubleArray(int[] v)
+        {
+            for (var i = 0; i < v.Length; i++)
+                v[i] *= 2;
+            return v;
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Person"/> class.

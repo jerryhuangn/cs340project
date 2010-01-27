@@ -77,7 +77,7 @@ namespace UnitTesting
                 test1.Network.Listen(10000);
                 Person remote = Proxifier.GetProxy<Person>("127.0.0.1", 10000, "test1", 2);
                 remote.Age = 15;
-                remote.MyName = new PersonName("Ben", "Dilts", "Beandog");
+                remote.Name = new PersonName("Ben", "Dilts", "Beandog");
             }
             catch (Exception ex)
             {

@@ -40,10 +40,6 @@ namespace cs340project
         public event NetworkHubClientEvent NewConnection = null;
         public event NetworkHubClientEvent Disconnected = null;
 
-        Dictionary<string,byte[]> clientBuffers = new Dictionary<string,byte[]>();
-        Dictionary<string, MemoryStream> clientMemoryStreams = new Dictionary<string, MemoryStream>();
-        const int clientBufferSize = 1024;
-
         /// <summary>
         /// Setups the <see cref="TcpClient"/>.
         /// </summary>
@@ -59,6 +55,47 @@ namespace cs340project
                 NewConnection(client);
         }
 
+
+        /// <summary>
+        /// Gets the client IP.
+        /// </summary>
+        /// <param name="client">The client.</param>
+        /// <returns>The IP address of the client</returns>
+        string GetClientIP(TcpClient client) {
+            return ((IPEndPoint)client.Client.RemoteEndPoint).Address.ToString();
+        }
+
+        /// <summary>
+        /// Accepts the specified result.
+        /// </summary>
+        /// <param name="result">The result.</param>
+        void Accept(IAsyncResult result)
+        {
+            try
+            {
+                //Accept the one incoming client:
+                TcpClient client = listener.EndAcceptTcpClient(result);
+                clients[GetClientIP(client)] = client;
+                SetupClient(client);
+            }
+            catch
+            {
+                //Do nothing if we couldn't accept their connection.
+                //They've probably just closed the connection since they first attempted
+                //to connect.
+            }
+
+            //And start listening for our next connection:
+            listener.BeginAcceptTcpClient(new AsyncCallback(Accept), null);
+        }
+
+        #endregion
+
+        #region Sending/Receiving Objects
+
+        Dictionary<string, byte[]> clientBuffers = new Dictionary<string, byte[]>();
+        Dictionary<string, MemoryStream> clientMemoryStreams = new Dictionary<string, MemoryStream>();
+        const int clientBufferSize = 1024;
 
         public delegate void NetworkHubCommandEvent(TcpClient client, App.Command cmd);
         public event NetworkHubCommandEvent CommandReceived = null;
@@ -97,7 +134,8 @@ namespace cs340project
             TcpClient client = (TcpClient)result.AsyncState;
             string IP = GetClientIP(client);
 
-            try {
+            try
+            {
                 MemoryStream stream = clientMemoryStreams[IP];
                 int bytesRead = client.GetStream().EndRead(result);
                 stream.Seek(0, SeekOrigin.End);
@@ -107,7 +145,8 @@ namespace cs340project
 
                 client.GetStream().BeginRead(clientBuffers[IP], 0, clientBufferSize, new AsyncCallback(OnRead), client);
             }
-            catch {
+            catch
+            {
                 Disconnect(client);
             }
         }
@@ -183,39 +222,6 @@ namespace cs340project
                 bw.Write(data);
             }
             catch { } //No biggie, we just got disconnected.
-        }
-
-        /// <summary>
-        /// Gets the client IP.
-        /// </summary>
-        /// <param name="client">The client.</param>
-        /// <returns>The IP address of the client</returns>
-        string GetClientIP(TcpClient client) {
-            return ((IPEndPoint)client.Client.RemoteEndPoint).Address.ToString();
-        }
-
-        /// <summary>
-        /// Accepts the specified result.
-        /// </summary>
-        /// <param name="result">The result.</param>
-        void Accept(IAsyncResult result)
-        {
-            try
-            {
-                //Accept the one incoming client:
-                TcpClient client = listener.EndAcceptTcpClient(result);
-                clients[GetClientIP(client)] = client;
-                SetupClient(client);
-            }
-            catch
-            {
-                //Do nothing if we couldn't accept their connection.
-                //They've probably just closed the connection since they first attempted
-                //to connect.
-            }
-
-            //And start listening for our next connection:
-            listener.BeginAcceptTcpClient(new AsyncCallback(Accept), null);
         }
 
         #endregion
