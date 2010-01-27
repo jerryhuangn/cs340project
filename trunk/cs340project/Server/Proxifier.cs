@@ -13,9 +13,9 @@ using System.Windows.Forms;
 namespace cs340project
 {
     /// <summary>
-    /// A Proxy is a generic type that allows for an object
-    /// to reside on another <see cref="App"/> and be accessed by the 
-    /// local <see cref="App"/>
+    /// A Proxy is a generic utility class that allows for an object
+    /// to reside on another <see cref="App"/> to be accessed by a local
+    /// specific XXXXProxy.
     /// </summary>
     public class Proxy
     {
@@ -27,19 +27,20 @@ namespace cs340project
 
 
         class WaitingForResponse { }
-
+        
         /// <summary>
         /// Initializes a new instance of the <see cref="Proxy"/> class.
         /// </summary>
         /// <param name="server">The server for the <see cref="Proxy"/>. Can be either IP or Fully Qualified Domain Name</param>
         /// <param name="port">The port the <see cref="Proxy"/> communicates over.</param>
+        /// <param name="appName">The name of the App on the other side of the network that we're connecting to.</param>
         /// <param name="id">The id of the <see cref="Proxy"/>.</param>
-        public Proxy(string server, int port, string AppName, int id)
+        public Proxy(string server, int port, string appName, int id)
         {
             this.server = server;
             this.port = port;
             this.id = id;
-            this.app = AppName;
+            this.app = appName;
 
             App.GetApp(app).Network.ResponseReceived += new NetworkHub.NetworkHubResponseEvent(Network_ResponseReceived);
         }
@@ -89,18 +90,15 @@ namespace cs340project
 
     /// <summary>
     /// The Proxifier class takes the type of another class, and produces a new class named
-    /// [ClassName]Proxy (e.g. PersonProxy) that duplicates the public interface of that
+    /// [ClassName]Proxy (e.g. PersonProxy) that duplicates the public virtual interface of that
     /// class in an inherited class.
-    /// 
-    /// The class to by proxified must be ISerializable, so we can send it to disk or over
-    /// the network.
     /// </summary>
     public class Proxifier
     {
         static Dictionary<Type, Type> ProxyTypes = new Dictionary<Type, Type>();
 
         /// <summary>
-        /// Creates a <see cref="Proxy"/> class for the object of type T.
+        /// Creates an instance of a proxy class for the type T.
         /// </summary>
         /// <typeparam name="T">The type of object to be proxified</typeparam>
         /// <param name="server">The server for the <see cref="Proxy"/>. Can be either IP or Fully Qualified Domain Name</param>
@@ -114,7 +112,7 @@ namespace cs340project
         }
 
         /// <summary>
-        /// Creates the proxy using Reflection.
+        /// Compiles a proxy class for type original using Reflection.
         /// </summary>
         /// <param name="original">The original type.</param>
         /// <returns>A new type that contains all the same methods and properties
@@ -141,7 +139,7 @@ namespace cs340project
         }
 
         /// <summary>
-        /// Creates the  code for the <see cref="Proxy"/> class.
+        /// Creates the code for a proxy class from the Type original, which may then later be compiled.
         /// </summary>
         /// <param name="original">The original type.</param>
         /// <returns>A string that contains all the source code to create a proxy

@@ -19,11 +19,15 @@ namespace cs340project
         public Form1()
         {
             InitializeComponent();
+
+            //Hook all network events for debug output.
             App.Network.NewConnection += new NetworkHub.NetworkHubClientEvent(Network_NewConnection);
             App.Network.Disconnected += new NetworkHub.NetworkHubClientEvent(Network_Disconnected);
             App.Network.MessageReceived += new NetworkHub.NetworkHubMessageEvent(Network_MessageReceived);
             App.Network.CommandReceived += new NetworkHub.NetworkHubCommandEvent(Network_CommandReceived);
             App.Network.ResponseReceived += new NetworkHub.NetworkHubResponseEvent(Network_ResponseReceived);
+
+            //Create a handful of Person objects on each running App so others have them to connect to with proxies.
             App.AddObject(new Person());
             App.AddObject(new Person());
             App.AddObject(new Person());
@@ -88,10 +92,13 @@ namespace cs340project
         {
             Person remote = Proxifier.GetProxy<Person>("127.0.0.1", 10000, "Test", 2);
             remote.Age = 15;
-            remote.MyName = new PersonName("Ben", "Dilts", "Beandog");
+            remote.Name = new PersonName("Ben", "Dilts", "Beandog");
+
+            int[] input = new int[] { 1, 2, 3 };
+            int[] output = remote.DoubleArray(input);
 
             txtOutput.AppendText("Remote says Age is now " + remote.Age + Environment.NewLine);
-            txtOutput.AppendText("Remote says Nick is now " + remote.MyName.Nick + Environment.NewLine);
+            txtOutput.AppendText("Remote says Nick is now " + remote.Name.Nick + Environment.NewLine);
         }
     }
 }
