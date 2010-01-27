@@ -133,9 +133,16 @@ namespace UnitTesting
         [DeploymentItem("Server.dll")]
         public void AppConstructorTest()
         {
-            string name = string.Empty; // TODO: Initialize to an appropriate value
-            App_Accessor target = new App_Accessor(name);
-            Assert.Inconclusive("TODO: Implement code to verify target");
+            string name = "Test";
+            try
+            {
+                App_Accessor target = new App_Accessor(name);
+                target.AddObject(new Person());
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message.ToString());   
+            }
         }
     }
 }
