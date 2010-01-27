@@ -71,17 +71,18 @@ namespace UnitTesting
         [TestMethod()]
         public void RunCommandTest()
         {
-            App_Accessor target = new App_Accessor("test");
-            PrivateObject param0 = new PrivateObject(target);
-            Nullable<int> id = new Nullable<int>(0); //TODO: initialize to proper value
-            string name = null; //TODO: initialize to proper value
-            object[] p = null; //TODO: initialize to proper value 
-            App.Command cmd = new App.Command(id,name,p);
-            object expected = null; //initialize to proper return value
-            object actual;
-            actual = target.RunCommand(cmd);
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
+            try
+            {
+                App test1 = App.GetApp("test1");
+                test1.Network.Listen(10000);
+                Person remote = Proxifier.GetProxy<Person>("127.0.0.1", 10000, "test1", 2);
+                remote.Age = 15;
+                remote.MyName = new PersonName("Ben", "Dilts", "Beandog");
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message.ToString());
+            }
         }
 
         /// <summary>
