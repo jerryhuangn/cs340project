@@ -24,7 +24,28 @@ namespace Server
 
         public override string ToString()
         {
-            return base.ToString();
+            StringBuilder ret = new StringBuilder();
+            ret.AppendLine("Node " + Id.ToString());
+            
+            ret.AppendLine("Neighbors:");
+            foreach (Node n in Neighbors)
+                ret.AppendLine(n.Id.ToString());
+
+            ret.AppendLine("Up:");
+            foreach (Node n in Up)
+                ret.AppendLine(n.Id.ToString());
+
+            ret.AppendLine("Down:");
+            foreach (Node n in Down)
+                ret.AppendLine(n.Id.ToString());
+
+            if(Fold != null)
+                ret.AppendLine("Fold: " + Fold.Id.ToString());
+
+            if(OldFold != null)
+                ret.AppendLine("OldFold: " + OldFold.Id.ToString());
+
+            return ret.ToString();
         }
 
         #endregion
@@ -39,10 +60,19 @@ namespace Server
         /// Construct a new Node in the hyperweb.
         /// </summary>
         /// <param name="id">The new node's ID number.</param>
-        public Node(uint id)
+        private Node(uint id)
         {
             Id = id;
             Node.AllNodes[id] = this;
+        }
+
+        /// <summary>
+        /// Creates a new root node of a hyperweb.
+        /// </summary>
+        public Node()
+        {
+            Id = 0;
+            Node.AllNodes[Id] = this;
         }
 
 
@@ -50,9 +80,11 @@ namespace Server
 
         #region References to other nodes
 
-        public List<Node> Neighbors = new List<Node>();
-        public Node Fold { get; set; }
-        public Node OldFold { get; set; }
+        List<Node> Neighbors = new List<Node>();
+        List<Node> Up = new List<Node>();
+        List<Node> Down = new List<Node>();
+        Node Fold { get; set; }
+        Node OldFold { get; set; }
 
         #endregion
 
