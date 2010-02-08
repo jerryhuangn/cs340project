@@ -6,20 +6,21 @@ using System.Diagnostics;
 
 namespace Server
 {
-    class Node
+    public class Node
     {
         #region Global set of nodes; debugging
 
-        static Dictionary<uint, Node> AllNodes = new Dictionary<uint, Node>();
+        public static Dictionary<uint, Node> AllNodes = new Dictionary<uint, Node>();
 
-        public static void DumpAllNodes()
+        public static string DumpAllNodes()
         {
+            StringBuilder ret = new StringBuilder();
             foreach (uint id in Node.AllNodes.Keys)
             {
-                Debug.WriteLine(id);
-                Debug.WriteLine(Node.AllNodes[id].ToString());
-                Debug.WriteLine("------------------------------------");
+                ret.Append(Node.AllNodes[id].ToString());
+                ret.AppendLine("------------------------------------");
             }
+            return ret.ToString();
         }
 
         public override string ToString()
