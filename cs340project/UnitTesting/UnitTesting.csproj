@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{DEE92E5C-3BB8-4E63-8A9A-4C5181DC087D}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -53,14 +53,14 @@
     <Compile Include="AppTest.cs" />
     <Compile Include="App_CommandTest.cs" />
     <Compile Include="App_ResponseTest.cs" />
-    <Compile Include="PersonNameTest.cs" />
-    <Compile Include="PersonTest.cs" />
+    <Compile Include="NodeTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProxifierTest.cs" />
     <Compile Include="ProxyTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="AuthoringTests.txt" />
+    <EmbeddedResource Include="TestNodeData\0Nodes.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\cs340project\cs340project.csproj">

@@ -1,15 +1,20 @@
-﻿using cs340project;
+﻿using Server;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Reflection;
+using System.IO;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System;
 namespace UnitTesting
 {
     
     
     /// <summary>
-    ///This is a test class for PersonTest and is intended
-    ///to contain all PersonTest Unit Tests
+    ///This is a test class for NodeTest and is intended
+    ///to contain all NodeTest Unit Tests
     ///</summary>
     [TestClass()]
-    public class PersonTest
+    public class NodeTest
     {
 
 
@@ -63,43 +68,51 @@ namespace UnitTesting
 
 
         /// <summary>
-        ///A test for MyName
+        ///A test for InsertNode
         ///</summary>
         [TestMethod()]
-        public void MyNameTest()
+        [DeploymentItem("Server.dll")]
+        public void InsertNodeTest()
         {
-            Person target = new Person();
-            PersonName expected = new PersonName("First", "Last", "Nick");
-            PersonName actual;
-            target.Name = expected;
-            actual = target.Name;
-            Assert.AreEqual(expected, actual);
-            //Assert.Inconclusive("Verify the correctness of this test method.");
+            InsertNodeTest(new List<uint>(), 4);
         }
 
-        /// <summary>
-        ///A test for Age
-        ///</summary>
-        [TestMethod()]
-        public void AgeTest()
+        void InsertNodeTest(List<uint> insertIndex, int maxNodes)
         {
-            Person target = new Person();
-            uint expected = 0;
-            uint actual;
-            target.Age = expected;
-            actual = target.Age;
-            Assert.AreEqual(expected, actual);
-            //Assert.Inconclusive("Verify the correctness of this test method.");
+            int alreadyExist = insertIndex.Count;
+            if (alreadyExist >= maxNodes)
+                return;
+
+            if (alreadyExist == 0)
+            {
+                Node n = new Node();//Create a root (0) node.
+            }
+
+            for (uint i = 0; i <= alreadyExist; i++)
+            {
+                insertIndex.Add(i);
+                InsertNodeTest(insertIndex, maxNodes);
+                InsertNodeTestSingle(insertIndex.ToArray());
+                insertIndex.RemoveAt(alreadyExist);
+            }
         }
 
-        /// <summary>
-        ///A test for Person Constructor
-        ///</summary>
-        [TestMethod()]
-        public void PersonConstructorTest()
+        void InsertNodeTestSingle(uint[] insertIndex)
         {
-            Person target = new Person();
-            Assert.Inconclusive("TODO: Implement code to verify target");
+            Node.AllNodes.Clear();
+            Node root = new Node();
+
+            foreach (uint idx in insertIndex)
+                Node.AllNodes[idx].InsertNode();
+
+            TextReader tr = new StreamReader(Assembly.GetExecutingAssembly()
+                .GetManifestResourceStream("UnitTesting.TestNodeData." + insertIndex.Length.ToString() + "Nodes.txt"));
+
+            string expected = tr.ReadToEnd();
+            string actual = Node.DumpAllNodes();
+
+            Assert.AreEqual(expected, actual);
         }
+
     }
 }
