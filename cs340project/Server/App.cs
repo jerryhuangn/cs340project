@@ -47,7 +47,7 @@ namespace cs340project
         /// Initializes a new instance of the <see cref="App"/> class.
         /// </summary>
         /// <param name="name">The name of the <see cref="App"/>.</param>
-        private App(string name)
+        public App(string name)
         {
             Name = name;
             Network = new NetworkHub();

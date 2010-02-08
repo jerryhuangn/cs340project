@@ -153,10 +153,10 @@ namespace cs340project
             ret.AppendLine("\tclass " + original.Name + "Proxy : "+original.Namespace+"."+original.Name);
             ret.AppendLine("\t{");
 
-            ret.AppendLine("\t\tProxy proxy = null;");
+            ret.AppendLine("\t\tcs340project.Proxy proxy = null;");
             ret.AppendLine("\t\tpublic " + original.Name + "Proxy(string server, int port, string AppName, int id)");
             ret.AppendLine("\t\t{");
-            ret.AppendLine("\t\t\tproxy = new Proxy(server, port, AppName, id);");
+            ret.AppendLine("\t\t\tproxy = new cs340project.Proxy(server, port, AppName, id);");
             ret.AppendLine("\t\t}");
 
 
