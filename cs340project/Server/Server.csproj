@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{0873EB80-93AE-4A74-AAA0-5D9779B9A89E}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="App.cs" />
     <Compile Include="NetworkHub.cs" />
+    <Compile Include="Node.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Proxifier.cs" />
   </ItemGroup>
