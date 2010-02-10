@@ -103,7 +103,7 @@ namespace UnitTesting
             Node root = new Node();
 
             foreach (uint idx in insertIndex)
-                Node.AllNodes[idx].InsertNode();
+                Node.AllNodes[idx].CreateNode();
 
             TextReader tr = new StreamReader(Assembly.GetExecutingAssembly()
                 .GetManifestResourceStream("UnitTesting.TestNodeData." + insertIndex.Length.ToString() + "Nodes.txt"));
