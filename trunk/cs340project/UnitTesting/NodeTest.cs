@@ -74,7 +74,34 @@ namespace UnitTesting
         [DeploymentItem("Server.dll")]
         public void InsertNodeTest()
         {
-            InsertNodeTest(new List<uint>(), 4);
+            //InsertNodeTest(new List<uint>(), 4);
+
+            Node start = new Node();
+            var one = start.CreateNode();
+            var two = one.CreateNode();
+            var three = one.CreateNode();
+            var four = two.CreateNode();
+            var five = start.CreateNode();
+            var six = one.CreateNode();
+            string output = Node.DumpAllNodes();
+            var seven = one.CreateNode();
+            output = Node.DumpAllNodes();
+            var eight = two.CreateNode();
+            output = Node.DumpAllNodes();
+            var nine = start.CreateNode();
+            output = Node.DumpAllNodes();
+            var ten = one.CreateNode();
+            output = Node.DumpAllNodes();
+            var eleven = one.CreateNode();
+            output = Node.DumpAllNodes();
+            var twelve = two.CreateNode();
+            output = Node.DumpAllNodes();
+            var thirteen = start.CreateNode();
+            output = Node.DumpAllNodes();
+            var fourteen = one.CreateNode();
+            output = Node.DumpAllNodes();
+            var fifteen = one.CreateNode();
+            output = Node.DumpAllNodes();
         }
 
         void InsertNodeTest(List<uint> insertIndex, int maxNodes)
@@ -114,5 +141,41 @@ namespace UnitTesting
             Assert.AreEqual(expected, actual);
         }
 
+
+        /// <summary>
+        ///A test for ChildId
+        ///</summary>
+        [TestMethod()]
+        public void ChildIdTest()
+        {
+            Node target = new Node(1406); // TODO: Initialize to an appropriate value
+            uint actual;
+            actual = target.ChildId(1406);
+            Assert.AreEqual<uint>(actual, 3454);
+        }
+
+        /// <summary>
+        ///A test for ParentId
+        ///</summary>
+        [TestMethod()]
+        public void ParentIdTest()
+        {
+            Node target = new Node(3454); // TODO: Initialize to an appropriate value
+            uint actual;
+            actual = target.ParentId;
+            Assert.AreEqual<uint>(actual, 1406);
+        }
+
+        /// <summary>
+        ///A test for SurrogateId
+        ///</summary>
+        [TestMethod()]
+        public void SurrogateIdTest()
+        {
+            Node target = new Node(1406); // TODO: Initialize to an appropriate value
+            uint actual;
+            actual = target.SurrogateId(1406);
+            Assert.AreEqual<uint>(actual, 3454);
+        }
     }
 }
