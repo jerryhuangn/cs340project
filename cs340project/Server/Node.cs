@@ -34,25 +34,26 @@ namespace Server
         public override string ToString()
         {
             StringBuilder ret = new StringBuilder();
-            ret.AppendLine("Node " + Id.ToString());
+            ret.AppendLine("Node\t" + Id.ToString());
+            ret.AppendLine("CurrState:\t" + CurrentState);
 
             ret.AppendLine("Neighbors:");
             foreach (Node n in Neighbors)
-                ret.AppendLine(n.Id.ToString());
+                ret.AppendLine("\t" + n.Id.ToString());
 
             ret.AppendLine("Up:");
             foreach (Node n in Up.Values)
-                ret.AppendLine(n.Id.ToString());
+                ret.AppendLine("\t" + n.Id.ToString());
 
             ret.AppendLine("Down:");
             foreach (Node n in Down.Values)
-                ret.AppendLine(n.Id.ToString());
+                ret.AppendLine("\t" + n.Id.ToString());
 
             if (Fold != null)
-                ret.AppendLine("Fold: " + Fold.Id.ToString());
+                ret.AppendLine("Fold:\t" + Fold.Id.ToString());
 
             if (OldFold != null)
-                ret.AppendLine("OldFold: " + OldFold.Id.ToString());
+                ret.AppendLine("OldFold:\t" + OldFold.Id.ToString());
 
             return ret.ToString();
         }
@@ -61,6 +62,23 @@ namespace Server
 
         #region References to other nodes
 
+        List<Node> AllNeighbors
+        {
+            get
+            {
+                List<Node> nodes = new List<Node>();
+                nodes.AddRange(Neighbors);
+                nodes.AddRange(Up.Values);
+                nodes.AddRange(Down.Values);
+
+                if (Fold != null)
+                    nodes.Add(Fold);
+                if (OldFold != null)
+                    nodes.Add(OldFold);
+
+                return nodes;
+            }
+        }
         List<Node> Neighbors = new List<Node>();
         Dictionary<uint, Node> Up = new Dictionary<uint, Node>();
         Dictionary<uint, Node> Down = new Dictionary<uint, Node>();
@@ -78,7 +96,7 @@ namespace Server
             get
             {
                 uint par = 0;
-                for (uint i = 1; i < Id; )
+                for (uint i = 1; i <= Id; )
                 {
                     par = Id - i;
                     i *= 2;
@@ -91,55 +109,26 @@ namespace Server
         /// Gets the node's Child Id. Purely Logical, node may not exist
         /// </summary>
         /// <value>The child's Id.</value>
-        public uint ChildId
-        {
-            get
-            {
-                if (Id == 0)
-                    return nextDimensionChild();
-                uint i = 1;
-                while (i < Id)
-                    i *= 2;
-                return i + Id;
-            }
-        }
-
-        /// <summary>
-        /// Gets the next dimension child Id.
-        /// </summary>
-        /// <returns>A child Id for the next dimension</returns>
-        private uint nextDimensionChild()
+        public uint ChildId(uint callerId)
         {
             uint dim = 1;
-            while (Neighbors.Count(n => n.Id == dim) > 0)
+            while (callerId != 0)
+            {
                 dim <<= 1;
-            return dim;
+                callerId >>= 1;
+            }
+            dim >>= 1;
+            return dim + Id;
         }
-
         /// <summary>
         /// Gets the logical surrogate id.
         /// </summary>
         /// <value>The logical surrogate id.</value>
-        public uint SurrogateId
+        public uint SurrogateId(uint callerId)
         {
-            get
-            {
-                uint sur = Id;
-                int count = 0;
-                while (sur > 0)
-                {
-                    sur >>= 1;
-                    count++;
-                }
-                sur = 1;
-                count++;
-                while (count > 0)
-                {
-                    sur <<= 1;
-                }
 
-                return sur + Id;
-            }
+            return ChildId(callerId);
+
         }
 
         /// <summary>
@@ -150,7 +139,17 @@ namespace Server
         {
             get
             {
-                return Neighbors.Count(n => n.Id == ChildId) == 1;
+                if (Id == 0)
+                    return true;
+
+                var largestNeighbor = (from n in Neighbors
+                                       orderby n.Id ascending
+                                       select n).Last();
+
+                if (largestNeighbor.Id.Dimension() == Id.Dimension())
+                    return false;
+
+                return largestNeighbor.CurrentState == NodeState.Down;
             }
         }
 
@@ -162,15 +161,19 @@ namespace Server
         {
             get
             {
+                                var largestNeighbor = (from n in Neighbors
+                                       orderby n.Id ascending
+                                       select n).Last();
+
                 if (Down.Count > 0)
                     return NodeState.Down;
                 if (Up.Count > 0)
                     return NodeState.Up;
                 if (Neighbors.Count(n => n.Id > Id) == 0)
                     return NodeState.Largest;
-                if (!HasChild)
-                    return NodeState.Edge; 
-               
+                if (!HasChild && largestNeighbor.Id.Dimension() == Id.Dimension())
+                    return NodeState.Edge;
+
                 return NodeState.Inner;
             }
 
@@ -186,7 +189,7 @@ namespace Server
         /// Construct a new Node in the hyperweb.
         /// </summary>
         /// <param name="id">The new node's ID number.</param>
-        private Node(uint id)
+        public Node(uint id)
         {
             Id = id;
             Node.AllNodes[id] = this;
