@@ -7,8 +7,8 @@ using System.Diagnostics;
 using System;
 namespace UnitTesting
 {
-    
-    
+
+
     /// <summary>
     ///This is a test class for NodeTest and is intended
     ///to contain all NodeTest Unit Tests
@@ -102,6 +102,14 @@ namespace UnitTesting
             output = Node.DumpAllNodes();
             var fifteen = one.CreateNode();
             output = Node.DumpAllNodes();
+
+
+            for (int i = 0; i < 16; i++)
+            {
+                two.CreateNode();
+            }
+            output = Node.DumpAllNodes();
+
         }
 
         void InsertNodeTest(List<uint> insertIndex, int maxNodes)

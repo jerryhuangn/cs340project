@@ -101,13 +101,23 @@ namespace Server
             switch (n.CurrentState)
             {
                 case NodeState.Up:
-                    ret.Add(n);
+                    /*ret.Add(n);
 
                     ret.Add((from n1 in n.Up.Values
                              orderby n1.Id ascending
                              select n1).Last());
 
-                    // largest up and Me
+                    // largest up and Me*/
+
+
+                    ret.Add((from n1 in n.Neighbors
+                             orderby n1.Id ascending
+                             select n1).First());
+
+                    ret.Add((from n1 in n.Up.Values
+                             orderby n1.Id ascending
+                             select n1).Last());
+
                     break;
                 case NodeState.Down:
                     ret.Add(n.Neighbors.First(n1 => n1.Id == n.ParentId));
@@ -227,7 +237,7 @@ namespace Server
                 Up.Remove(upNode.Id);
                 upNode.addNeighbor(n);
                 n.addNeighbor(upNode);
-            }            
+            }
 
             if (OldFold == null)
             {
