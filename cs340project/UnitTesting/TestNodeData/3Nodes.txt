@@ -1,0 +1,36 @@
+Node	0
+CurrState:	Inner
+Neighbors:
+	1
+	2
+Up:
+Down:
+Fold:	3
+------------------------------------
+Node	1
+CurrState:	Inner
+Neighbors:
+	0
+	3
+Up:
+Down:
+Fold:	2
+------------------------------------
+Node	2
+CurrState:	Edge
+Neighbors:
+	0
+	3
+Up:
+Down:
+Fold:	1
+------------------------------------
+Node	3
+CurrState:	Largest
+Neighbors:
+	2
+	1
+Up:
+Down:
+Fold:	0
+------------------------------------

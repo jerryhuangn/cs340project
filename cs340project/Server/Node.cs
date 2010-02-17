@@ -161,9 +161,15 @@ namespace Server
         {
             get
             {
-                                var largestNeighbor = (from n in Neighbors
-                                       orderby n.Id ascending
-                                       select n).Last();
+                if (Neighbors.Count == 0)
+                {
+                    Debug.Assert(Node.AllNodes.Count == 1);
+                    return NodeState.Largest;
+                }
+
+                var largestNeighbor = (from n in Neighbors
+                       orderby n.Id ascending
+                       select n).Last();
 
                 if (Down.Count > 0)
                     return NodeState.Down;

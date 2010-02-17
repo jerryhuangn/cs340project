@@ -1,0 +1,28 @@
+Node	0
+CurrState:	Inner
+Neighbors:
+	1
+	2
+Up:
+Down:
+Fold:	1
+------------------------------------
+Node	1
+CurrState:	Up
+Neighbors:
+	0
+Up:
+	2
+Down:
+Fold:	2
+OldFold:	0
+------------------------------------
+Node	2
+CurrState:	Down
+Neighbors:
+	0
+Up:
+Down:
+	1
+Fold:	1
+------------------------------------

@@ -1,4 +1,5 @@
-﻿Node 0
+Node	0
+CurrState:	Largest
 Neighbors:
 Up:
 Down:
