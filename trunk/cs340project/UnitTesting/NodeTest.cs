@@ -74,7 +74,7 @@ namespace UnitTesting
         [DeploymentItem("Server.dll")]
         public void InsertNodeTest()
         {
-            for (uint size = 0; size < 50; size++)
+            for (uint size = 0; size < 63; size++)
             {
                 TextReader tr = new StreamReader(Assembly.GetExecutingAssembly()
                     .GetManifestResourceStream("UnitTesting.TestNodeData." + (size+1).ToString() + "Nodes.txt"));
