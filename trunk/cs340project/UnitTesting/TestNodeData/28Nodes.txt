@@ -1,0 +1,356 @@
+Node	0
+CurrState:	Inner
+Neighbors:
+	1
+	2
+	4
+	8
+	16
+Up:
+Down:
+Fold:	15
+------------------------------------
+Node	1
+CurrState:	Inner
+Neighbors:
+	0
+	3
+	5
+	9
+	17
+Up:
+Down:
+Fold:	14
+------------------------------------
+Node	2
+CurrState:	Inner
+Neighbors:
+	0
+	3
+	6
+	10
+	18
+Up:
+Down:
+Fold:	13
+------------------------------------
+Node	3
+CurrState:	Inner
+Neighbors:
+	2
+	1
+	7
+	11
+	19
+Up:
+Down:
+Fold:	28
+------------------------------------
+Node	4
+CurrState:	Inner
+Neighbors:
+	0
+	5
+	6
+	12
+	20
+Up:
+Down:
+Fold:	27
+------------------------------------
+Node	5
+CurrState:	Inner
+Neighbors:
+	4
+	1
+	7
+	13
+	21
+Up:
+Down:
+Fold:	26
+------------------------------------
+Node	6
+CurrState:	Inner
+Neighbors:
+	4
+	2
+	7
+	14
+	22
+Up:
+Down:
+Fold:	25
+------------------------------------
+Node	7
+CurrState:	Inner
+Neighbors:
+	5
+	6
+	3
+	15
+	23
+Up:
+Down:
+Fold:	24
+------------------------------------
+Node	8
+CurrState:	Inner
+Neighbors:
+	0
+	9
+	10
+	12
+	24
+Up:
+Down:
+Fold:	23
+------------------------------------
+Node	9
+CurrState:	Inner
+Neighbors:
+	8
+	1
+	11
+	13
+	25
+Up:
+Down:
+Fold:	22
+------------------------------------
+Node	10
+CurrState:	Inner
+Neighbors:
+	8
+	2
+	11
+	14
+	26
+Up:
+Down:
+Fold:	21
+------------------------------------
+Node	11
+CurrState:	Inner
+Neighbors:
+	10
+	9
+	3
+	15
+	27
+Up:
+Down:
+Fold:	20
+------------------------------------
+Node	12
+CurrState:	Inner
+Neighbors:
+	8
+	4
+	13
+	14
+	28
+Up:
+Down:
+Fold:	19
+------------------------------------
+Node	13
+CurrState:	Up
+Neighbors:
+	9
+	12
+	5
+	15
+Up:
+	21
+	25
+	28
+Down:
+Fold:	18
+OldFold:	2
+------------------------------------
+Node	14
+CurrState:	Up
+Neighbors:
+	10
+	12
+	6
+	15
+Up:
+	22
+	26
+	28
+Down:
+Fold:	17
+OldFold:	1
+------------------------------------
+Node	15
+CurrState:	Up
+Neighbors:
+	11
+	13
+	14
+	7
+Up:
+	23
+	27
+Down:
+Fold:	16
+OldFold:	0
+------------------------------------
+Node	16
+CurrState:	Edge
+Neighbors:
+	0
+	17
+	18
+	20
+	24
+Up:
+Down:
+Fold:	15
+------------------------------------
+Node	17
+CurrState:	Edge
+Neighbors:
+	16
+	1
+	19
+	21
+	25
+Up:
+Down:
+Fold:	14
+------------------------------------
+Node	18
+CurrState:	Edge
+Neighbors:
+	16
+	2
+	19
+	22
+	26
+Up:
+Down:
+Fold:	13
+------------------------------------
+Node	19
+CurrState:	Edge
+Neighbors:
+	18
+	17
+	3
+	23
+	27
+Up:
+Down:
+Fold:	12
+------------------------------------
+Node	20
+CurrState:	Edge
+Neighbors:
+	16
+	4
+	21
+	22
+	28
+Up:
+Down:
+Fold:	11
+------------------------------------
+Node	21
+CurrState:	Down
+Neighbors:
+	20
+	17
+	5
+	23
+Up:
+Down:
+	13
+Fold:	10
+------------------------------------
+Node	22
+CurrState:	Down
+Neighbors:
+	20
+	18
+	6
+	23
+Up:
+Down:
+	14
+Fold:	9
+------------------------------------
+Node	23
+CurrState:	Down
+Neighbors:
+	22
+	21
+	19
+	7
+Up:
+Down:
+	15
+Fold:	8
+------------------------------------
+Node	24
+CurrState:	Edge
+Neighbors:
+	16
+	8
+	25
+	26
+	28
+Up:
+Down:
+Fold:	7
+------------------------------------
+Node	25
+CurrState:	Down
+Neighbors:
+	17
+	24
+	9
+	27
+Up:
+Down:
+	13
+Fold:	6
+------------------------------------
+Node	26
+CurrState:	Down
+Neighbors:
+	18
+	24
+	10
+	27
+Up:
+Down:
+	14
+Fold:	5
+------------------------------------
+Node	27
+CurrState:	Down
+Neighbors:
+	19
+	25
+	26
+	11
+Up:
+Down:
+	15
+Fold:	4
+------------------------------------
+Node	28
+CurrState:	Down
+Neighbors:
+	20
+	24
+	12
+Up:
+Down:
+	13
+	14
+Fold:	3
+------------------------------------

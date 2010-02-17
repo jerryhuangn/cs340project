@@ -74,79 +74,33 @@ namespace UnitTesting
         [DeploymentItem("Server.dll")]
         public void InsertNodeTest()
         {
-            //InsertNodeTest(new List<uint>(), 4);
-
-            Node start = new Node();
-            var one = start.CreateNode();
-            var two = one.CreateNode();
-            var three = one.CreateNode();
-            var four = two.CreateNode();
-            var five = start.CreateNode();
-            var six = one.CreateNode();
-            string output = Node.DumpAllNodes();
-            var seven = one.CreateNode();
-            output = Node.DumpAllNodes();
-            var eight = two.CreateNode();
-            output = Node.DumpAllNodes();
-            var nine = start.CreateNode();
-            output = Node.DumpAllNodes();
-            var ten = one.CreateNode();
-            output = Node.DumpAllNodes();
-            var eleven = one.CreateNode();
-            output = Node.DumpAllNodes();
-            var twelve = two.CreateNode();
-            output = Node.DumpAllNodes();
-            var thirteen = start.CreateNode();
-            output = Node.DumpAllNodes();
-            var fourteen = one.CreateNode();
-            output = Node.DumpAllNodes();
-            var fifteen = one.CreateNode();
-            output = Node.DumpAllNodes();
-
-
-            for (int i = 0; i < 131056; i++)
+            for (uint size = 0; size < 50; size++)
             {
-                two.CreateNode();
-            }
-            output = Node.DumpAllNodes();
+                TextReader tr = new StreamReader(Assembly.GetExecutingAssembly()
+                    .GetManifestResourceStream("UnitTesting.TestNodeData." + (size+1).ToString() + "Nodes.txt"));
+                string expected = tr.ReadToEnd();
 
-        }
-
-        void InsertNodeTest(List<uint> insertIndex, int maxNodes)
-        {
-            int alreadyExist = insertIndex.Count;
-            if (alreadyExist >= maxNodes)
-                return;
-
-            if (alreadyExist == 0)
-            {
-                Node n = new Node();//Create a root (0) node.
-            }
-
-            for (uint i = 0; i <= alreadyExist; i++)
-            {
-                insertIndex.Add(i);
-                InsertNodeTest(insertIndex, maxNodes);
-                InsertNodeTestSingle(insertIndex.ToArray());
-                insertIndex.RemoveAt(alreadyExist);
+                for (uint i = 0; i <= size; i++)
+                {
+                    InsertNodeTest(size, i, expected);
+                }
             }
         }
 
-        void InsertNodeTestSingle(uint[] insertIndex)
+        private static void InsertNodeTest(uint size, uint insertAt, string expected)
         {
+            //Refresh the whole hyperweb to size+1 nodes (including root)
             Node.AllNodes.Clear();
             Node root = new Node();
+            for (uint j = 0; j < size; j++)
+                root.CreateNode();
 
-            foreach (uint idx in insertIndex)
-                Node.AllNodes[idx].CreateNode();
+            //And add the node n+2, at insertion point i.
+            Node.AllNodes[insertAt].CreateNode();
 
-            TextReader tr = new StreamReader(Assembly.GetExecutingAssembly()
-                .GetManifestResourceStream("UnitTesting.TestNodeData." + insertIndex.Length.ToString() + "Nodes.txt"));
-
-            string expected = tr.ReadToEnd();
             string actual = Node.DumpAllNodes();
-
-            Assert.AreEqual(expected, actual);
+            if (expected != actual)
+                Assert.Fail("Failed on size " + size + ", insertAt " + insertAt);
         }
 
 

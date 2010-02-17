@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{DEE92E5C-3BB8-4E63-8A9A-4C5181DC087D}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -61,6 +61,69 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AuthoringTests.txt" />
+    <EmbeddedResource Include="TestNodeData\10Nodes.txt" />
+    <EmbeddedResource Include="TestNodeData\11Nodes.txt" />
+    <EmbeddedResource Include="TestNodeData\12Nodes.txt" />
+    <EmbeddedResource Include="TestNodeData\13Nodes.txt" />
+    <EmbeddedResource Include="TestNodeData\14Nodes.txt" />
+    <EmbeddedResource Include="TestNodeData\15Nodes.txt" />
+    <EmbeddedResource Include="TestNodeData\16Nodes.txt" />
+    <EmbeddedResource Include="TestNodeData\17Nodes.txt" />
+    <EmbeddedResource Include="TestNodeData\18Nodes.txt" />
+    <EmbeddedResource Include="TestNodeData\19Nodes.txt" />
+    <EmbeddedResource Include="TestNodeData\1Nodes.txt" />
+    <EmbeddedResource Include="TestNodeData\20Nodes.txt" />
+    <EmbeddedResource Include="TestNodeData\21Nodes.txt" />
+    <EmbeddedResource Include="TestNodeData\22Nodes.txt" />
+    <EmbeddedResource Include="TestNodeData\23Nodes.txt" />
+    <EmbeddedResource Include="TestNodeData\24Nodes.txt" />
+    <EmbeddedResource Include="TestNodeData\25Nodes.txt" />
+    <EmbeddedResource Include="TestNodeData\26Nodes.txt" />
+    <EmbeddedResource Include="TestNodeData\27Nodes.txt" />
+    <EmbeddedResource Include="TestNodeData\28Nodes.txt" />
+    <EmbeddedResource Include="TestNodeData\29Nodes.txt" />
+    <EmbeddedResource Include="TestNodeData\2Nodes.txt" />
+    <EmbeddedResource Include="TestNodeData\30Nodes.txt" />
+    <EmbeddedResource Include="TestNodeData\31Nodes.txt" />
+    <EmbeddedResource Include="TestNodeData\32Nodes.txt" />
+    <EmbeddedResource Include="TestNodeData\33Nodes.txt" />
+    <EmbeddedResource Include="TestNodeData\34Nodes.txt" />
+    <EmbeddedResource Include="TestNodeData\35Nodes.txt" />
+    <EmbeddedResource Include="TestNodeData\36Nodes.txt" />
+    <EmbeddedResource Include="TestNodeData\37Nodes.txt" />
+    <EmbeddedResource Include="TestNodeData\38Nodes.txt" />
+    <EmbeddedResource Include="TestNodeData\39Nodes.txt" />
+    <EmbeddedResource Include="TestNodeData\3Nodes.txt" />
+    <EmbeddedResource Include="TestNodeData\40Nodes.txt" />
+    <EmbeddedResource Include="TestNodeData\41Nodes.txt" />
+    <EmbeddedResource Include="TestNodeData\42Nodes.txt" />
+    <EmbeddedResource Include="TestNodeData\43Nodes.txt" />
+    <EmbeddedResource Include="TestNodeData\44Nodes.txt" />
+    <EmbeddedResource Include="TestNodeData\45Nodes.txt" />
+    <EmbeddedResource Include="TestNodeData\46Nodes.txt" />
+    <EmbeddedResource Include="TestNodeData\47Nodes.txt" />
+    <EmbeddedResource Include="TestNodeData\48Nodes.txt" />
+    <EmbeddedResource Include="TestNodeData\49Nodes.txt" />
+    <EmbeddedResource Include="TestNodeData\4Nodes.txt" />
+    <EmbeddedResource Include="TestNodeData\50Nodes.txt" />
+    <EmbeddedResource Include="TestNodeData\51Nodes.txt" />
+    <EmbeddedResource Include="TestNodeData\52Nodes.txt" />
+    <EmbeddedResource Include="TestNodeData\53Nodes.txt" />
+    <EmbeddedResource Include="TestNodeData\54Nodes.txt" />
+    <EmbeddedResource Include="TestNodeData\55Nodes.txt" />
+    <EmbeddedResource Include="TestNodeData\56Nodes.txt" />
+    <EmbeddedResource Include="TestNodeData\57Nodes.txt" />
+    <EmbeddedResource Include="TestNodeData\58Nodes.txt" />
+    <EmbeddedResource Include="TestNodeData\59Nodes.txt" />
+    <EmbeddedResource Include="TestNodeData\5Nodes.txt" />
+    <EmbeddedResource Include="TestNodeData\60Nodes.txt" />
+    <EmbeddedResource Include="TestNodeData\61Nodes.txt" />
+    <EmbeddedResource Include="TestNodeData\62Nodes.txt" />
+    <EmbeddedResource Include="TestNodeData\63Nodes.txt" />
+    <EmbeddedResource Include="TestNodeData\6Nodes.txt" />
+    <EmbeddedResource Include="TestNodeData\7Nodes.txt" />
+    <EmbeddedResource Include="TestNodeData\8Nodes.txt" />
+    <EmbeddedResource Include="TestNodeData\9Nodes.txt" />
     <EmbeddedResource Include="TestNodeData\0Nodes.txt" />
   </ItemGroup>
   <ItemGroup>
