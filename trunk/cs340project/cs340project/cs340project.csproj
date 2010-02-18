@@ -56,24 +56,11 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="..\..\..\GUI.cs">
-      <SubType>Form</SubType>
-      <Link>GUI.cs</Link>
-    </Compile>
-    <Compile Include="..\..\..\GUI.Designer.cs">
-      <DependentUpon>GUI.cs</DependentUpon>
-      <Link>GUI.Designer.cs</Link>
-    </Compile>
     <Compile Include="Objects.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\..\..\GUI.resx">
-      <DependentUpon>GUI.cs</DependentUpon>
-      <Link>GUI.resx</Link>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
