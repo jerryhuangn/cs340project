@@ -15,7 +15,7 @@ namespace cs340project
         public GUI()
         {
             InitializeComponent();
-            ConsoleWriter consoleWriter = new ConsoleWriter(textBoxConsole);
+            ConsoleWriter consoleWriter = new ConsoleWriter(textBoxConsole, 1024);
             Console.SetOut(consoleWriter);
         }
 
@@ -68,12 +68,12 @@ namespace cs340project
 
         private void clickBroadcast(object sender, EventArgs e)
         {
-            Console.WriteLine("clickBroadcast");
+            Console.WriteLine("broadcasting message: " + textBoxMessage.Text);
         }
 
         private void clickSend(object sender, EventArgs e)
         {
-            Console.WriteLine("clickSend");
+            Console.WriteLine("sending message: " + textBoxMessage.Text);
         }
     }
 }
