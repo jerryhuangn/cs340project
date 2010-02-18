@@ -34,26 +34,29 @@ namespace Server
         public override string ToString()
         {
             StringBuilder ret = new StringBuilder();
-            ret.AppendLine("Node\t" + Id.ToString());
-            ret.AppendLine("CurrState:\t" + CurrentState);
+            ret.AppendLine("Node:\t\t" + Id.ToString());
+            ret.AppendLine("CurrState:\t\t" + CurrentState);
 
-            ret.AppendLine("Neighbors:");
+            ret.Append("Neighbors:\t");
             foreach (Node n in Neighbors)
-                ret.AppendLine("\t" + n.Id.ToString());
+                ret.Append(n.Id.ToString() + " ");
+            ret.AppendLine();
 
-            ret.AppendLine("Up:");
+            ret.Append("Up:\t\t");
             foreach (Node n in Up.Values)
-                ret.AppendLine("\t" + n.Id.ToString());
+                ret.Append(n.Id.ToString() + " ");
+            ret.AppendLine();
 
-            ret.AppendLine("Down:");
+            ret.Append("Down:\t\t");
             foreach (Node n in Down.Values)
-                ret.AppendLine("\t" + n.Id.ToString());
+                ret.Append(n.Id.ToString() + " ");
+            ret.AppendLine();
 
             if (Fold != null)
-                ret.AppendLine("Fold:\t" + Fold.Id.ToString());
+                ret.AppendLine("Fold:\t\t" + Fold.Id.ToString());
 
             if (OldFold != null)
-                ret.AppendLine("OldFold:\t" + OldFold.Id.ToString());
+                ret.AppendLine("OldFold:\t\t" + OldFold.Id.ToString());
 
             return ret.ToString();
         }
