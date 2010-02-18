@@ -4,20 +4,30 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace cs340project
 {
     class ConsoleWriter : StringWriter
     {
+        int capacity;
         TextBox box;
+        StringBuilder builder;
 
-        public ConsoleWriter(TextBox box)
+        public ConsoleWriter(TextBox box, int capacity)
         {
+            this.capacity = capacity;
             this.box = box;
+            builder = this.GetStringBuilder();
         }
 
         private void updateTextBox()
         {
+            Debug.WriteLine("before builder length: " + builder.Length);
+            // pretty sure this is not very efficient
+            if (builder.Length > capacity)
+                builder.Remove(0, builder.Length - capacity);
+            Debug.WriteLine("after builder length:  " + builder.Length);
             GUI.SetControlPropertyThreadSafe(box, "Text", this.ToString());
             GUI.SetControlPropertyThreadSafe(box, "SelectionStart", box.Text.Length);
             GUI.CallControlFunctionThreadSafe(box, "ScrollToCaret");
