@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Windows.Forms;
-using System.Diagnostics;
 
 namespace cs340project
 {
@@ -23,11 +22,9 @@ namespace cs340project
 
         private void updateTextBox()
         {
-            Debug.WriteLine("before builder length: " + builder.Length);
             // pretty sure this is not very efficient
             if (builder.Length > capacity)
                 builder.Remove(0, builder.Length - capacity);
-            Debug.WriteLine("after builder length:  " + builder.Length);
             GUI.SetControlPropertyThreadSafe(box, "Text", this.ToString());
             GUI.SetControlPropertyThreadSafe(box, "SelectionStart", box.Text.Length);
             GUI.CallControlFunctionThreadSafe(box, "ScrollToCaret");
