@@ -281,5 +281,16 @@ namespace Server
 
             return true;
         }
+
+        /// <summary>
+        /// Removes the current node from the hypeerweb
+        /// </summary>
+        public void Remove()
+        {
+            var insert = insertionPoint(this);
+            uint lastid = (insert.ChildId(this.Id) - 1);
+            var lastnode = getNode(lastid, this);
+
+        }
     }
 }
