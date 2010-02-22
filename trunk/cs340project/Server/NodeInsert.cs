@@ -297,15 +297,65 @@ namespace Server
             {
                 tmpneighbors[i].RemoveNeighbor(lastnode);
             }
+
+            //tell the parent of lastnode to remove the child
+            //Node lastparent = getNode(lastnode.ParentId, this);
+            //lastparent.RemoveChild();
+
+            //copy remove node info into lastnode
+            lastnode.Id = this.Id;
+            lastnode.Neighbors = this.Neighbors;
+            lastnode.Up = this.Up;
+            lastnode.Down = this.Down;
+            lastnode.Fold = this.Fold;
+            lastnode.OldFold = this.OldFold;
+            
+            //tell all remove nodes neighbors to switch to lastnode
+            for (int i = 0; i < this.AllNeighbors.Count; i++)
+            {
+                this.AllNeighbors[i].SwitchNeighbor(this,lastnode);
+            }
             
         }
 
+        /// <summary>
+        /// Remove neighbor node and replace with lastnode
+        /// </summary>
+        /// <param name="node">Current neighbor of this</param>
+        /// <param name="lastnode">Replacement node</param>
+        private void SwitchNeighbor(Node node, Node lastnode)
+        {
+            if (Neighbors.Contains(node)) //if it is a neighbor remove the nieghbor and add lastnode as a neighbor
+            {
+                Neighbors.Remove(node);
+                this.addNeighbor(lastnode);
+            }
+            else if (Up.ContainsValue(node)) //if it is an up pointer remove from dictionary and add lastnode with same key
+            {
+                Up.Remove(node.Id);
+                Up.Add(node.Id, lastnode);
+            }
+            else if (Down.ContainsValue(node)) //same as if its an up pointer
+            {
+                Down.Remove(node.Id);
+                Down.Add(node.Id, lastnode);
+            }
+        }
+
+        /// <summary>
+        /// Remove nieghbore if it exists
+        /// </summary>
+        /// <param name="n">neighbor of this</param>
         public void RemoveNeighbor(Node n)
         {
             if (Neighbors.Contains(n))
             {
                 Neighbors.Remove(n);
                 this.addSurrogate(getNode(n.ParentId, this));
+            }
+            else if (Up.ContainsValue(n))
+            {
+                Up.Remove(n.Id);
             }
         }
     }
