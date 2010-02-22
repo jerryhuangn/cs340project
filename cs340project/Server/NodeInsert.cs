@@ -319,6 +319,26 @@ namespace Server
         }
 
         /// <summary>
+        /// remove node n from the hypeerweb
+        /// </summary>
+        /// <param name="n">node to be removed</param>
+        public void Remove(Node n)
+        {
+            n.Remove();
+        }
+
+        /// <summary>
+        /// remove node with give Id from the hypeerweb
+        /// </summary>
+        /// <param name="Id">Id of node to be removed</param>
+        public void Remove(uint Id)
+        {
+            Node rem = getNode(Id, this);
+            if(rem != null)
+                rem.Remove();
+        }
+
+        /// <summary>
         /// Remove neighbor node and replace with lastnode
         /// </summary>
         /// <param name="node">Current neighbor of this</param>
