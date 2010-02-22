@@ -290,7 +290,23 @@ namespace Server
             var insert = insertionPoint(this);
             uint lastid = (insert.ChildId(this.Id) - 1);
             var lastnode = getNode(lastid, this);
+            
+            // tell all of lastnodes neighborst to remove him as a neighbor
+            List<Node> tmpneighbors = lastnode.AllNeighbors;
+            for (int i = 0; i < tmpneighbors.Count; i++)
+            {
+                tmpneighbors[i].RemoveNeighbor(lastnode);
+            }
+            
+        }
 
+        public void RemoveNeighbor(Node n)
+        {
+            if (Neighbors.Contains(n))
+            {
+                Neighbors.Remove(n);
+                this.addSurrogate(getNode(n.ParentId, this));
+            }
         }
     }
 }
