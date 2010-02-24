@@ -29,6 +29,13 @@ namespace Server
             return count;
         }
 
+        /// <summary>
+        /// Gets the n in the 2^n for the leading 1
+        /// 
+        /// EX: 100101001 = 9
+        /// </summary>
+        /// <param name="numb">The number.</param>
+        /// <returns>The dimension</returns>
         public static uint Dimension(this uint numb)
         {
             uint count = 0;
@@ -41,10 +48,19 @@ namespace Server
             return count;
         }
     }
+
+    /// <summary>
+    /// Part of the Node class that has the static methods for inserts
+    /// </summary>
     public partial class Node
     {
         #region static helper methods
 
+        /// <summary>
+        /// Determines if the web is empty
+        /// </summary>
+        /// <param name="n">Any node in the web</param>
+        /// <returns>True if the web is empty, false otherwise</returns>
         private static bool emptyWeb(Node n)
         {
             if (n.Id == 0 && n.Neighbors.Count == 0)
@@ -52,6 +68,14 @@ namespace Server
             return false;
         }
 
+        /// <summary>
+        /// Gets the Insertion point.  A node who's child is the 
+        /// next node to be inserted
+        /// </summary>
+        /// <param name="n">Any node in the web</param>
+        /// <returns>
+        /// The father of the next node to be inserted (insertion point)
+        /// </returns>
         private static Node insertionPoint(Node n)
         {
             List<Node> right = new List<Node>();
@@ -61,6 +85,16 @@ namespace Server
             return searchRange(right);
         }
 
+        /// <summary>
+        /// Searches the range of nodes.
+        /// </summary>
+        /// <param name="right">
+        /// A list of nodes.  Should only have 2 nodes, and if
+        /// node 1 and 2 are the same, one node is returned, 
+        /// else the function is recursively called with the 
+        /// the new proper range.
+        /// </param>
+        /// <returns></returns>
         private static Node searchRange(List<Node> right)
         {
             // first node id + 1
@@ -95,6 +129,21 @@ namespace Server
             return searchRange(right);
         }
 
+        /// <summary>
+        /// Goes from any node in the web and "goes right" based on node state.
+        /// 
+        /// If the Node State is Up, returns the <see cref="searchRange()"/> of the smallest neighbor
+        /// and the largest Up node
+        /// 
+        /// if Down node, return the <see cref="searchRange()"/> of parent and smallest Down node
+        /// 
+        /// if Largest, check for <see cref="perfectCube()"/> and if it is, returns <see cref="searchRange()"/> 
+        /// with 1 and 2 being the root node.  Else, returns the fold.
+        /// 
+        /// Else returns the Largest Neighbor
+        /// </summary>
+        /// <param name="n">Any node in the web</param>
+        /// <returns>A list of 1 or 2 nodes</returns>
         private static List<Node> goRight(Node n)
         {
             List<Node> ret = new List<Node>();
@@ -151,6 +200,12 @@ namespace Server
             return ret;
         }
 
+        /// <summary>
+        /// Gets the node defined by p.
+        /// </summary>
+        /// <param name="p">The web id of the node.</param>
+        /// <param name="n">Any node in the web</param>
+        /// <returns>The node with web id == p</returns>
         private static Node getNode(uint p, Node n)
         {
             var nearest = (from node in n.AllNeighbors
@@ -162,6 +217,12 @@ namespace Server
             return getNode(p, nearest);
         }
 
+
+        /// <summary>
+        /// Gets if the the web is a Perfect cube.
+        /// </summary>
+        /// <param name="n">Any node in the web</param>
+        /// <returns></returns>
         private static bool perfectCube(Node n)
         {
             if (n.CurrentState == NodeState.Largest)
@@ -199,6 +260,10 @@ namespace Server
             return insert.insertChildNode();
         }
 
+        /// <summary>
+        /// Inserts the child node.
+        /// </summary>
+        /// <returns>The newly inserted node</returns>
         private Node insertChildNode()
         {
             Node n = null;
@@ -260,6 +325,10 @@ namespace Server
             return n;
         }
 
+        /// <summary>
+        /// Adds the node as a neighbor.
+        /// </summary>
+        /// <param name="n">Any node in the web</param>
         private void addNeighbor(Node n)
         {
             if (Up.ContainsKey(n.Id))
@@ -271,6 +340,11 @@ namespace Server
             Neighbors.Add(n);
         }
 
+        /// <summary>
+        /// Adds the node as a surrogate.
+        /// </summary>
+        /// <param name="n">Any node in the web</param>
+        /// <returns></returns>
         private bool addSurrogate(Node n)
         {
             if (Id < n.Id)
