@@ -1,5 +1,6 @@
 = Notes =
-  * Include pre-conditions, post-conditions, and domain definitions in documentation...
-  * Part 2 Usecase Diagram Missing
-  * Fix UML diagram
-  * Incorporate visitor pattern?
+  * Include well-written pre-conditions, post-conditions, and domain definitions for every class for the last two projects (insert and delete).
+  * Create the usecase diagram for part 2.
+  * Fix UML diagram.
+  * Output code coverage to document and add to the downloads list.
+  * Do we need to use the visitor pattern for the next project?
