@@ -13,6 +13,8 @@ using System.Windows.Forms;
 namespace cs340project
 {
     /// <summary>
+    /// Class owner: Ben Dilts
+    /// 
     /// A Proxy is a generic utility class that allows for an object
     /// to reside on another <see cref="App"/> to be accessed by a local
     /// specific XXXXProxy.
@@ -89,6 +91,8 @@ namespace cs340project
     }
 
     /// <summary>
+    /// Class owner: Ben Dilts
+    /// 
     /// The Proxifier class takes the type of another class, and produces a new class named
     /// [ClassName]Proxy (e.g. PersonProxy) that duplicates the public virtual interface of that
     /// class in an inherited class.

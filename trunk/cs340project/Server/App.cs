@@ -10,6 +10,8 @@ using System.Reflection;
 namespace cs340project
 {
     /// <summary>
+    /// Class owner: Ben Dilts
+    /// 
     /// Class that contains all the information
     /// for a single node in the Application.
     /// </summary>
