@@ -7,3 +7,4 @@
   * Add telephone numbers to group doc.
   * Project management needs dependencies.
   * Do we need to use the visitor pattern for the next project?
+  * Project 3 or 4 will require better test cases.
