@@ -1,0 +1,5 @@
+= Notes =
+  * Include pre-conditions, post-conditions, and domain definitions in documentation...
+  * Part 2 Usecase Diagram Missing
+  * Fix UML diagram
+  * Incorporate visitor pattern?
