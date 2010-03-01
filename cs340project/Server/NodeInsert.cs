@@ -364,7 +364,10 @@ namespace Server
             var insert = insertionPoint(this);
             uint lastid = (insert.ChildId(this.Id) - 1);
             var lastnode = getNode(lastid, this);
-            
+
+            //For testing purposes, take the last one out of AllNodes.
+            Node.AllNodes.Remove(lastid);
+
             // tell all of lastnodes neighborst to remove him as a neighbor
             List<Node> tmpneighbors = lastnode.AllNeighbors;
             for (int i = 0; i < tmpneighbors.Count; i++)
@@ -389,7 +392,6 @@ namespace Server
             {
                 this.AllNeighbors[i].SwitchNeighbor(this,lastnode);
             }
-            
         }
 
         /// <summary>
