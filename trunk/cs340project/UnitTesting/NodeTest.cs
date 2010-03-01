@@ -87,6 +87,43 @@ namespace UnitTesting
             }
         }
 
+        /// <summary>
+        ///A test for InsertNode
+        ///</summary>
+        [TestMethod()]
+        [DeploymentItem("Server.dll")]
+        public void RemoveNodeTest()
+        {
+            for (uint size = 1; size < 64; size++)
+            {
+                TextReader tr = new StreamReader(Assembly.GetExecutingAssembly()
+                    .GetManifestResourceStream("UnitTesting.TestNodeData." + size.ToString() + "Nodes.txt"));
+                string expected = tr.ReadToEnd();
+
+                for (uint i = 0; i <= size; i++)
+                {
+                    for(uint j = 0; j <= size; j++)
+                        RemoveNodeTest(size, i, j, expected);
+                }
+            }
+        }
+
+        private static void RemoveNodeTest(uint size, uint removeAt, uint removeSentFrom, string expected)
+        {
+            //Refresh the whole hyperweb to size+1 nodes (including root)
+            Node.AllNodes.Clear();
+            Node root = new Node();
+            for (uint j = 0; j < size; j++)
+                root.CreateNode();
+
+            //Remove the node they wanted us to.
+            Node.AllNodes[removeSentFrom].Remove(removeAt);
+
+            string actual = Node.DumpAllNodes();
+            if (expected != actual)
+                Assert.Fail("Failed on size " + size + ", removeAt " + removeAt + ", removeSentFrom " + removeSentFrom);
+        }
+
         private static void InsertNodeTest(uint size, uint insertAt, string expected)
         {
             //Refresh the whole hyperweb to size+1 nodes (including root)
