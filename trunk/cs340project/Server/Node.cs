@@ -11,7 +11,7 @@ namespace Server
         Inner, Up, Down, Edge, Largest
     }
     /// <summary>
-    /// 
+    ///  Author: Joel Day
     /// </summary>
     public partial class Node
     {

@@ -7,6 +7,8 @@ namespace Server
 {
     /// <summary>
     /// Common Extension Methods
+    /// 
+    /// Author: Joel Day
     /// </summary>
     public static class Extensions
     {
@@ -51,6 +53,8 @@ namespace Server
 
     /// <summary>
     /// Part of the Node class that has the static methods for inserts
+    /// 
+    /// Author: Joel Day
     /// </summary>
     public partial class Node
     {
