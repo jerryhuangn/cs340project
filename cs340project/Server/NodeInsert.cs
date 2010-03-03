@@ -347,11 +347,12 @@ namespace Server
         public void Remove()
         {
             var insert = insertionPoint(this);
-            uint lastid = (insert.ChildId(this.Id) - 1);
+            uint lastid = insert.ChildId(AbsoluteLargestNeighbor.Id) - 1;
             var lastnode = getNode(lastid, this);
 
             //For testing purposes, take the last one out of AllNodes.
             Node.AllNodes.Remove(lastid);
+            Node.AllNodes.Remove(Id);
 
             // tell all of lastnodes neighborst to remove him as a neighbor
             List<Node> tmpneighbors = lastnode.AllNeighbors;
@@ -377,6 +378,9 @@ namespace Server
             {
                 this.AllNeighbors[i].SwitchNeighbor(this, lastnode);
             }
+
+            if (lastid != Id)
+                Node.AllNodes.Add(Id, lastnode);
         }
 
         /// <summary>
@@ -432,11 +436,36 @@ namespace Server
             if (Neighbors.Contains(n))
             {
                 Neighbors.Remove(n);
-                this.addSurrogate(getNode(n.ParentId, this));
+                if (Id != n.ParentId)
+                    this.addSurrogate(getNode(n.ParentId, this));
+                else
+                {
+                    if (n.Fold.OldFold == null)
+                    {
+                        OldFold = n.Fold;
+                        OldFold.Fold = this;
+
+                    }
+                    else
+                    {
+                        Fold = n.Fold;
+                        Fold.Fold = Fold.OldFold;
+                        Fold.OldFold = null;
+                    }
+
+                    if (Fold.Id == Id)
+                        Fold = null;
+                    if (OldFold.Id == Id)
+                        OldFold = null;
+                }
             }
-            else if (Up.ContainsValue(n))
+            else if (Up.ContainsKey(n.Id))
             {
                 Up.Remove(n.Id);
+            }
+            else if (Down.ContainsKey(n.Id))
+            {
+                Down.Remove(n.Id);
             }
         }
     }

@@ -99,18 +99,17 @@ namespace UnitTesting
             for (uint size = 1; size < 64; size++)
             {
                 TextReader tr = new StreamReader(Assembly.GetExecutingAssembly()
-                    .GetManifestResourceStream("UnitTesting.TestNodeData." + size.ToString() + "Nodes.txt"));
+                    .GetManifestResourceStream("UnitTesting.TestNodeData." + (size - 1) + "Nodes.txt"));
                 string expected = tr.ReadToEnd();
 
                 for (uint i = 0; i <= size; i++)
                 {
-                    for(uint j = 0; j <= size; j++)
-                        RemoveNodeTest(size, i, j, expected);
+                        RemoveNodeTest(size, i, expected);
                 }
             }
         }
 
-        private static void RemoveNodeTest(uint size, uint removeAt, uint removeSentFrom, string expected)
+        private static void RemoveNodeTest(uint size, uint removeAt, string expected)
         {
             //Refresh the whole hyperweb to size+1 nodes (including root)
             Node.AllNodes.Clear();
@@ -119,11 +118,11 @@ namespace UnitTesting
                 root.CreateNode();
 
             //Remove the node they wanted us to.
-            Node.AllNodes[removeSentFrom].Remove(removeAt);
+            Node.AllNodes[removeAt].Remove(removeAt);
 
             string actual = Node.DumpAllNodes();
             if (expected != actual)
-                Assert.Fail("Failed on size " + size + ", removeAt " + removeAt + ", removeSentFrom " + removeSentFrom);
+                Assert.Fail("Failed on size " + size + ", removeAt " + removeAt);
         }
 
         private static void InsertNodeTest(uint size, uint insertAt, string expected)
