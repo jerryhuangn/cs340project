@@ -12,6 +12,8 @@ namespace UnitTesting
     /// <summary>
     ///This is a test class for NodeTest and is intended
     ///to contain all NodeTest Unit Tests
+    ///
+    /// Author: Joel Day
     ///</summary>
     [TestClass()]
     public class NodeTest
