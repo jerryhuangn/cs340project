@@ -110,6 +110,18 @@ namespace Server
             }
         }
 
+        Node AbsoluteLargestNeighbor
+        {
+            get
+            {
+                Node temp = this;
+                while (temp.LargestNeighbor.Id > temp.Id)
+                    temp = temp.LargestNeighbor;
+
+                return temp;
+            }
+        }
+
         Node SmallestNeighbor
         {
             get
@@ -175,6 +187,8 @@ namespace Server
                 dim <<= 1;
                 callerId >>= 1;
             }
+            if (Id == 0)
+                return dim;
             dim >>= 1;
             return dim + Id;
         }
@@ -200,9 +214,7 @@ namespace Server
                 if (Id == 0)
                     return true;
 
-                Node temp = this;
-                while (temp.LargestNeighbor.Id > temp.Id)
-                    temp = temp.LargestNeighbor;
+                Node temp = AbsoluteLargestNeighbor;
 
                 if (temp.Id.Dimension() == Id.Dimension())
                     return false;
