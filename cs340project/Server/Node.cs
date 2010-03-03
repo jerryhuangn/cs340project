@@ -100,6 +100,26 @@ namespace Server
 
         #region References to other nodes
 
+        Node LargestNeighbor
+        {
+            get
+            {
+                return (from n in Neighbors
+                        orderby n.Id ascending
+                        select n).Last();
+            }
+        }
+
+        Node SmallestNeighbor
+        {
+            get
+            {
+                return (from n in Neighbors
+                        orderby n.Id ascending
+                        select n).First();
+            }
+        }
+
         List<Node> AllNeighbors
         {
             get
@@ -180,14 +200,14 @@ namespace Server
                 if (Id == 0)
                     return true;
 
-                var largestNeighbor = (from n in Neighbors
-                                       orderby n.Id ascending
-                                       select n).Last();
+                Node temp = this;
+                while (temp.LargestNeighbor.Id > temp.Id)
+                    temp = temp.LargestNeighbor;
 
-                if (largestNeighbor.Id.Dimension() == Id.Dimension())
+                if (temp.Id.Dimension() == Id.Dimension())
                     return false;
 
-                return largestNeighbor.CurrentState == NodeState.Down;
+                return temp.CurrentState == NodeState.Down;
             }
         }
 
@@ -205,17 +225,13 @@ namespace Server
                     return NodeState.Largest;
                 }
 
-                var largestNeighbor = (from n in Neighbors
-                       orderby n.Id ascending
-                       select n).Last();
-
                 if (Down.Count > 0)
                     return NodeState.Down;
                 if (Up.Count > 0)
                     return NodeState.Up;
                 if (Neighbors.Count(n => n.Id > Id) == 0)
                     return NodeState.Largest;
-                if (!HasChild && largestNeighbor.Id.Dimension() == Id.Dimension())
+                if (LargestNeighbor.Id.Dimension() == Id.Dimension())
                     return NodeState.Edge;
 
                 return NodeState.Inner;

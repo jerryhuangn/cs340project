@@ -163,9 +163,7 @@ namespace Server
                     // largest up and Me*/
 
 
-                    ret.Add((from n1 in n.Neighbors
-                             orderby n1.Id ascending
-                             select n1).First());
+                    ret.Add(n.SmallestNeighbor);
 
                     ret.Add((from n1 in n.Up.Values
                              orderby n1.Id ascending
@@ -194,11 +192,7 @@ namespace Server
                     break;
                 default:
 
-                    var node = (from n1 in n.Neighbors
-                                orderby n1.Id ascending
-                                select n1).Last();
-
-                    ret.Add(node);
+                    ret.Add(n.LargestNeighbor);
                     break;
             }
             return ret;
@@ -229,12 +223,7 @@ namespace Server
         /// <returns></returns>
         private static bool perfectCube(Node n)
         {
-            if (n.CurrentState == NodeState.Largest)
-                return n.Fold.Id == 0;
-
-            return perfectCube((from n1 in n.Neighbors
-                                orderby n1.Id ascending
-                                select n1).Last());
+            return n.Fold.Id == 0;
         }
 
         #endregion
@@ -335,9 +324,6 @@ namespace Server
         /// <param name="n">Any node in the web</param>
         private void addNeighbor(Node n)
         {
-            if (Up.ContainsKey(n.Id))
-                Up.Remove(n.Id);
-
             if (Down.ContainsKey(n.Id))
                 Down.Remove(n.Id);
 
@@ -349,15 +335,10 @@ namespace Server
         /// </summary>
         /// <param name="n">Any node in the web</param>
         /// <returns></returns>
-        private bool addSurrogate(Node n)
+        private void addSurrogate(Node n)
         {
-            if (Id < n.Id)
-                return false;
-
             Down.Add(n.SurrogateId(Id), n);
             n.Up.Add(Id, this);
-
-            return true;
         }
 
         /// <summary>
@@ -390,11 +371,11 @@ namespace Server
             lastnode.Down = this.Down;
             lastnode.Fold = this.Fold;
             lastnode.OldFold = this.OldFold;
-            
+
             //tell all remove nodes neighbors to switch to lastnode
             for (int i = 0; i < this.AllNeighbors.Count; i++)
             {
-                this.AllNeighbors[i].SwitchNeighbor(this,lastnode);
+                this.AllNeighbors[i].SwitchNeighbor(this, lastnode);
             }
         }
 
@@ -414,7 +395,7 @@ namespace Server
         public void Remove(uint Id)
         {
             Node rem = getNode(Id, this);
-            if(rem != null)
+            if (rem != null)
                 rem.Remove();
         }
 

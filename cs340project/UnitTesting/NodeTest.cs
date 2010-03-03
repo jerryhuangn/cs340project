@@ -131,6 +131,8 @@ namespace UnitTesting
             //Refresh the whole hyperweb to size+1 nodes (including root)
             Node.AllNodes.Clear();
             Node root = new Node();
+
+            var curStat = root.CurrentState;
             for (uint j = 0; j < size; j++)
                 root.CreateNode();
 
@@ -139,7 +141,9 @@ namespace UnitTesting
 
             string actual = Node.DumpAllNodes();
             if (expected != actual)
-                Assert.Fail("Failed on size " + size + ", insertAt " + insertAt);
+                Assert.Fail("Failed on size " + size + ", insertAt " + insertAt +":\n\n" + expected + "\n\n" +actual);
+            
+            var guiDump = Node.DumpAllNodesGui();
         }
 
 
