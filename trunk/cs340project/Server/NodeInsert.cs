@@ -35,6 +35,10 @@ namespace Server
         /// Gets the n in the 2^n for the leading 1
         /// 
         /// EX: 100101001 = 9
+        /// 
+        /// PreCondition: uint
+        /// Domain: All positive 32bit integers
+        /// PostCondition: Will return the n for 2^n for the leading 1
         /// </summary>
         /// <param name="numb">The number.</param>
         /// <returns>The dimension</returns>
@@ -218,6 +222,12 @@ namespace Server
 
         /// <summary>
         /// Gets if the the web is a Perfect cube.
+        /// 
+        /// PreCondition: Node n is a valid member of the 
+        /// Hypeerweb and their status is Largest
+        /// Domain: Any Node in the Hypeerweb
+        /// PostCondition: The status of the Hypeerweb with regards 
+        /// to it being complete.
         /// </summary>
         /// <param name="n">Any node in the web</param>
         /// <returns></returns>
