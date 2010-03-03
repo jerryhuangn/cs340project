@@ -11,7 +11,7 @@ namespace Server
         Inner, Up, Down, Edge, Largest
     }
     /// <summary>
-    ///  Author: Joel Day
+    /// Author: Joel Day
     /// </summary>
     public partial class Node
     {
@@ -31,32 +31,67 @@ namespace Server
             return ret.ToString();
         }
 
+        public static string DumpAllNodesGui()
+        {
+            StringBuilder ret = new StringBuilder();
+            foreach (uint id in Node.AllNodes.Keys)
+            {
+                ret.Append(Node.AllNodes[id].ToStringDisplay());
+                ret.AppendLine("------------------------------------");
+            }
+            return ret.ToString();
+        }
+
         public override string ToString()
         {
             StringBuilder ret = new StringBuilder();
-            ret.AppendLine("Node:\t\t" + Id.ToString());
-            ret.AppendLine("CurrState:\t\t" + CurrentState);
+            ret.AppendLine("Node\t" + Id.ToString());
+            ret.AppendLine("CurrState:\t" + CurrentState);
 
-            ret.Append("Neighbors:\t");
+            ret.AppendLine("Neighbors:");
             foreach (Node n in Neighbors)
-                ret.Append(n.Id.ToString() + " ");
-            ret.AppendLine();
+                ret.AppendLine("\t" + n.Id.ToString());
 
-            ret.Append("Up:\t\t");
+            ret.AppendLine("Up:");
             foreach (Node n in Up.Values)
-                ret.Append(n.Id.ToString() + " ");
-            ret.AppendLine();
+                ret.AppendLine("\t" + n.Id.ToString());
 
-            ret.Append("Down:\t\t");
+            ret.AppendLine("Down:");
             foreach (Node n in Down.Values)
-                ret.Append(n.Id.ToString() + " ");
-            ret.AppendLine();
+                ret.AppendLine("\t" + n.Id.ToString());
 
             if (Fold != null)
-                ret.AppendLine("Fold:\t\t" + Fold.Id.ToString());
+                ret.AppendLine("Fold:\t" + Fold.Id.ToString());
 
             if (OldFold != null)
-                ret.AppendLine("OldFold:\t\t" + OldFold.Id.ToString());
+                ret.AppendLine("OldFold:\t" + OldFold.Id.ToString());
+
+            return ret.ToString();
+        }
+
+        public string ToStringDisplay()
+        {
+            StringBuilder ret = new StringBuilder();
+            ret.AppendLine("Node\t" + Id.ToString());
+            ret.AppendLine("CurrState:\t" + CurrentState);
+
+            ret.AppendLine("Neighbors:");
+            foreach (Node n in Neighbors)
+                ret.AppendLine("\t" + n.Id.ToString());
+
+            ret.AppendLine("Up:");
+            foreach (Node n in Up.Values)
+                ret.AppendLine("\t" + n.Id.ToString());
+
+            ret.AppendLine("Down:");
+            foreach (Node n in Down.Values)
+                ret.AppendLine("\t" + n.Id.ToString());
+
+            if (Fold != null)
+                ret.AppendLine("Fold:\t" + Fold.Id.ToString());
+
+            if (OldFold != null)
+                ret.AppendLine("OldFold:\t" + OldFold.Id.ToString());
 
             return ret.ToString();
         }
