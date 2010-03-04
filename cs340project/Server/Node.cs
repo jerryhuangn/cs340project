@@ -6,11 +6,49 @@ using System.Diagnostics;
 
 namespace Server
 {
+    /// <summary>
+    /// Enumerator for the different states.
+    /// 
+    /// This is used to satisfy the "State Pattern"
+    /// Portion of the project
+    /// </summary>
     public enum NodeState
     {
-        Inner, Up, Down, Edge, Largest
+        /// <summary>
+        /// Inner Nodes are nodes that have children and are not
+        /// Up Nodes
+        /// </summary>
+        Inner,
+        /// <summary>
+        /// Nodes that are Surrogates are in the Up Node State
+        /// 
+        /// Surrogates are used to fill in the gaps of the HypeerWeb
+        /// </summary>
+        Up,
+        /// <summary>
+        /// Nodes that are on the outter edge of the HypeerWeb, but
+        /// not all their neighbors are physical nodes.  Neighbors that
+        /// aren't represented by physical nodes are called Surrogates
+        /// 
+        /// Surrogates are used to fill in the gaps of the HypeerWeb
+        /// </summary>
+        Down,
+        /// <summary>
+        /// Nodes that have all their neighbors, but do not have children.
+        /// They are on the outter edge of the HypeerWeb
+        /// </summary>
+        Edge,
+        /// <summary>
+        /// The node that are the biggest of all their neighbors
+        /// </summary>
+        Largest
     }
     /// <summary>
+    /// A node is an element of the HypeerWeb.
+    /// Nodes have all the built in functionality
+    /// to add new nodes, delete nodes, and communicate
+    /// between nodes all while maintaining the proper
+    /// struction of th the HypeerWeb
     /// Author: Joel Day
     /// </summary>
     public partial class Node
@@ -18,8 +56,22 @@ namespace Server
 
         #region Global set of nodes; debugging
 
+
+        /// <summary>
+        /// Dictionary that holds all the Nodes.  Used for 
+        /// dumping the web as a string.
+        /// </summary>
         public static Dictionary<uint, Node> AllNodes = new Dictionary<uint, Node>();
 
+
+        /// <summary>
+        /// Dumps all nodes into a string representation of the HypeerWeb.
+        /// 
+        /// PreCondition: True
+        /// PostCondition: The web stays the same, only a list of the nodes
+        /// is iterated over to produces a string representation of the web
+        /// </summary>
+        /// <returns>A string representation of the web</returns>
         public static string DumpAllNodes()
         {
             StringBuilder ret = new StringBuilder();
@@ -31,6 +83,15 @@ namespace Server
             return ret.ToString();
         }
 
+        /// <summary>
+        /// Dumps all nodes into a string representation of the HypeerWeb.
+        /// Specially designed to work with the GUI.
+        /// 
+        /// PreCondition: True
+        /// PostCondition: The web stays the same, only a list of the nodes
+        /// is iterated over to produces a string representation of the web
+        /// </summary>
+        /// <returns>A string representation of the web</returns>
         public static string DumpAllNodesGui()
         {
             StringBuilder ret = new StringBuilder();
@@ -42,6 +103,12 @@ namespace Server
             return ret.ToString();
         }
 
+        /// <summary>
+        /// Returns a <see cref="System.String"/> that represents the node instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String"/> that represents the node instance.
+        /// </returns>
         public override string ToString()
         {
             StringBuilder ret = new StringBuilder();
@@ -69,6 +136,13 @@ namespace Server
             return ret.ToString();
         }
 
+        /// <summary>
+        /// Returns a <see cref="System.String"/> that represents the node instance, 
+        /// formatted to be used in the GUI.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String"/> that represents the node instance.
+        /// </returns>
         public string ToStringDisplay()
         {
             StringBuilder ret = new StringBuilder();
@@ -100,6 +174,10 @@ namespace Server
 
         #region References to other nodes
 
+        /// <summary>
+        /// Gets the largest neighbor.
+        /// </summary>
+        /// <value>The largest neighbor.</value>
         Node LargestNeighbor
         {
             get
@@ -110,6 +188,12 @@ namespace Server
             }
         }
 
+<<<<<<< .mine
+        /// <summary>
+        /// Gets the smallest neighbor.
+        /// </summary>
+        /// <value>The smallest neighbor.</value>
+=======
         Node AbsoluteLargestNeighbor
         {
             get
@@ -122,6 +206,7 @@ namespace Server
             }
         }
 
+>>>>>>> .r104
         Node SmallestNeighbor
         {
             get
@@ -132,6 +217,11 @@ namespace Server
             }
         }
 
+        /// <summary>
+        /// Gets all neighbors. This includes all the <see cref="Neighbors"/>, <see cref="Up"/>, <see cref="Down"/>,
+        /// <see cref="Fold"/>, and <see cref="OldFold"/>
+        /// </summary>
+        /// <value>All neighbors.</value>
         List<Node> AllNeighbors
         {
             get
@@ -149,10 +239,29 @@ namespace Server
                 return nodes;
             }
         }
+        /// <summary>
+        /// A list of Neighboring Nodes
+        /// </summary>
         List<Node> Neighbors = new List<Node>();
+        /// <summary>
+        /// A list of Up pointers for Surrogate Nodes
+        /// </summary>
         Dictionary<uint, Node> Up = new Dictionary<uint, Node>();
+        /// <summary>
+        /// A list of Down pointers to Surrogate Nodes
+        /// </summary>
         Dictionary<uint, Node> Down = new Dictionary<uint, Node>();
+        /// <summary>
+        /// Gets or sets the fold. The Fold is used as a short-cut to
+        /// get to the other side of the web quickly
+        /// </summary>
+        /// <value>The fold.</value>
         Node Fold { get; set; }
+        /// <summary>
+        /// Gets or sets the old fold. The Fold is used as a short-cut to
+        /// get to the other side of the web quickly
+        /// </summary>
+        /// <value>The old fold.</value>
         Node OldFold { get; set; }
 
         #endregion
@@ -177,7 +286,15 @@ namespace Server
 
         /// <summary>
         /// Gets the node's Child Id. Purely Logical, node may not exist
+        /// 
+        /// PreCondition: The caller's id's <see cref="Dimension"/> is 
+        /// greater-than or equal to the current node's id's <see cref="Dimension"/>
+        /// Domain: All possible Node Ids
+        /// PostCondition: The logical child in the same
+        /// level of the HypeerWeb as the caller
         /// </summary>
+        /// <param name="callerId">The callers id.</param>
+        /// <returns></returns>
         /// <value>The child's Id.</value>
         public uint ChildId(uint callerId)
         {
@@ -187,20 +304,24 @@ namespace Server
                 dim <<= 1;
                 callerId >>= 1;
             }
+<<<<<<< .mine
+=======
             if (Id == 0)
                 return dim;
             dim >>= 1;
+>>>>>>> .r104
             return dim + Id;
         }
+
         /// <summary>
         /// Gets the logical surrogate id.
+        /// Same as the ChidId
         /// </summary>
-        /// <value>The logical surrogate id.</value>
+        /// <param name="callerId">The caller id.</param>
+        /// <returns>The logical surrogate id. Same as ChildId</returns>
         public uint SurrogateId(uint callerId)
         {
-
-            return ChildId(callerId);
-
+            return ChildId(callerId >> 1);
         }
 
         /// <summary>
@@ -236,7 +357,6 @@ namespace Server
                     Debug.Assert(Node.AllNodes.Count == 1);
                     return NodeState.Largest;
                 }
-
                 if (Down.Count > 0)
                     return NodeState.Down;
                 if (Up.Count > 0)
@@ -254,6 +374,8 @@ namespace Server
         /// <summary>
         /// The binary representation of the node's ID number in the
         /// hyperweb.
+        /// 
+        /// Domain: All positive 32 bit numbers
         /// </summary>
         public uint Id { get; private set; }
 

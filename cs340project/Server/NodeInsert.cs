@@ -6,7 +6,7 @@ using System.Text;
 namespace Server
 {
     /// <summary>
-    /// Common Extension Methods
+    /// Common Extension Methods for the type uint
     /// 
     /// Author: Joel Day
     /// </summary>
@@ -15,6 +15,11 @@ namespace Server
         /// <summary>
         /// Distance from the current uint to the specified other uint.
         /// Distance is the number of 1 bits in the XOR of the two numbers
+        /// 
+        /// PreCondition: The current uint has been assigned a value
+        /// Domain: 0-31
+        /// PostCondition: The return will be the "Distance" of the 
+        /// current Id to the supplied Id in the HypeerWeb.
         /// </summary>
         /// <param name="numb">The current uint</param>
         /// <param name="otherNumb">The other uint</param>
@@ -34,7 +39,13 @@ namespace Server
         /// <summary>
         /// Gets the n in the 2^n for the leading 1
         /// 
-        /// EX: 100101001 = 9
+        /// EX: 100101001 = 9 or 100 = 3
+        /// 
+        /// PreCondition: The current instance uint has been assigned
+        /// a value
+        /// Domain: 0-31
+        /// PostCondition: The return will be the number of digits including
+        /// the leading 1 till the end of the binary number
         /// 
         /// PreCondition: uint
         /// Domain: All positive 32bit integers
@@ -66,6 +77,11 @@ namespace Server
 
         /// <summary>
         /// Determines if the web is empty
+        /// 
+        /// PreCondition: The node is not null
+        /// Domain: True, False
+        /// PostCondtion: The return will answer if the current
+        /// HypeerWeb that the node belongs to is empty
         /// </summary>
         /// <param name="n">Any node in the web</param>
         /// <returns>True if the web is empty, false otherwise</returns>
@@ -79,6 +95,11 @@ namespace Server
         /// <summary>
         /// Gets the Insertion point.  A node who's child is the 
         /// next node to be inserted
+        /// 
+        /// PreCondition: The node is a member of a HypeerWeb
+        /// Domain: All the nodes of the HypeerWeb
+        /// PostCondtion: The node who is defined by the HypeerWeb
+        /// structure to be the parent of the next node to be inserted
         /// </summary>
         /// <param name="n">Any node in the web</param>
         /// <returns>
@@ -95,6 +116,12 @@ namespace Server
 
         /// <summary>
         /// Searches the range of nodes.
+        /// 
+        /// PreCondition: The list only contains 1 or 2 nodes.
+        /// Both nodes must be members of the same HypeerWeb.
+        /// Domain: All nodes in the HypeerWeb
+        /// PostCondtion: The node that is to be returned for the 
+        /// <see cref="insertionPoint"/> method
         /// </summary>
         /// <param name="right">
         /// A list of nodes.  Should only have 2 nodes, and if
@@ -149,6 +176,12 @@ namespace Server
         /// with 1 and 2 being the root node.  Else, returns the fold.
         /// 
         /// Else returns the Largest Neighbor
+        /// 
+        /// PreCondition: The node is a member of a HypeerWeb
+        /// Domain: One or Two nodes in the HypeerWeb
+        /// PostCondtion: The final return will have a list with two
+        /// nodes from the HypeerWeb, representing the upper and lower
+        /// bounds of the <see cref="searchRange"/> method
         /// </summary>
         /// <param name="n">Any node in the web</param>
         /// <returns>A list of 1 or 2 nodes</returns>
@@ -158,14 +191,7 @@ namespace Server
             switch (n.CurrentState)
             {
                 case NodeState.Up:
-                    /*ret.Add(n);
-
-                    ret.Add((from n1 in n.Up.Values
-                             orderby n1.Id ascending
-                             select n1).Last());
-
-                    // largest up and Me*/
-
+                     // largest up and Me*/
 
                     ret.Add(n.SmallestNeighbor);
 
@@ -204,6 +230,11 @@ namespace Server
 
         /// <summary>
         /// Gets the node defined by p.
+        /// 
+        /// PreCondition: The node is a member of a HypeerWeb, and the id is 
+        /// an id of a node that is in the HypeerWeb
+        /// Domain: All nodes in the HypeerWeb
+        /// PostCondtion: The node who's Id is equal to the parameter P.
         /// </summary>
         /// <param name="p">The web id of the node.</param>
         /// <param name="n">Any node in the web</param>
@@ -219,15 +250,23 @@ namespace Server
             return getNode(p, nearest);
         }
 
-
         /// <summary>
         /// Gets if the the web is a Perfect cube.
+<<<<<<< .mine
+        /// 
+        /// PreCondition: The node is a member of a HypeerWeb
+        /// who's <see cref="NodeState"/> is equal to Largest
+        /// Domain: True of False
+        /// PostCondtion: The answer to if the current HypeerWeb
+        /// is a perfect cube
+=======
         /// 
         /// PreCondition: Node n is a valid member of the 
         /// Hypeerweb and their status is Largest
         /// Domain: Any Node in the Hypeerweb
         /// PostCondition: The status of the Hypeerweb with regards 
         /// to it being complete.
+>>>>>>> .r104
         /// </summary>
         /// <param name="n">Any node in the web</param>
         /// <returns></returns>
@@ -242,6 +281,10 @@ namespace Server
         /// Inserts a new node in the hyperweb, and returns it.
         /// If this is the insertion point, insert it here, otherwise
         /// send it closer to the insertion point.
+        /// 
+        /// PreCondition: True
+        /// Domain: none
+        /// PostCondtion: The HypeerWeb of the current node will increase by one node
         /// </summary>
         /// <returns>The newly inserted node.</returns>
         public Node CreateNode()
@@ -265,6 +308,13 @@ namespace Server
 
         /// <summary>
         /// Inserts the child node.
+        /// 
+        /// PreCondition: True
+        /// Domain: none
+        /// PostCondtion: Following the logic of the HypeerWeb,
+        /// a new node is inserted into the correct place and
+        /// all the settings for the Folds, neighbors, and parent
+        /// are modified accordingly.
         /// </summary>
         /// <returns>The newly inserted node</returns>
         private Node insertChildNode()
@@ -330,6 +380,10 @@ namespace Server
 
         /// <summary>
         /// Adds the node as a neighbor.
+        /// 
+        /// PreCondition: The node is a member of a HypeerWeb
+        /// Domain: none
+        /// PostCondtion: the node is added as a neighbor in the HypeerWeb
         /// </summary>
         /// <param name="n">Any node in the web</param>
         private void addNeighbor(Node n)
@@ -342,6 +396,11 @@ namespace Server
 
         /// <summary>
         /// Adds the node as a surrogate.
+        /// 
+        /// PreCondition: The node is a member of a HypeerWeb
+        /// Domain: none
+        /// PostCondtion: The node specified is turned into a
+        /// surrogate node for the parameter node
         /// </summary>
         /// <param name="n">Any node in the web</param>
         /// <returns></returns>
@@ -353,6 +412,10 @@ namespace Server
 
         /// <summary>
         /// Removes the current node from the hypeerweb
+        /// 
+        /// PreCondition:
+        /// Domain:
+        /// PostCondtion:
         /// </summary>
         public void Remove()
         {
@@ -395,6 +458,10 @@ namespace Server
 
         /// <summary>
         /// remove node n from the hypeerweb
+        /// 
+        /// PreCondition: The node is a member of a HypeerWeb
+        /// Domain:
+        /// PostCondtion:
         /// </summary>
         /// <param name="n">node to be removed</param>
         public void Remove(Node n)
@@ -404,6 +471,10 @@ namespace Server
 
         /// <summary>
         /// remove node with give Id from the hypeerweb
+        /// 
+        /// PreCondition:
+        /// Domain:
+        /// PostCondtion:
         /// </summary>
         /// <param name="Id">Id of node to be removed</param>
         public void Remove(uint Id)
@@ -415,6 +486,10 @@ namespace Server
 
         /// <summary>
         /// Remove neighbor node and replace with lastnode
+        /// 
+        /// PreCondition: The node is a member of a HypeerWeb
+        /// Domain:
+        /// PostCondtion:
         /// </summary>
         /// <param name="node">Current neighbor of this</param>
         /// <param name="lastnode">Replacement node</param>
@@ -439,6 +514,10 @@ namespace Server
 
         /// <summary>
         /// Remove nieghbore if it exists
+        /// 
+        /// PreCondition: The node is a member of a HypeerWeb
+        /// Domain:
+        /// PostCondtion:
         /// </summary>
         /// <param name="n">neighbor of this</param>
         public void RemoveNeighbor(Node n)
