@@ -192,6 +192,7 @@ namespace Server
         /// Gets the smallest neighbor.
         /// </summary>
         /// <value>The smallest neighbor.</value>
+        /// <value>The smallest neighbor.</value>
         Node AbsoluteLargestNeighbor
         {
             get
@@ -303,6 +304,7 @@ namespace Server
             }
             if (Id == 0)
                 return dim;
+            dim >>= 1;
             //dim >>= 1;
             return dim + Id;
         }

@@ -251,6 +251,7 @@ namespace Server
         }
 
         /// <summary>
+        /// Gets if the the web is a Perfect cube.<<<<<<< .mine
         /// Gets if the the web is a Perfect cube.
         /// 
         /// PreCondition: The node is a member of a HypeerWeb
@@ -416,41 +417,38 @@ namespace Server
         /// </summary>
         public void Remove()
         {
-            var insert = insertionPoint(this);
-            uint lastid = insert.ChildId(AbsoluteLargestNeighbor.Id) - 1;
-            var lastnode = getNode(lastid, this);
+            Node insert = insertionPoint(this);
+            uint lastid = (insert.ChildId(insert.Id) - 1);
+            Node lastnode = getNode(lastid, this);
 
-            //For testing purposes, take the last one out of AllNodes.
-            Node.AllNodes.Remove(lastid);
-            Node.AllNodes.Remove(Id);
+            //copy lastnode attributes into a temporary node
+            Node tmp = new Node();
+            tmp.Id = lastnode.Id;
+            tmp.Fold = lastnode.Fold;
+            tmp.OldFold = lastnode.OldFold;
+            tmp.Up = lastnode.Up;
+            tmp.Neighbors = lastnode.Neighbors;
+            tmp.Down = lastnode.Down;
 
-            // tell all of lastnodes neighborst to remove him as a neighbor
-            List<Node> tmpneighbors = lastnode.AllNeighbors;
-            for (int i = 0; i < tmpneighbors.Count; i++)
-            {
-                tmpneighbors[i].RemoveNeighbor(lastnode);
-            }
-
-            //tell the parent of lastnode to remove the child
-            //Node lastparent = getNode(lastnode.ParentId, this);
-            //lastparent.RemoveChild();
-
-            //copy remove node info into lastnode
+            //copy this into lastnode
             lastnode.Id = this.Id;
-            lastnode.Neighbors = this.Neighbors;
-            lastnode.Up = this.Up;
-            lastnode.Down = this.Down;
             lastnode.Fold = this.Fold;
             lastnode.OldFold = this.OldFold;
+            lastnode.Up = this.Up;
+            lastnode.Neighbors = this.Neighbors;
+            lastnode.Down = this.Down;
 
-            //tell all remove nodes neighbors to switch to lastnode
-            for (int i = 0; i < this.AllNeighbors.Count; i++)
-            {
-                this.AllNeighbors[i].SwitchNeighbor(this, lastnode);
-            }
+            //copy tmp into this
+            this.Id = tmp.Id;
+            this.Fold = tmp.Fold;
+            this.OldFold = tmp.OldFold;
+            this.Up = tmp.Up;
+            this.Neighbors = tmp.Neighbors;
+            this.Down = tmp.Down;
 
-            if (lastid != Id)
-                Node.AllNodes.Add(Id, lastnode);
+            // undo everything insert did
+
+
         }
 
         /// <summary>
@@ -479,80 +477,6 @@ namespace Server
             Node rem = getNode(Id, this);
             if (rem != null)
                 rem.Remove();
-        }
-
-        /// <summary>
-        /// Remove neighbor node and replace with lastnode
-        /// 
-        /// PreCondition: The node is a member of a HypeerWeb
-        /// Domain:
-        /// PostCondtion:
-        /// </summary>
-        /// <param name="node">Current neighbor of this</param>
-        /// <param name="lastnode">Replacement node</param>
-        private void SwitchNeighbor(Node node, Node lastnode)
-        {
-            if (Neighbors.Contains(node)) //if it is a neighbor remove the nieghbor and add lastnode as a neighbor
-            {
-                Neighbors.Remove(node);
-                this.addNeighbor(lastnode);
-            }
-            else if (Up.ContainsValue(node)) //if it is an up pointer remove from dictionary and add lastnode with same key
-            {
-                Up.Remove(node.Id);
-                Up.Add(node.Id, lastnode);
-            }
-            else if (Down.ContainsValue(node)) //same as if its an up pointer
-            {
-                Down.Remove(node.Id);
-                Down.Add(node.Id, lastnode);
-            }
-        }
-
-        /// <summary>
-        /// Remove nieghbore if it exists
-        /// 
-        /// PreCondition: The node is a member of a HypeerWeb
-        /// Domain:
-        /// PostCondtion:
-        /// </summary>
-        /// <param name="n">neighbor of this</param>
-        public void RemoveNeighbor(Node n)
-        {
-            if (Neighbors.Contains(n))
-            {
-                Neighbors.Remove(n);
-                if (Id != n.ParentId)
-                    this.addSurrogate(getNode(n.ParentId, this));
-                else
-                {
-                    if (n.Fold.OldFold == null)
-                    {
-                        OldFold = n.Fold;
-                        OldFold.Fold = this;
-
-                    }
-                    else
-                    {
-                        Fold = n.Fold;
-                        Fold.Fold = Fold.OldFold;
-                        Fold.OldFold = null;
-                    }
-
-                    if (Fold.Id == Id)
-                        Fold = null;
-                    if (OldFold.Id == Id)
-                        OldFold = null;
-                }
-            }
-            else if (Up.ContainsKey(n.Id))
-            {
-                Up.Remove(n.Id);
-            }
-            else if (Down.ContainsKey(n.Id))
-            {
-                Down.Remove(n.Id);
-            }
         }
     }
 }
