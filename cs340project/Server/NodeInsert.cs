@@ -252,21 +252,18 @@ namespace Server
 
         /// <summary>
         /// Gets if the the web is a Perfect cube.
-<<<<<<< .mine
         /// 
         /// PreCondition: The node is a member of a HypeerWeb
         /// who's <see cref="NodeState"/> is equal to Largest
         /// Domain: True of False
         /// PostCondtion: The answer to if the current HypeerWeb
         /// is a perfect cube
-=======
         /// 
         /// PreCondition: Node n is a valid member of the 
         /// Hypeerweb and their status is Largest
         /// Domain: Any Node in the Hypeerweb
         /// PostCondition: The status of the Hypeerweb with regards 
         /// to it being complete.
->>>>>>> .r104
         /// </summary>
         /// <param name="n">Any node in the web</param>
         /// <returns></returns>

@@ -188,12 +188,10 @@ namespace Server
             }
         }
 
-<<<<<<< .mine
         /// <summary>
         /// Gets the smallest neighbor.
         /// </summary>
         /// <value>The smallest neighbor.</value>
-=======
         Node AbsoluteLargestNeighbor
         {
             get
@@ -206,7 +204,6 @@ namespace Server
             }
         }
 
->>>>>>> .r104
         Node SmallestNeighbor
         {
             get
@@ -304,12 +301,9 @@ namespace Server
                 dim <<= 1;
                 callerId >>= 1;
             }
-<<<<<<< .mine
-=======
             if (Id == 0)
                 return dim;
-            dim >>= 1;
->>>>>>> .r104
+            //dim >>= 1;
             return dim + Id;
         }
 
