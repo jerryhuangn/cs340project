@@ -71,6 +71,11 @@ namespace UnitTesting
 
         /// <summary>
         ///A test for InsertNode
+        ///
+        /// White-Box testing.  Test exhaustivly all the different insertions
+        /// of nodes from every place in the HypeerWeb from 1-63 nodes.
+        /// 
+        /// All tests conclude with a comparison with the expected results.
         ///</summary>
         [TestMethod()]
         [DeploymentItem("Server.dll")]
@@ -89,9 +94,39 @@ namespace UnitTesting
             }
         }
 
+
         /// <summary>
-        ///A test for InsertNode
-        ///</summary>
+        /// Insert test.
+        /// 
+        /// This is the main body of the Insert Test.
+        /// </summary>
+        /// <param name="size">The size of the web.</param>
+        /// <param name="insertAt">The insertAt point.</param>
+        /// <param name="expected">The expected output.</param>
+        private static void InsertNodeTest(uint size, uint insertAt, string expected)
+        {
+            //Refresh the whole hyperweb to size+1 nodes (including root)
+            Node.AllNodes.Clear();
+            Node root = new Node();
+
+            var curStat = root.CurrentState;
+            for (uint j = 0; j < size; j++)
+                root.CreateNode();
+
+            //And add the node n+2, at insertion point i.
+            Node.AllNodes[insertAt].CreateNode();
+
+            string actual = Node.DumpAllNodes();
+            if (expected != actual)
+                Assert.Fail("Failed on size " + size + ", insertAt " + insertAt + ":\n\n" + expected + "\n\n" + actual);
+
+            var guiDump = Node.DumpAllNodesGui();
+        }
+
+
+        /// <summary>
+        /// Remove node test.
+        /// </summary>
         [TestMethod()]
         [DeploymentItem("Server.dll")]
         public void RemoveNodeTest()
@@ -125,61 +160,105 @@ namespace UnitTesting
                 Assert.Fail("Failed on size " + size + ", removeAt " + removeAt);
         }
 
-        private static void InsertNodeTest(uint size, uint insertAt, string expected)
-        {
-            //Refresh the whole hyperweb to size+1 nodes (including root)
-            Node.AllNodes.Clear();
-            Node root = new Node();
-
-            var curStat = root.CurrentState;
-            for (uint j = 0; j < size; j++)
-                root.CreateNode();
-
-            //And add the node n+2, at insertion point i.
-            Node.AllNodes[insertAt].CreateNode();
-
-            string actual = Node.DumpAllNodes();
-            if (expected != actual)
-                Assert.Fail("Failed on size " + size + ", insertAt " + insertAt +":\n\n" + expected + "\n\n" +actual);
-            
-            var guiDump = Node.DumpAllNodesGui();
-        }
-
 
         /// <summary>
-        ///A test for ChildId
+        ///A test for ChildId.
+        ///
+        /// White-Box test for the ChildId attribute of a node
+        /// Tests several nodes with specific Ids and compares their
+        /// ChildId with an expected result.
         ///</summary>
         [TestMethod()]
         public void ChildIdTest()
         {
+            // Target 1
             Node target = new Node(1406); // TODO: Initialize to an appropriate value
             uint actual;
             actual = target.ChildId(1406);
             Assert.AreEqual<uint>(actual, 3454);
+
+            // Target 2         
+            Node target2 = new Node(0); // TODO: Initialize to an appropriate value
+            uint actual2;
+            actual2 = target2.ChildId(0);
+            Assert.AreEqual<uint>(actual2, 1);
+
+            // Target 3         
+            Node target3 = new Node(0); // TODO: Initialize to an appropriate value
+            uint actual3;
+            actual3 = target3.ChildId(1406);
+            Assert.AreEqual<uint>(actual3, 2048);
+
+            // Target 4         
+            Node target4 = new Node(0); // TODO: Initialize to an appropriate value
+            uint actual4;
+            actual4 = target4.ChildId(1);
+            Assert.AreEqual<uint>(actual4, 2);
         }
 
         /// <summary>
         ///A test for ParentId
+        ///
+        /// White-Box test for the ParentId attribute of a node
+        /// Tests several nodes with specific Ids and compares their
+        /// ParentId with an expected result.
         ///</summary>
         [TestMethod()]
         public void ParentIdTest()
         {
+            // Target 1
             Node target = new Node(3454); // TODO: Initialize to an appropriate value
             uint actual;
             actual = target.ParentId;
             Assert.AreEqual<uint>(actual, 1406);
+
+            // Target 2         
+            Node target2 = new Node(1); // TODO: Initialize to an appropriate value
+            uint actual2;
+            actual2 = target2.ParentId;
+            Assert.AreEqual<uint>(actual2, 0);
+
+            // Target 3         
+            Node target3 = new Node(2048); // TODO: Initialize to an appropriate value
+            uint actual3;
+            actual3 = target3.ParentId;
+            Assert.AreEqual<uint>(actual3, 0);
+
+            // Target 4         
+            Node target4 = new Node(2); // TODO: Initialize to an appropriate value
+            uint actual4;
+            actual4 = target4.ParentId;
+            Assert.AreEqual<uint>(actual4, 0);
+
         }
 
         /// <summary>
         ///A test for SurrogateId
+        ///
+        /// White-Box test for the SurrogateId attribute of a node
+        /// Tests several nodes with specific Ids and compares their
+        /// SurrogateId with an expected result.
         ///</summary>
         [TestMethod()]
         public void SurrogateIdTest()
         {
+            // Target 1
             Node target = new Node(1406); // TODO: Initialize to an appropriate value
             uint actual;
-            actual = target.SurrogateId(1406);
+            actual = target.SurrogateId(2450);
             Assert.AreEqual<uint>(actual, 3454);
+
+            // Target 2         
+            Node target2 = new Node(1); // TODO: Initialize to an appropriate value
+            uint actual2;
+            actual2 = target2.SurrogateId(2);
+            Assert.AreEqual<uint>(actual2, 3);
+
+            // Target 3         
+            Node target3 = new Node(1); // TODO: Initialize to an appropriate value
+            uint actual3;
+            actual3 = target3.SurrogateId(1406);
+            Assert.AreEqual<uint>(actual3, 1025);
         }
     }
 }
