@@ -84,7 +84,7 @@ namespace UnitTesting
             for (uint size = 0; size < 63; size++)
             {
                 TextReader tr = new StreamReader(Assembly.GetExecutingAssembly()
-                    .GetManifestResourceStream("UnitTesting.TestNodeData." + (size+1).ToString() + "Nodes.txt"));
+                    .GetManifestResourceStream("UnitTesting.TestNodeData." + (size + 1).ToString() + "Nodes.txt"));
                 string expected = tr.ReadToEnd();
 
                 for (uint i = 0; i <= size; i++)
@@ -92,6 +92,40 @@ namespace UnitTesting
                     InsertNodeTest(size, i, expected);
                 }
             }
+        }
+
+
+        /// <summary>
+        /// Used to create the test documents
+        /// </summary>
+        [TestMethod()]
+        [DeploymentItem("Server.dll")]
+        public void InsertNodeTestCreate()
+        {
+            for (uint size = 0; size < 63; size++)
+            {
+                InsertNodeTestCreate(size);
+            }
+        }
+
+        private void InsertNodeTestCreate(uint size)
+        {
+            //Refresh the whole hyperweb to size+1 nodes (including root)
+            Node.AllNodes.Clear();
+            Node root = new Node();
+
+            var curStat = root.CurrentState;
+            for (uint j = 0; j < size; j++)
+                root.CreateNode();
+
+            //And add the node n+2, at insertion point i.
+            Node.AllNodes[0].CreateNode();
+
+            string actual = Node.DumpAllNodes();
+
+            TextWriter tr = new StreamWriter(File.OpenWrite(@"C:\Users\joel.day3\Documents\Visual Studio 2008\Projects\school\cs340project\cs340project\UnitTesting\TestNodeData\" + (size + 1).ToString() + "Nodes.txt"));
+            tr.Write(actual);
+            tr.Close();
         }
 
 
@@ -119,8 +153,6 @@ namespace UnitTesting
             string actual = Node.DumpAllNodes();
             if (expected != actual)
                 Assert.Fail("Failed on size " + size + ", insertAt " + insertAt + ":\n\n" + expected + "\n\n" + actual);
-
-            var guiDump = Node.DumpAllNodesGui();
         }
 
 
@@ -139,7 +171,7 @@ namespace UnitTesting
 
                 for (uint i = 0; i <= size; i++)
                 {
-                        RemoveNodeTest(size, i, expected);
+                    RemoveNodeTest(size, i, expected);
                 }
             }
         }
@@ -259,6 +291,29 @@ namespace UnitTesting
             uint actual3;
             actual3 = target3.SurrogateId(1406);
             Assert.AreEqual<uint>(actual3, 1025);
+        }
+
+        /// <summary>
+        ///A test for Remove
+        ///</summary>
+        [TestMethod()]
+        public void RemoveTest()
+        {
+            TextReader tr = new StreamReader(Assembly.GetExecutingAssembly()
+     .GetManifestResourceStream("UnitTesting.TestNodeData.2Nodes.txt"));
+            string expected = tr.ReadToEnd();
+
+            Node.AllNodes.Clear();
+            Node root = new Node();
+            for (uint j = 0; j < 3; j++)
+                root.CreateNode();
+
+            //Remove the node they wanted us to.
+            Node.AllNodes[3].Remove(3);
+
+            string actual = Node.DumpAllNodes();
+            if (expected != actual)
+                Assert.Fail("Failed on size 4");
         }
     }
 }

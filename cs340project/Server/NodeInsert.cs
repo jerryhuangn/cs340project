@@ -191,7 +191,7 @@ namespace Server
             switch (n.CurrentState)
             {
                 case NodeState.Up:
-                     // largest up and Me*/
+                    // largest up and Me*/
 
                     ret.Add(n.SmallestNeighbor);
 
@@ -317,28 +317,7 @@ namespace Server
         /// <returns>The newly inserted node</returns>
         private Node insertChildNode()
         {
-            Node n = null;
-            if (Id == 0)
-            {
-                n = new Node(Fold.Id + 1);
-            }
-            else
-            {
-                uint newId = Id;
-                uint i = 0;
-                for (i = 1; i <= newId; )
-                    i <<= 1;
-                newId += i;
-
-                while (Neighbors.Count(n1 => n1.Id == newId) > 0)
-                {
-                    i <<= 1;
-                    newId = Id + i;
-                }
-
-                n = new Node(newId);
-            }
-
+            Node n = new Node(NextChildId);
             foreach (var neighbor in Neighbors)
             {
                 if (!neighbor.HasChild)
@@ -418,36 +397,138 @@ namespace Server
         public void Remove()
         {
             Node insert = insertionPoint(this);
-            uint lastid = (insert.ChildId(insert.Id) - 1);
+            uint lastid = insert.NextChildId - 1;
             Node lastnode = getNode(lastid, this);
 
-            //copy lastnode attributes into a temporary node
-            Node tmp = new Node();
-            tmp.Id = lastnode.Id;
-            tmp.Fold = lastnode.Fold;
-            tmp.OldFold = lastnode.OldFold;
-            tmp.Up = lastnode.Up;
-            tmp.Neighbors = lastnode.Neighbors;
-            tmp.Down = lastnode.Down;
 
-            //copy this into lastnode
-            lastnode.Id = this.Id;
-            lastnode.Fold = this.Fold;
-            lastnode.OldFold = this.OldFold;
-            lastnode.Up = this.Up;
-            lastnode.Neighbors = this.Neighbors;
-            lastnode.Down = this.Down;
+            // Me - tell all neighbors that I'm not here
+            // last insert - All pointers and neighbors point elsewhere
+            // Me's pointers put into last insert.
+            // 
 
-            //copy tmp into this
-            this.Id = tmp.Id;
-            this.Fold = tmp.Fold;
-            this.OldFold = tmp.OldFold;
-            this.Up = tmp.Up;
-            this.Neighbors = tmp.Neighbors;
-            this.Down = tmp.Down;
+            fixFolds(lastnode, this);
+            redirectNeighbors(lastnode);
+            removeFromNeighbors(this);
+            addNeighbors(lastnode, this);
+            cleanUp(lastnode, this);
+        }
 
-            // undo everything insert did
+        private static void cleanUp(Node lastnode, Node node)
+        {
+            Node.AllNodes.Remove(node.Id);
 
+            lastnode.Id = node.Id;
+            //lastnode.Fold = node.Fold == null? lastnode.Fold : node.Fold;
+
+            if (lastnode == node || lastnode.Fold == null)
+                return;
+
+            if (lastnode.Fold.Id == lastnode.Id)
+                lastnode.Fold = null;
+            if (lastnode.OldFold != null && lastnode.OldFold.Id == lastnode.Id)
+                lastnode.OldFold = null;
+        }
+
+        private static void fixFolds(Node lastnode, Node node)
+        {
+            bool swapFold = true;
+            Node lastnodeParent = getNode(lastnode.ParentId, lastnode);
+            Node lastnodeFold = lastnode.Fold;
+
+            if (node.OldFold != null)
+                lastnode.OldFold = node.OldFold;
+
+            if (lastnodeParent == node)
+                lastnodeParent = lastnode;
+            if (lastnodeFold == node)
+            {
+                lastnodeFold = lastnode;
+                swapFold = false;
+            }
+
+            if (lastnode.Fold.OldFold == null)
+                lastnodeParent.OldFold = lastnodeFold;
+            else
+                lastnodeFold.OldFold = null;
+
+            lastnodeFold.Fold = lastnodeParent;
+
+            if (lastnodeParent.Fold.Id == lastnodeParent.Id)
+                lastnodeParent.Fold = null;
+            if (lastnodeParent.OldFold != null && lastnodeParent.OldFold.Id == lastnodeParent.Id)
+                lastnodeParent.OldFold = null;
+
+            //if (getNode(lastnode.ParentId, lastnode) == node)
+            //    lastnode.Fold = node.Fold;
+            //if (lastnode.Fold == node)
+            if (swapFold)
+            {
+                lastnode.Fold = node.Fold;
+                //lastnode.OldFold = node.OldFold;
+            }
+
+        }
+
+        private static void addNeighbors(Node lastnode, Node node)
+        {
+            foreach (Node n in node.Neighbors)
+            {
+                lastnode.Neighbors.Add(n);
+                n.Neighbors.Add(lastnode);
+            }
+
+            foreach (Node n in node.Down.Values)
+            {
+                lastnode.addSurrogate(n);
+            }
+
+            uint temp = lastnode.Id;
+            lastnode.Id = node.Id;
+            foreach (Node n in node.Up.Values)
+            {
+                n.addSurrogate(lastnode);
+            }
+            lastnode.Id = temp;
+        }
+
+        private static void redirectNeighbors(Node lastnode)
+        {
+            Node lastnodeParent = getNode(lastnode.ParentId, lastnode);
+            foreach (Node n in lastnode.Neighbors)
+            {
+                n.Neighbors.Remove(lastnode);
+                if (n.Id != lastnode.ParentId)
+                {
+                    n.addSurrogate(lastnodeParent);
+                }
+            }
+
+            lastnode.Neighbors.Clear();
+
+            foreach (Node n in lastnode.Down.Values)
+            {
+                n.Up.Remove(lastnode.Id);
+            }
+
+            lastnode.Down.Clear();
+        }
+
+        private void removeFromNeighbors(Node node)
+        {
+            foreach (Node n in node.Neighbors)
+            {
+                n.Neighbors.Remove(node);
+            }
+
+            foreach (Node n in node.Up.Values)
+            {
+                n.Down.Remove(node.SurrogateId(n.Id));
+            }
+
+            foreach (Node n in node.Down.Values)
+            {
+                n.Up.Remove(node.Id);
+            }
 
         }
 
