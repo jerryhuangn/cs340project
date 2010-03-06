@@ -34,8 +34,8 @@ Fold:	13
 Node	3
 CurrState:	Inner
 Neighbors:
-	2
 	1
+	2
 	7
 	11
 Up:
@@ -56,8 +56,8 @@ Fold:	11
 Node	5
 CurrState:	Inner
 Neighbors:
-	4
 	1
+	4
 	7
 	13
 Up:
@@ -67,8 +67,8 @@ Fold:	10
 Node	6
 CurrState:	Inner
 Neighbors:
-	4
 	2
+	4
 	7
 	14
 Up:
@@ -78,9 +78,9 @@ Fold:	9
 Node	7
 CurrState:	Up
 Neighbors:
+	3
 	5
 	6
-	3
 Up:
 	11
 	13
@@ -103,8 +103,8 @@ Fold:	7
 Node	9
 CurrState:	Edge
 Neighbors:
-	8
 	1
+	8
 	11
 	13
 Up:
@@ -114,8 +114,8 @@ Fold:	6
 Node	10
 CurrState:	Edge
 Neighbors:
-	8
 	2
+	8
 	11
 	14
 Up:
@@ -125,9 +125,9 @@ Fold:	5
 Node	11
 CurrState:	Down
 Neighbors:
-	10
-	9
 	3
+	9
+	10
 Up:
 Down:
 	7
@@ -136,8 +136,8 @@ Fold:	4
 Node	12
 CurrState:	Edge
 Neighbors:
-	8
 	4
+	8
 	13
 	14
 Up:
@@ -147,9 +147,9 @@ Fold:	3
 Node	13
 CurrState:	Down
 Neighbors:
+	5
 	9
 	12
-	5
 Up:
 Down:
 	7
@@ -158,9 +158,9 @@ Fold:	2
 Node	14
 CurrState:	Down
 Neighbors:
+	6
 	10
 	12
-	6
 Up:
 Down:
 	7

@@ -34,12 +34,12 @@ Fold:	5
 Node	3
 CurrState:	Up
 Neighbors:
-	2
 	1
+	2
 	7
 Up:
-	10
 	9
+	10
 Down:
 Fold:	4
 ------------------------------------
@@ -57,8 +57,8 @@ Fold:	3
 Node	5
 CurrState:	Up
 Neighbors:
-	4
 	1
+	4
 	7
 Up:
 	9
@@ -69,8 +69,8 @@ OldFold:	2
 Node	6
 CurrState:	Up
 Neighbors:
-	4
 	2
+	4
 	7
 Up:
 	10
@@ -81,9 +81,9 @@ OldFold:	1
 Node	7
 CurrState:	Largest
 Neighbors:
+	3
 	5
 	6
-	3
 Up:
 Down:
 Fold:	8
@@ -103,8 +103,8 @@ Fold:	7
 Node	9
 CurrState:	Down
 Neighbors:
-	8
 	1
+	8
 Up:
 Down:
 	3
@@ -114,8 +114,8 @@ Fold:	6
 Node	10
 CurrState:	Down
 Neighbors:
-	8
 	2
+	8
 Up:
 Down:
 	3
