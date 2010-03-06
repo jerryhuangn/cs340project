@@ -64,7 +64,7 @@ namespace cs340project
 
         private void updateDisplay()
         {
-            textBoxDisplay.Text = Node.DumpAllNodesGui();
+            textBoxDisplay.Text = Node.DumpAllNodes();
         }
 
         private void clickAdd(object sender, EventArgs e)

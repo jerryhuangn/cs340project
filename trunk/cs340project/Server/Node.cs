@@ -75,29 +75,12 @@ namespace Server
         public static string DumpAllNodes()
         {
             StringBuilder ret = new StringBuilder();
-            foreach (uint id in Node.AllNodes.Keys)
+            var nodes = from n in Node.AllNodes.Values
+                       orderby n.Id ascending
+                       select n;
+            foreach (var node in nodes)
             {
-                ret.Append(Node.AllNodes[id].ToString());
-                ret.AppendLine("------------------------------------");
-            }
-            return ret.ToString();
-        }
-
-        /// <summary>
-        /// Dumps all nodes into a string representation of the HypeerWeb.
-        /// Specially designed to work with the GUI.
-        /// 
-        /// PreCondition: True
-        /// PostCondition: The web stays the same, only a list of the nodes
-        /// is iterated over to produces a string representation of the web
-        /// </summary>
-        /// <returns>A string representation of the web</returns>
-        public static string DumpAllNodesGui()
-        {
-            StringBuilder ret = new StringBuilder();
-            foreach (uint id in Node.AllNodes.Keys)
-            {
-                ret.Append(Node.AllNodes[id].ToStringDisplay());
+                ret.Append(node.ToString());
                 ret.AppendLine("------------------------------------");
             }
             return ret.ToString();
@@ -116,15 +99,28 @@ namespace Server
             ret.AppendLine("CurrState:\t" + CurrentState);
 
             ret.AppendLine("Neighbors:");
-            foreach (Node n in Neighbors)
+
+            var neigh = from ne in Neighbors
+                        orderby ne.Id ascending
+                        select ne;
+
+            foreach (Node n in neigh)
                 ret.AppendLine("\t" + n.Id.ToString());
 
+
+            var up = from u in Up.Values
+                     orderby u.Id ascending
+                     select u;
             ret.AppendLine("Up:");
-            foreach (Node n in Up.Values)
+            foreach (Node n in up)
                 ret.AppendLine("\t" + n.Id.ToString());
 
+
+            var down = from d in Down.Values
+                       orderby d.Id ascending
+                       select d;
             ret.AppendLine("Down:");
-            foreach (Node n in Down.Values)
+            foreach (Node n in down)
                 ret.AppendLine("\t" + n.Id.ToString());
 
             if (Fold != null)
@@ -135,41 +131,6 @@ namespace Server
 
             return ret.ToString();
         }
-
-        /// <summary>
-        /// Returns a <see cref="System.String"/> that represents the node instance, 
-        /// formatted to be used in the GUI.
-        /// </summary>
-        /// <returns>
-        /// A <see cref="System.String"/> that represents the node instance.
-        /// </returns>
-        public string ToStringDisplay()
-        {
-            StringBuilder ret = new StringBuilder();
-            ret.AppendLine("Node\t" + Id.ToString());
-            ret.AppendLine("CurrState:\t" + CurrentState);
-
-            ret.AppendLine("Neighbors:");
-            foreach (Node n in Neighbors)
-                ret.AppendLine("\t" + n.Id.ToString());
-
-            ret.AppendLine("Up:");
-            foreach (Node n in Up.Values)
-                ret.AppendLine("\t" + n.Id.ToString());
-
-            ret.AppendLine("Down:");
-            foreach (Node n in Down.Values)
-                ret.AppendLine("\t" + n.Id.ToString());
-
-            if (Fold != null)
-                ret.AppendLine("Fold:\t" + Fold.Id.ToString());
-
-            if (OldFold != null)
-                ret.AppendLine("OldFold:\t" + OldFold.Id.ToString());
-
-            return ret.ToString();
-        }
-
         #endregion
 
         #region References to other nodes
@@ -282,6 +243,30 @@ namespace Server
             }
         }
 
+        public uint NextChildId
+        {
+            get
+            {
+                if (Id == 0)
+                {
+                    return Fold.Id + 1;
+                }
+
+                uint newId = Id;
+                uint i = 0;
+                for (i = 1; i <= newId; )
+                    i <<= 1;
+                newId += i;
+
+                while (Neighbors.Count(n1 => n1.Id == newId) > 0)
+                {
+                    i <<= 1;
+                    newId = Id + i;
+                }
+                return newId;
+            }
+        }
+
         /// <summary>
         /// Gets the node's Child Id. Purely Logical, node may not exist
         /// 
@@ -296,16 +281,7 @@ namespace Server
         /// <value>The child's Id.</value>
         public uint ChildId(uint callerId)
         {
-            uint dim = 1;
-            while (callerId != 0)
-            {
-                dim <<= 1;
-                callerId >>= 1;
-            }
-            if (Id == 0)
-                return dim;
-            dim >>= 1;
-            //dim >>= 1;
+            uint dim = (uint)(1 << (int)callerId.Dimension());
             return dim + Id;
         }
 
