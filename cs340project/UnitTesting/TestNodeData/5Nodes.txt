@@ -32,8 +32,8 @@ OldFold:	1
 Node	3
 CurrState:	Up
 Neighbors:
-	2
 	1
+	2
 Up:
 	5
 Down:
@@ -53,8 +53,8 @@ Fold:	3
 Node	5
 CurrState:	Down
 Neighbors:
-	4
 	1
+	4
 Up:
 Down:
 	3

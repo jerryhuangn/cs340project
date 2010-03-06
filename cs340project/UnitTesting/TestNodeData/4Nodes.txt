@@ -31,8 +31,8 @@ Fold:	1
 Node	3
 CurrState:	Largest
 Neighbors:
-	2
 	1
+	2
 Up:
 Down:
 Fold:	4
