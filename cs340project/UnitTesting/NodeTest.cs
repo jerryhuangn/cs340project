@@ -192,7 +192,6 @@ namespace UnitTesting
                 Assert.Fail("Failed on size " + size + ", removeAt " + removeAt);
         }
 
-
         /// <summary>
         ///A test for ChildId.
         ///
