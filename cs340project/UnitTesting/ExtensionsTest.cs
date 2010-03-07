@@ -77,6 +77,10 @@ namespace UnitTesting
             Assert.AreEqual(expected, actual);
        }
 
+        /// <summary>
+        /// white box testing for the extension method to
+        /// calculate dimension
+        /// </summary>
         [TestMethod()]
         public void DimensionTest()
         {
