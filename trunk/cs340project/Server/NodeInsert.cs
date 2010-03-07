@@ -390,9 +390,9 @@ namespace Server
         /// <summary>
         /// Removes the current node from the hypeerweb
         /// 
-        /// PreCondition:
-        /// Domain:
-        /// PostCondtion:
+        /// PreCondition: Current Node is a member of the Hypeerweb
+        /// Domain: All Nodes in the Hypeerweb
+        /// PostCondtion: Current Node is no longer a member of the Hypeerweb
         /// </summary>
         public void Remove()
         {
@@ -413,6 +413,17 @@ namespace Server
             cleanUp(lastnode, this);
         }
 
+
+        /// <summary>
+        /// Effectively finishes the process of removing node from the hypeerweb
+        /// 
+        /// Precondition: lastnode and node are valid members of the hypeerweb
+        ///                 lastnode and node have been preped for removal
+        /// Domain: all nodes in the hypeerweb
+        /// Postcondition: node is no longer a member of the hypeerweb and lastnode has taken its place.
+        /// </summary>
+        /// <param name="lastnode"> The last inserted Node in the hypeerweb</param>
+        /// <param name="node">Node to be removed from the hypeerweb</param>
         private static void cleanUp(Node lastnode, Node node)
         {
             Node.AllNodes.Remove(node.Id);
@@ -429,6 +440,18 @@ namespace Server
                 lastnode.OldFold = null;
         }
 
+        /// <summary>
+        /// Modifies the Folds as a result of removing Node from the hypeerweb
+        /// 
+        /// Precondition: lastnode and node are valid members of the hypeerweb.
+        ///                 lastnode is the last node inserted in the hypeerweb.
+        ///                  lastnode will hereafter no longer be a member of the hypeerweb.
+        /// Domain: All Nodes in the hypeerweb
+        /// Postcondition: The folds are such that the removal of lastnode will result in
+        ///                 a valid hypeerweb according to the specifications
+        /// </summary>
+        /// <param name="lastnode">Last Node inserted in the hypeerweb</param>
+        /// <param name="node">Node to be removed</param>
         private static void fixFolds(Node lastnode, Node node)
         {
             bool swapFold = true;
@@ -469,6 +492,18 @@ namespace Server
 
         }
 
+        /// <summary>
+        /// copy all neighbors from node into lastnode
+        /// 
+        /// Precondition: node and lastnode are both valid members of a hypeerweb
+        ///                 node is the Node to be removed from the hypeerweb
+        ///                  lastnode is the last inserted Node in the hypeerweb
+        /// Domain: All nodes in the hypeerweb
+        /// Postcondition: lastnode and node have effectively traded places
+        ///                 with respect to their neighbors.
+        /// </summary>
+        /// <param name="lastnode">the last Node inserted in the hypeerweb</param>
+        /// <param name="node">Node to be removed from the hypeerweb</param>
         private static void addNeighbors(Node lastnode, Node node)
         {
             foreach (Node n in node.Neighbors)
@@ -491,6 +526,16 @@ namespace Server
             lastnode.Id = temp;
         }
 
+        /// <summary>
+        /// Updates All the neighbors of the last Node inserted such that upon
+        /// removal of lastnode the hypeerweb is correct according to specification.
+        /// 
+        /// Precondition: lastnode is a valid member of a hypeerweb.
+        ///                lastnode is the last inserted Node in the hypeerweb.
+        /// Domain: the Last Node inserted in the hypeerweb.
+        /// Postcondition: lastnode will hereafter no longer be needed in the hypeerweb.
+        /// </summary>
+        /// <param name="lastnode">Last Node inserted in the hypeerweb</param>
         private static void redirectNeighbors(Node lastnode)
         {
             Node lastnodeParent = getNode(lastnode.ParentId, lastnode);
@@ -513,6 +558,15 @@ namespace Server
             lastnode.Down.Clear();
         }
 
+        /// <summary>
+        /// Removes node as a neighbor from its respective neighbors
+        /// 
+        /// Precondition: node is a valid member of a hypeerweb
+        /// Domain: all Nodes in the hypeerweb
+        /// Postcondition: node is no longer associated with its respective neighbors and
+        ///                 will hereafter be removed from the hypeerweb
+        /// </summary>
+        /// <param name="node">Node to be hereafter removed from the hypeerweb</param>
         private void removeFromNeighbors(Node node)
         {
             foreach (Node n in node.Neighbors)
@@ -536,8 +590,8 @@ namespace Server
         /// remove node n from the hypeerweb
         /// 
         /// PreCondition: The node is a member of a HypeerWeb
-        /// Domain:
-        /// PostCondtion:
+        /// Domain: All Nodes in the hypeerweb
+        /// PostCondtion: Node n is no longer a member of a Hypeerweb
         /// </summary>
         /// <param name="n">node to be removed</param>
         public void Remove(Node n)
@@ -548,9 +602,9 @@ namespace Server
         /// <summary>
         /// remove node with give Id from the hypeerweb
         /// 
-        /// PreCondition:
-        /// Domain:
-        /// PostCondtion:
+        /// PreCondition: Id is a valid Id for a Node in the HypeerWeb
+        /// Domain: All Positive integers that are Valid Id's in the Hypeerweb
+        /// PostCondtion: The Node specified by said Id is no longer a member of the Hypeerweb
         /// </summary>
         /// <param name="Id">Id of node to be removed</param>
         public void Remove(uint Id)
