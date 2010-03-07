@@ -76,5 +76,24 @@ namespace UnitTesting
             actual = Extensions.Distance(numb, otherNumb);
             Assert.AreEqual(expected, actual);
        }
+
+        [TestMethod()]
+        public void DimensionTest()
+        {
+            uint test1 = 4;
+            uint expected1 = 3;
+            uint test2 = 254;
+            uint expected2 = 8;
+            uint test3 = 1500;
+            uint expected3 = 11;
+
+            uint actual1 = Extensions.Dimension(test1);
+            uint actual2 = Extensions.Dimension(test2);
+            uint actual3 = Extensions.Dimension(test3);
+
+            Assert.AreEqual(expected1, actual1);
+            Assert.AreEqual(expected2, actual2);
+            Assert.AreEqual(expected3, actual3);
+        }
     }
 }
