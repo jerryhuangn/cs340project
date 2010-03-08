@@ -171,12 +171,13 @@ namespace UnitTesting
 
                 for (uint i = 0; i <= size; i++)
                 {
-                    RemoveNodeTest(size, i, expected);
+                    for (uint j = 0; j <= size; j++)
+                        RemoveNodeTest(size, i, j, expected);
                 }
             }
         }
 
-        private static void RemoveNodeTest(uint size, uint removeAt, string expected)
+        private static void RemoveNodeTest(uint size, uint removeFrom, uint removeAt, string expected)
         {
             //Refresh the whole hyperweb to size+1 nodes (including root)
             Node.AllNodes.Clear();
@@ -185,7 +186,7 @@ namespace UnitTesting
                 root.CreateNode();
 
             //Remove the node they wanted us to.
-            Node.AllNodes[removeAt].Remove(removeAt);
+            Node.AllNodes[removeFrom].Remove(removeAt);
 
             string actual = Node.DumpAllNodes();
             if (expected != actual)

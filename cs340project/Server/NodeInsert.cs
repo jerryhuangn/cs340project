@@ -426,9 +426,11 @@ namespace Server
         /// <param name="node">Node to be removed from the hypeerweb</param>
         private static void cleanUp(Node lastnode, Node node)
         {
-            Node.AllNodes.Remove(node.Id);
+            var key = Node.AllNodes.First(n => n.Value.Id == node.Id);
+            Node.AllNodes.Remove(key.Key);
 
             lastnode.Id = node.Id;
+            node.Id = uint.MaxValue;
             //lastnode.Fold = node.Fold == null? lastnode.Fold : node.Fold;
 
             if (lastnode == node || lastnode.Fold == null)
@@ -458,11 +460,21 @@ namespace Server
             Node lastnodeParent = getNode(lastnode.ParentId, lastnode);
             Node lastnodeFold = lastnode.Fold;
 
+            if (node.Fold.Fold == node)
+                node.Fold.Fold = lastnode;
+            if (node.OldFold != null && node.OldFold.Fold == node)
+                node.OldFold.Fold = lastnode;
+            if (node.Fold.OldFold != null && node.Fold.OldFold == node)
+                node.Fold.OldFold = lastnode;
+
             if (node.OldFold != null)
                 lastnode.OldFold = node.OldFold;
 
             if (lastnodeParent == node)
+            {
+                node.Fold.Fold = lastnode;
                 lastnodeParent = lastnode;
+            }
             if (lastnodeFold == node)
             {
                 lastnodeFold = lastnode;
@@ -472,7 +484,11 @@ namespace Server
             if (lastnode.Fold.OldFold == null)
                 lastnodeParent.OldFold = lastnodeFold;
             else
+            {
+                if (!swapFold)
+                    lastnodeFold.OldFold.Fold = lastnode;
                 lastnodeFold.OldFold = null;
+            }
 
             lastnodeFold.Fold = lastnodeParent;
 
@@ -489,7 +505,6 @@ namespace Server
                 lastnode.Fold = node.Fold;
                 //lastnode.OldFold = node.OldFold;
             }
-
         }
 
         /// <summary>
@@ -552,7 +567,8 @@ namespace Server
 
             foreach (Node n in lastnode.Down.Values)
             {
-                n.Up.Remove(lastnode.Id);
+                var key = n.Up.First(n1 => n1.Value.Id == lastnode.Id);
+                n.Up.Remove(key.Key);
             }
 
             lastnode.Down.Clear();
