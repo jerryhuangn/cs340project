@@ -77,9 +77,21 @@ namespace cs340project
 
         private void clickRemove(object sender, EventArgs e)
         {
-            Console.WriteLine("node not removed: is this method implemented?");
+            if (root.HasChild)
+            {
+                Random r = new Random(1234);
 
-            updateDisplay();
+                //uint nodeToRemove = (uint)r.Next(0, Node.AllNodes.Count);
+                uint nodeToRemove = (uint)r.Next(1, Node.AllNodes.Count);
+                root.Remove(nodeToRemove);
+                Console.WriteLine("removed node " + nodeToRemove + " from root");
+
+                updateDisplay();
+            }
+            else
+            {
+                Console.WriteLine("root node has no more children to delete");
+            }
         }
 
         private void clickBroadcast(object sender, EventArgs e)
