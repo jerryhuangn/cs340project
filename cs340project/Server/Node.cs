@@ -270,8 +270,8 @@ namespace Server
         /// <summary>
         /// Gets the node's Child Id. Purely Logical, node may not exist
         /// 
-        /// PreCondition: The caller's id's <see cref="Dimension"/> is 
-        /// greater-than or equal to the current node's id's <see cref="Dimension"/>
+        /// PreCondition: The caller's id's <see cref="Server.Extensions.Dimension"/> is 
+        /// greater-than or equal to the current node's id's <see cref="Server.Extensions.Dimension"/>
         /// Domain: All possible Node Ids
         /// PostCondition: The logical child in the same
         /// level of the HypeerWeb as the caller
