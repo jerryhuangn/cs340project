@@ -226,6 +226,14 @@ namespace Server
         #endregion
 
         /// <summary>
+        /// The Payload is the storage house for the visitor pattern.
+        /// When the node is visited, the Payload is used to record the 
+        /// actions.
+        /// </summary>
+        /// <value>The payload.</value>
+        public Dictionary<uint, object> Payload { get; set; }
+
+        /// <summary>
         /// Gets the node's parent Id.
         /// </summary>
         /// <value>The parent's Id.</value>
@@ -243,6 +251,10 @@ namespace Server
             }
         }
 
+        /// <summary>
+        /// Gets the next child id based on the current HypeerWeb.
+        /// </summary>
+        /// <value>The next child id.</value>
         public uint NextChildId
         {
             get
@@ -357,6 +369,7 @@ namespace Server
         /// <param name="id">The new node's ID number.</param>
         public Node(uint id)
         {
+            Payload = new Dictionary<uint, object>();
             Id = id;
             Node.AllNodes[id] = this;
         }
@@ -366,9 +379,14 @@ namespace Server
         /// </summary>
         public Node()
         {
+            Payload = new Dictionary<uint, object>();
             Id = 0;
             Node.AllNodes[Id] = this;
         }
 
+        public void Visit(Visitor vis, object obj)
+        {
+            vis.Visit(obj);
+        }
     }
 }
