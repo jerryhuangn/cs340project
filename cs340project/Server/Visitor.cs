@@ -11,8 +11,26 @@ namespace Server
     /// 
     /// Domain: Nodes in HypeerWeb (Specifically the Payload)
     /// </summary>
+    [Serializable]
     public class Visitor
     {
+        /// <summary>
+        /// A unique string identifying this message
+        /// </summary>
+        public string Id { get; set; }
+
+        /// <summary>
+        /// When was this visitor created initially?
+        /// </summary>
+        public DateTime Created { get; set; }
+
+        public Visitor()
+        {
+            Id = Guid.NewGuid().ToString();
+            Created = DateTime.Now;
+        }
+
+
         /// <summary>
         /// Visits the specified node. When visited, something happens
         /// and is recorded in the Payload. This is the base class
@@ -23,7 +41,7 @@ namespace Server
         /// it will correctly do its job
         /// </summary>
         /// <param name="obj">An object.</param>
-        public void Visit(object obj)
+        public virtual void Visit(Dictionary<string, object> Payload)
         {
         }
     }
@@ -31,8 +49,19 @@ namespace Server
     /// <summary>
     /// 
     /// </summary>
+    [Serializable]
     public class MessageVisitor : Visitor
     {
+        /// <summary>
+        /// The message to be delivered by this visitor
+        /// </summary>
+        public string Message { get; set; }
+        public MessageVisitor(string msg)
+            : base()
+        {
+            Message = msg;
+        }
+
         /// <summary>
         /// Visits the specified node. When visited, something happens
         /// and is recorded in the Payload. This is the base class
@@ -41,10 +70,11 @@ namespace Server
         /// Post: Whatever type of visitor the instance is,
         /// it will correctly do its job
         /// </summary>
-        /// <param name="obj">An object.</param>
-        public void Visit(object obj)
+        /// <param name="Payload">The information this visitor acts upon.</param>
+        public override void Visit(Dictionary<string, object> Payload)
         {
-            throw new NotImplementedException();
+            List<string> Messages = (List<string>)Payload["Messages"];
+            Messages.Add(this.Message);
         }
     }
 }

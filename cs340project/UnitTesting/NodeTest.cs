@@ -171,8 +171,7 @@ namespace UnitTesting
 
                 for (uint i = 0; i <= size; i++)
                 {
-                    for (uint j = 0; j <= size; j++)
-                        RemoveNodeTest(size, i, j, expected);
+                    RemoveNodeTest(size, i, (uint)(new Random().Next(0, (int)size)), expected);
                 }
             }
         }
@@ -314,6 +313,34 @@ namespace UnitTesting
             string actual = Node.DumpAllNodes();
             if (expected != actual)
                 Assert.Fail("Failed on size 4");
+        }
+
+        /// <summary>
+        ///A test for Broadcast
+        ///</summary>
+        [TestMethod()]
+        public void BroadcastTest()
+        {
+            //First, create a hyperweb with 6 nodes in it.
+            Node.AllNodes.Clear();
+            Node root = new Node();
+            root.CreateNode();
+            root.CreateNode();
+            root.CreateNode();
+            root.CreateNode();
+            root.CreateNode();
+
+            //Now create a message visitor and broadcast it.
+            MessageVisitor v = new MessageVisitor("First");
+            Node.AllNodes[(uint)(new Random().Next(0, 6))].Broadcast(v);
+
+            //Now make sure that all nodes have exactly one copy of that message.
+            foreach (Node n in Node.AllNodes.Values)
+            {
+                List<string> Messages = (List<string>)n.Payload["Messages"];
+                Assert.AreEqual(1, Messages.Count);
+                Assert.AreEqual("First", Messages[0]);
+            }
         }
     }
 }

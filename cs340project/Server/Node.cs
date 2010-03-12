@@ -231,7 +231,30 @@ namespace Server
         /// actions.
         /// </summary>
         /// <value>The payload.</value>
-        public Dictionary<uint, object> Payload { get; set; }
+        public Dictionary<string, object> Payload { get; set; }
+
+        /// <summary>
+        /// Accept a visitor and run it on this Node if it hasn't already been run here.
+        /// </summary>
+        /// <param name="v">The visitor to visit this Node</param>
+        /// <returns>true if the visitor was called, false if it has already been here.</returns>
+        public bool Accept(Visitor v)
+        {
+            //First, quit if the visitor has already been here.
+            foreach (Visitor old in RecentVisitors)
+            {
+                if (old.Id == v.Id)
+                    return false;
+            }
+
+            //Then do the actual visit itself.
+            v.Visit(this.Payload);
+
+            //And add it to the history.
+            this.RecentVisitors.Add(v);
+
+            return true;
+        }
 
         /// <summary>
         /// Gets the node's parent Id.
@@ -364,12 +387,23 @@ namespace Server
         public uint Id { get; private set; }
 
         /// <summary>
+        /// Visitors who recently visited this Node.
+        /// 
+        /// Used to prevent duplicate visits.
+        /// </summary>
+        public List<Visitor> RecentVisitors;
+
+        /// <summary>
         /// Construct a new Node in the hyperweb.
         /// </summary>
         /// <param name="id">The new node's ID number.</param>
         public Node(uint id)
         {
-            Payload = new Dictionary<uint, object>();
+            Payload = new Dictionary<string, object>();
+            Payload["Messages"] = new List<string>();
+
+            RecentVisitors = new List<Visitor>();
+
             Id = id;
             Node.AllNodes[id] = this;
         }
@@ -378,15 +412,20 @@ namespace Server
         /// Creates a new root node of a hyperweb.
         /// </summary>
         public Node()
+            : this(0)
         {
-            Payload = new Dictionary<uint, object>();
-            Id = 0;
-            Node.AllNodes[Id] = this;
         }
 
-        public void Visit(Visitor vis, object obj)
+        //Send v to all nodes in this node's hyperweb
+        public void Broadcast(Visitor v)
         {
-            vis.Visit(obj);
+            //First, run it on this Node.
+            if (this.Accept(v))
+            {
+                //Next, send it to all neighbors.
+                foreach (Node n in AllNeighbors)
+                    n.Broadcast(v);
+            }
         }
     }
 }
