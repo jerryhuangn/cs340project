@@ -427,5 +427,19 @@ namespace Server
                     n.Broadcast(v);
             }
         }
+
+        //send v to all nodes and return # of nodes visited
+        public uint BroadcastWithAck(Visitor v, uint num)
+        {
+            //First, run it on this Node.
+            if (this.Accept(v))
+            {
+                num++;
+                //Next, send it to all neighbors.
+                foreach (Node n in AllNeighbors)
+                    num = n.BroadcastWithAck(v,num);
+            }
+            return num;
+        }
     }
 }

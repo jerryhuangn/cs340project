@@ -316,23 +316,35 @@ namespace UnitTesting
         }
 
         /// <summary>
+        /// Test Broadcast and Broadcast with Acknowledgement Exhaustively
+        /// </summary>
+        [TestMethod()]
+        public void TestBroadcast()
+        {
+            for (int i = 0; i < 64; i++)
+            {
+                for (int j = 0; j < i; j++)
+                {
+                    BroadcastTest((uint)i, (uint)j);
+                    BroadcastWithAckTest((uint)i, (uint)j);
+                }
+            }
+        }
+
+        /// <summary>
         ///A test for Broadcast
         ///</summary>
-        [TestMethod()]
-        public void BroadcastTest()
+        public void BroadcastTest(uint size, uint startnode)
         {
             //First, create a hyperweb with 6 nodes in it.
             Node.AllNodes.Clear();
             Node root = new Node();
-            root.CreateNode();
-            root.CreateNode();
-            root.CreateNode();
-            root.CreateNode();
-            root.CreateNode();
+            for (int i = 0; i < size; i++)
+                root.CreateNode();
 
             //Now create a message visitor and broadcast it.
             MessageVisitor v = new MessageVisitor("First");
-            Node.AllNodes[(uint)(new Random().Next(0, 6))].Broadcast(v);
+            Node.AllNodes[startnode].Broadcast(v);
 
             //Now make sure that all nodes have exactly one copy of that message.
             foreach (Node n in Node.AllNodes.Values)
@@ -342,5 +354,32 @@ namespace UnitTesting
                 Assert.AreEqual("First", Messages[0]);
             }
         }
+
+        /// <summary>
+        /// A test for Broadcast With Acknowledgement
+        /// </summary>
+        public void BroadcastWithAckTest(uint size, uint startnode)
+        {
+            //First, create a hyperweb with 6 nodes in it.
+            Node.AllNodes.Clear();
+            Node root = new Node();
+            for (int i = 0; i < size; i++)
+                root.CreateNode();
+
+            //Now create a message visitor and broadcast it.
+            MessageVisitor v = new MessageVisitor("First");
+            uint Retval = Node.AllNodes[startnode].BroadcastWithAck(v,0);
+            uint Expected = (uint)Node.AllNodes.Count;
+
+            //Now make sure that all nodes have exactly one copy of that message.
+            foreach (Node n in Node.AllNodes.Values)
+            {
+                List<string> Messages = (List<string>)n.Payload["Messages"];
+                Assert.AreEqual(1, Messages.Count);
+                Assert.AreEqual("First", Messages[0]);
+                Assert.AreEqual(Expected, Retval);
+            }
+        }
+
     }
 }
