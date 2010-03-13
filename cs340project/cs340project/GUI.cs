@@ -77,9 +77,9 @@ namespace cs340project
 
         private void clickRemove(object sender, EventArgs e)
         {
-            if (root.HasChild)
+            if (!Node.emptyWeb(root))
             {
-                Random r = new Random(1234);
+                Random r = new Random();
 
                 //uint nodeToRemove = (uint)r.Next(0, Node.AllNodes.Count);
                 uint nodeToRemove = (uint)r.Next(1, Node.AllNodes.Count);
