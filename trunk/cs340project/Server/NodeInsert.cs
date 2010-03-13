@@ -85,7 +85,7 @@ namespace Server
         /// </summary>
         /// <param name="n">Any node in the web</param>
         /// <returns>True if the web is empty, false otherwise</returns>
-        private static bool emptyWeb(Node n)
+        public static bool emptyWeb(Node n)
         {
             if (n.Id == 0 && n.Neighbors.Count == 0)
                 return true;
