@@ -416,6 +416,12 @@ namespace Server
         {
         }
 
+        public void Sent(Visitor v, uint id)
+        {
+            var node = getNode(id, this);
+            node.Accept(v);
+        }
+
         //Send v to all nodes in this node's hyperweb
         public void Broadcast(Visitor v)
         {
