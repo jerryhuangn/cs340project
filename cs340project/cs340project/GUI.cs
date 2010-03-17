@@ -97,7 +97,8 @@ namespace cs340project
         private void clickBroadcast(object sender, EventArgs e)
         {
             Console.WriteLine("message not broadcast: is this method implemented?");
-            //Console.WriteLine("broadcasting message: " + textBoxMessage.Text);
+            uint numberVisited = root.BroadcastWithAck(new Visitor(), 0);
+            Console.WriteLine("message: " + textBoxMessage.Text + " broadcasted to " + numberVisited + "  nodes");            
         }
 
         private void clickSend(object sender, EventArgs e)
