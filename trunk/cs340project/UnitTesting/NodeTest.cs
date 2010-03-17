@@ -319,6 +319,51 @@ namespace UnitTesting
         /// Test Broadcast and Broadcast with Acknowledgement Exhaustively
         /// </summary>
         [TestMethod()]
+        public void TestSend()
+        {
+            for (int i = 0; i < 64; i++)
+            {
+                for (int j = 0; j < i; j++)
+                {
+                    VisitTest((uint)i, (uint)j);
+                }
+            }
+        }
+
+        /// <summary>
+        ///A test for Broadcast
+        ///</summary>
+        public void VisitTest(uint size, uint startnode)
+        {
+            //First, create a hyperweb with 6 nodes in it.
+            Node.AllNodes.Clear();
+            Node root = new Node();
+            for (int i = 0; i < size; i++)
+                root.CreateNode();
+
+            //Now create a message visitor and broadcast it.
+            MessageVisitor v = new MessageVisitor("First");
+
+            uint rand = (uint)(new Random(12123)).Next(0, (int)size - 1);
+
+            Node.AllNodes[startnode].Sent(v, rand);
+
+            //Now make sure that all nodes have exactly one copy of that message.
+            foreach (Node n in Node.AllNodes.Values)
+            {
+                if (n.Id == rand)
+                {
+                    List<string> Messages = (List<string>)n.Payload["Messages"];
+                    Assert.AreEqual(1, Messages.Count);
+                    Assert.AreEqual("First", Messages[0]);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Test Broadcast and Broadcast with Acknowledgement Exhaustively
+        /// </summary>
+        [TestMethod()]
         public void TestBroadcast()
         {
             for (int i = 0; i < 64; i++)
@@ -331,9 +376,7 @@ namespace UnitTesting
             }
         }
 
-        /// <summary>
-        ///A test for Broadcast
-        ///</summary>
+
         public void BroadcastTest(uint size, uint startnode)
         {
             //First, create a hyperweb with 6 nodes in it.
@@ -368,7 +411,7 @@ namespace UnitTesting
 
             //Now create a message visitor and broadcast it.
             MessageVisitor v = new MessageVisitor("First");
-            uint Retval = Node.AllNodes[startnode].BroadcastWithAck(v,0);
+            uint Retval = Node.AllNodes[startnode].BroadcastWithAck(v, 0);
             uint Expected = (uint)Node.AllNodes.Count;
 
             //Now make sure that all nodes have exactly one copy of that message.
