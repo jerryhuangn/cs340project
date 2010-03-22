@@ -56,13 +56,11 @@ namespace Server
 
         #region Global set of nodes; debugging
 
-
-        /// <summary>
-        /// Dictionary that holds all the Nodes.  Used for 
-        /// dumping the web as a string.
-        /// </summary>
-        public static Dictionary<uint, Node> AllNodes = new Dictionary<uint, Node>();
-
+        public uint HypeerWebSize()
+        {
+            Node n = Node.insertionPoint(this);
+            return n.NextChildId;
+        }
 
         /// <summary>
         /// Dumps all nodes into a string representation of the HypeerWeb.
@@ -72,14 +70,14 @@ namespace Server
         /// is iterated over to produces a string representation of the web
         /// </summary>
         /// <returns>A string representation of the web</returns>
-        public static string DumpAllNodes()
+        public string DumpAllNodes()
         {
             StringBuilder ret = new StringBuilder();
-            var nodes = from n in Node.AllNodes.Values
-                       orderby n.Id ascending
-                       select n;
-            foreach (var node in nodes)
+
+            uint HypeerWebSize = this.HypeerWebSize();
+            for (uint i = 0; i < HypeerWebSize; i++)
             {
+                Node node = Node.getNode(i, this);
                 ret.Append(node.ToString());
                 ret.AppendLine("------------------------------------");
             }
@@ -360,10 +358,7 @@ namespace Server
             get
             {
                 if (Neighbors.Count == 0)
-                {
-                    Debug.Assert(Node.AllNodes.Count == 1);
                     return NodeState.Largest;
-                }
                 if (Down.Count > 0)
                     return NodeState.Down;
                 if (Up.Count > 0)
@@ -405,7 +400,6 @@ namespace Server
             RecentVisitors = new List<Visitor>();
 
             Id = id;
-            Node.AllNodes[id] = this;
         }
 
         /// <summary>

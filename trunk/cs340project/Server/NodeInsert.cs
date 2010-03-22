@@ -426,9 +426,6 @@ namespace Server
         /// <param name="node">Node to be removed from the hypeerweb</param>
         private static void cleanUp(Node lastnode, Node node)
         {
-            var key = Node.AllNodes.First(n => n.Value.Id == node.Id);
-            Node.AllNodes.Remove(key.Key);
-
             lastnode.Id = node.Id;
             node.Id = uint.MaxValue;
             //lastnode.Fold = node.Fold == null? lastnode.Fold : node.Fold;

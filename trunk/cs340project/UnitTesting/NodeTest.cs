@@ -98,8 +98,6 @@ namespace UnitTesting
         /// <summary>
         /// Used to create the test documents
         /// </summary>
-        [TestMethod()]
-        [DeploymentItem("Server.dll")]
         public void InsertNodeTestCreate()
         {
             for (uint size = 0; size < 63; size++)
@@ -111,7 +109,6 @@ namespace UnitTesting
         private void InsertNodeTestCreate(uint size)
         {
             //Refresh the whole hyperweb to size+1 nodes (including root)
-            Node.AllNodes.Clear();
             Node root = new Node();
 
             var curStat = root.CurrentState;
@@ -119,9 +116,9 @@ namespace UnitTesting
                 root.CreateNode();
 
             //And add the node n+2, at insertion point i.
-            Node.AllNodes[0].CreateNode();
+            root.CreateNode();
 
-            string actual = Node.DumpAllNodes();
+            string actual = root.DumpAllNodes();
 
             TextWriter tr = new StreamWriter(File.OpenWrite(@"C:\Users\joel.day3\Documents\Visual Studio 2008\Projects\school\cs340project\cs340project\UnitTesting\TestNodeData\" + (size + 1).ToString() + "Nodes.txt"));
             tr.Write(actual);
@@ -140,17 +137,17 @@ namespace UnitTesting
         private static void InsertNodeTest(uint size, uint insertAt, string expected)
         {
             //Refresh the whole hyperweb to size+1 nodes (including root)
-            Node.AllNodes.Clear();
             Node root = new Node();
 
             var curStat = root.CurrentState;
+            List<Node> AllNodes = new List<Node>(new Node[] { root });
             for (uint j = 0; j < size; j++)
-                root.CreateNode();
+                AllNodes.Add(root.CreateNode());
 
             //And add the node n+2, at insertion point i.
-            Node.AllNodes[insertAt].CreateNode();
+            AllNodes[(int)insertAt].CreateNode();
 
-            string actual = Node.DumpAllNodes();
+            string actual = root.DumpAllNodes();
             if (expected != actual)
                 Assert.Fail("Failed on size " + size + ", insertAt " + insertAt + ":\n\n" + expected + "\n\n" + actual);
         }
@@ -179,15 +176,15 @@ namespace UnitTesting
         private static void RemoveNodeTest(uint size, uint removeFrom, uint removeAt, string expected)
         {
             //Refresh the whole hyperweb to size+1 nodes (including root)
-            Node.AllNodes.Clear();
             Node root = new Node();
+            List<Node> AllNodes = new List<Node>(new Node[] { root }); 
             for (uint j = 0; j < size; j++)
-                root.CreateNode();
+                AllNodes.Add(root.CreateNode());
 
             //Remove the node they wanted us to.
-            Node.AllNodes[removeFrom].Remove(removeAt);
+            AllNodes[(int)removeFrom].Remove(removeAt);
 
-            string actual = Node.DumpAllNodes();
+            string actual = root.DumpAllNodes();
             if (expected != actual)
                 Assert.Fail("Failed on size " + size + ", removeAt " + removeAt);
         }
@@ -302,15 +299,15 @@ namespace UnitTesting
      .GetManifestResourceStream("UnitTesting.TestNodeData.2Nodes.txt"));
             string expected = tr.ReadToEnd();
 
-            Node.AllNodes.Clear();
             Node root = new Node();
+            List<Node> AllNodes = new List<Node>(new Node[] { root }); 
             for (uint j = 0; j < 3; j++)
-                root.CreateNode();
+                AllNodes.Add(root.CreateNode());
 
             //Remove the node they wanted us to.
-            Node.AllNodes[3].Remove(3);
+            AllNodes[3].Remove(3);
 
-            string actual = Node.DumpAllNodes();
+            string actual = root.DumpAllNodes();
             if (expected != actual)
                 Assert.Fail("Failed on size 4");
         }
@@ -336,20 +333,20 @@ namespace UnitTesting
         public void VisitTest(uint size, uint startnode)
         {
             //First, create a hyperweb with 6 nodes in it.
-            Node.AllNodes.Clear();
             Node root = new Node();
+            List<Node> AllNodes = new List<Node>(new Node[] { root }); 
             for (int i = 0; i < size; i++)
-                root.CreateNode();
+                AllNodes.Add(root.CreateNode());
 
             //Now create a message visitor and broadcast it.
             MessageVisitor v = new MessageVisitor("First");
 
             uint rand = (uint)(new Random(12123)).Next(0, (int)size - 1);
 
-            Node.AllNodes[startnode].Sent(v, rand);
+            AllNodes[(int)startnode].Sent(v, rand);
 
             //Now make sure that all nodes have exactly one copy of that message.
-            foreach (Node n in Node.AllNodes.Values)
+            foreach (Node n in AllNodes)
             {
                 if (n.Id == rand)
                 {
@@ -380,17 +377,17 @@ namespace UnitTesting
         public void BroadcastTest(uint size, uint startnode)
         {
             //First, create a hyperweb with 6 nodes in it.
-            Node.AllNodes.Clear();
             Node root = new Node();
+            List<Node> AllNodes = new List<Node>(new Node[] { root }); 
             for (int i = 0; i < size; i++)
-                root.CreateNode();
+                AllNodes.Add(root.CreateNode());
 
             //Now create a message visitor and broadcast it.
             MessageVisitor v = new MessageVisitor("First");
-            Node.AllNodes[startnode].Broadcast(v);
+            AllNodes[(int)startnode].Broadcast(v);
 
             //Now make sure that all nodes have exactly one copy of that message.
-            foreach (Node n in Node.AllNodes.Values)
+            foreach (Node n in AllNodes)
             {
                 List<string> Messages = (List<string>)n.Payload["Messages"];
                 Assert.AreEqual(1, Messages.Count);
@@ -404,18 +401,18 @@ namespace UnitTesting
         public void BroadcastWithAckTest(uint size, uint startnode)
         {
             //First, create a hyperweb with 6 nodes in it.
-            Node.AllNodes.Clear();
             Node root = new Node();
+            List<Node> AllNodes = new List<Node>(new Node[] { root }); 
             for (int i = 0; i < size; i++)
-                root.CreateNode();
+                AllNodes.Add(root.CreateNode());
 
             //Now create a message visitor and broadcast it.
             MessageVisitor v = new MessageVisitor("First");
-            uint Retval = Node.AllNodes[startnode].BroadcastWithAck(v, 0);
-            uint Expected = (uint)Node.AllNodes.Count;
+            uint Retval = AllNodes[(int)startnode].BroadcastWithAck(v, 0);
+            uint Expected = (uint)AllNodes.Count;
 
             //Now make sure that all nodes have exactly one copy of that message.
-            foreach (Node n in Node.AllNodes.Values)
+            foreach (Node n in AllNodes)
             {
                 List<string> Messages = (List<string>)n.Payload["Messages"];
                 Assert.AreEqual(1, Messages.Count);
