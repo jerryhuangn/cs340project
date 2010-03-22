@@ -64,7 +64,7 @@ namespace cs340project
 
         private void updateDisplay()
         {
-            textBoxDisplay.Text = Node.DumpAllNodes();
+            textBoxDisplay.Text = root.DumpAllNodes();
         }
 
         private void clickAdd(object sender, EventArgs e)
@@ -82,7 +82,7 @@ namespace cs340project
                 Random r = new Random();
 
                 //uint nodeToRemove = (uint)r.Next(0, Node.AllNodes.Count);
-                uint nodeToRemove = (uint)r.Next(1, Node.AllNodes.Count);
+                uint nodeToRemove = (uint)r.Next(1, (int)root.HypeerWebSize());
                 root.Remove(nodeToRemove);
                 Console.WriteLine("removed node " + nodeToRemove + " from root");
 
