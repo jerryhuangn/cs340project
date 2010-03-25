@@ -11,17 +11,19 @@
 
 ==General==
 * [http://cs340project.googlecode.com/files/340%20project%20UML.jpg Most Recent UML]
-* Documentation (API) [http://cs340project.googlecode.com/files/Documentation.chm]
+
+* [http://cs340project.googlecode.com/files/Documentation.chm Documentation (API) ]
 
 ==Phase 1 (Invoke a command)==
-* UML Diagram [http://cs340project.googlecode.com/files/Part1%20UML.png]
-* Use Case [http://cs340project.googlecode.com/files/Part1%20Use%20Case.png]
+* [http://cs340project.googlecode.com/files/Part1%20UML.png UML Diagram ]
+
+* [http://cs340project.googlecode.com/files/Part1%20Use%20Case.png Use Case ]
 
 ==Hypeerweb==
-* UML Diagram [http://cs340project.googlecode.com/files/340%20project%20UML.jpg]
+* [http://cs340project.googlecode.com/files/340%20project%20UML.jpg UML Diagram]
 
 ==Remove A Node==
-* Use Case [http://cs340project.googlecode.com/files/Remove_Node_Use_Case.png]
+* [http://cs340project.googlecode.com/files/Remove_Node_Use_Case.png Use Case]
 
 ==Broadcast==
 
