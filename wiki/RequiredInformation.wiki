@@ -10,7 +10,7 @@
 =Project Downloads=
 
 ==General==
-* Most Recent UML http://cs340project.googlecode.com/files/340%20project%20UML.jpg
+* [http://cs340project.googlecode.com/files/340%20project%20UML.jpg Most Recent UML]
 * Documentation (API) [http://cs340project.googlecode.com/files/Documentation.chm]
 
 ==Phase 1 (Invoke a command)==
