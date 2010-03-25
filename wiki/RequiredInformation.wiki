@@ -7,7 +7,7 @@
 ||Email||[mailto:thetjyoung@gmail.com thetjyoung@gmail.com]||[mailto:squebe@byu.edu squebe@byu.edu]||[mailto:BeanDog@gmail.com BeanDog@gmail.com]||[mailto:joel.day@byu.net joel.day@byu.net]||
 ||Phone||801-318-2628||330-205-8800||xxx-xxx-xxxx||801-712-2617||
 
-=Project Downloads=
+=Project Details=
 
 ==General==
 * [http://cs340project.googlecode.com/files/340%20project%20UML.jpg Most Recent UML]
