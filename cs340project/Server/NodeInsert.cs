@@ -210,7 +210,7 @@ namespace Server
                     // My parent and Down min
                     break;
                 case NodeState.Largest:
-                    if (perfectCube(n))
+                    if (n.Id == 0 || perfectCube(n))
                     {
                         ret.Add(getNode(0, n));
                         ret.Add(ret[0]);
@@ -241,6 +241,9 @@ namespace Server
         /// <returns>The node with web id == p</returns>
         private static Node getNode(uint p, Node n)
         {
+            if (n.Id == p)
+                return n;
+
             var nearest = (from node in n.AllNeighbors
                            orderby node.Id.Distance(p) ascending
                            select node).First();
@@ -396,6 +399,8 @@ namespace Server
         /// </summary>
         public void Remove()
         {
+            if (emptyWeb(this))
+                return;
             Node insert = insertionPoint(this);
             uint lastid = insert.NextChildId - 1;
             Node lastnode = getNode(lastid, this);

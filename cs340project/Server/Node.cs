@@ -127,6 +127,13 @@ namespace Server
             if (OldFold != null)
                 ret.AppendLine("OldFold:\t" + OldFold.Id.ToString());
 
+            List<string> Messages = (List<string>)Payload["Messages"];
+            if (Messages.Count > 0)
+            {
+                ret.AppendLine("Payload:\t" + Payload.Count);
+                foreach (var msg in Messages)
+                    ret.AppendLine("\t" + msg);
+            }
             return ret.ToString();
         }
         #endregion
@@ -282,6 +289,8 @@ namespace Server
             {
                 if (Id == 0)
                 {
+                    if (Fold == null)
+                        return 1;
                     return Fold.Id + 1;
                 }
 
@@ -298,6 +307,15 @@ namespace Server
                 }
                 return newId;
             }
+        }
+
+        public Node GetNode(uint id)
+        {
+            try
+            {
+                return Node.getNode(id, this);
+            }
+            catch { return null; }
         }
 
         /// <summary>
@@ -410,7 +428,7 @@ namespace Server
         {
         }
 
-        public void Sent(Visitor v, uint id)
+        public void Send(Visitor v, uint id)
         {
             var node = getNode(id, this);
             node.Accept(v);
@@ -437,7 +455,7 @@ namespace Server
                 num++;
                 //Next, send it to all neighbors.
                 foreach (Node n in AllNeighbors)
-                    num = n.BroadcastWithAck(v,num);
+                    num = n.BroadcastWithAck(v, num);
             }
             return num;
         }
