@@ -1,0 +1,39 @@
+﻿find the deletion point
+	if the hypercube is imperfect
+		find the largest node (insertion point)
+		find node one less than the largest node
+		find deletion point parents largest neighbor (child)
+	else
+		insertion point is node zero
+		deletion point is node zero's fold or the largest node in the cude
+	
+disconnect deletion point (dp)
+	find pseudoparent => p
+	find all neighbors but pseudoparent => np
+	
+	disconnect p (np, fold)
+		delete do as neighbor from p
+		set up ointers from p to np
+		if (fold == p.fold)
+			do nothing
+		else
+			old fold = fold
+			
+	for all np
+		disconnect n (parent, dp)
+			remove dp from n's neighbors
+			add parent to n's neighbors
+	
+	disconnect from fold
+		disconnect fold (parent)
+			fold's fold = parent
+
+kill node to be deleted
+	if (dp != node that wants to be deleted)
+		node to be deleted's contents = dp.contents
+		dp import all info from node to be deleted
+	
+	dp for all neighbors, up pts, d pts, fold, oldFold
+		replace every point to the deleted node with me (dp)
+	
+	
