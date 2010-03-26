@@ -343,7 +343,7 @@ namespace UnitTesting
 
             uint rand = (uint)(new Random(12123)).Next(0, (int)size - 1);
 
-            AllNodes[(int)startnode].Sent(v, rand);
+            AllNodes[(int)startnode].Send(v, rand);
 
             //Now make sure that all nodes have exactly one copy of that message.
             foreach (Node n in AllNodes)

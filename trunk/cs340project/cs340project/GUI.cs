@@ -14,6 +14,7 @@ namespace cs340project
     public partial class GUI : Form
     {
         Node root;
+        Node selected;
 
         public GUI()
         {
@@ -65,6 +66,48 @@ namespace cs340project
         private void updateDisplay()
         {
             textBoxDisplay.Text = root.DumpAllNodes();
+
+            SplitDisplay.Panel1.Controls.Clear();
+            CbListOfNodes.Items.Clear();
+
+            for (uint i = 0; i < root.HypeerWebSize(); i++)
+            {
+                CbListOfNodes.Items.Add(i);
+
+                Button c = new Button();
+
+                c.Width = 30;
+                c.Height = 30;
+
+                int tempLeng = (SplitDisplay.Panel1.Width) / 35;
+                int tempId = (int)i;
+                int y = 0;
+
+                while (tempId >= tempLeng)
+                {
+                    y += 35;
+                    tempId -= tempLeng;
+                }
+
+                int x = 35 * tempId;
+
+                c.Location = new Point(x, y);
+                c.Text = i + "";
+
+                c.Click += new EventHandler(c_Click);
+                SplitDisplay.Panel1.Controls.Add(c);
+            }
+            CbListOfNodes.SelectedIndex = -1;
+            CbListOfNodes.Text = "";
+        }
+
+        void c_Click(object sender, EventArgs e)
+        {
+            var b = (Button)sender;
+            selected = root.GetNode(uint.Parse(b.Text));
+            TbNodeInfo.Text = selected.ToString();
+
+            TcNodeTabs.Enabled = true;
         }
 
         private void clickAdd(object sender, EventArgs e)
@@ -96,16 +139,70 @@ namespace cs340project
 
         private void clickBroadcast(object sender, EventArgs e)
         {
-            Console.WriteLine("message not broadcast: is this method implemented?");
-            uint numberVisited = root.BroadcastWithAck(new MessageVisitor("textBoxMessage.Text"), 0);
-            Console.WriteLine("message: " + textBoxMessage.Text + " broadcasted to " + numberVisited + "  nodes");            
+            //Console.WriteLine("message not broadcast: is this method implemented?");
+            uint numberVisited = root.BroadcastWithAck(new MessageVisitor(textBoxMessage.Text), 0);
+            Console.WriteLine("message: " + textBoxMessage.Text + " broadcasted to " + numberVisited + "  nodes");
         }
 
         private void clickSend(object sender, EventArgs e)
         {
             //Console.WriteLine("message not sent: textBoxMessage.Text");
-            root.Sent(new MessageVisitor("textBoxMessage.Text"), 0);
+            root.Send(new MessageVisitor(textBoxMessage.Text), 0);
             Console.WriteLine("sending message: " + textBoxMessage.Text);
+        }
+
+        private void GUI_ResizeEnd(object sender, EventArgs e)
+        {
+            updateDisplay();
+        }
+
+        private void BtAddNodeFromNode_Click(object sender, EventArgs e)
+        {
+            var addedNode = selected.CreateNode();
+            Console.WriteLine("added node " + addedNode.Id + " to " + selected.Id);
+            updateDisplay();
+        }
+
+        private void BtRemoveThisNode_Click(object sender, EventArgs e)
+        {
+            Console.WriteLine("removed node " + selected.Id + " from self");
+            selected.Remove();
+            selected = null;
+
+            TcNodeTabs.Enabled = false;
+            TbNodeInfo.Text = "";
+            updateDisplay();
+        }
+
+        private void btBroadcastMessageFromNode_Click(object sender, EventArgs e)
+        {
+            if (cbAckBroadcastFrom.Checked)
+                MessageBox.Show("Number of nodes reached: " + selected.BroadcastWithAck(new MessageVisitor(tbBroadCastFromNode.Text), 0));
+            else
+                selected.Broadcast(new MessageVisitor(tbBroadCastFromNode.Text));
+            updateDisplay();
+        }
+
+        private void BtRmove_Click(object sender, EventArgs e)
+        {
+            if (CbListOfNodes.SelectedIndex < 0)
+                MessageBox.Show("Please select a node from the dropdown");
+            else
+                selected.Remove((uint)CbListOfNodes.SelectedIndex);
+            selected = null;
+
+            TcNodeTabs.Enabled = false;
+            TbNodeInfo.Text = "";
+            updateDisplay();
+        }
+
+        private void btSendMessageFromNode_Click(object sender, EventArgs e)
+        {
+            if (CbListOfNodes.SelectedIndex < 0)
+                MessageBox.Show("Please select a node from the dropdown");
+            else
+                selected.Send(new MessageVisitor(tbMessageFromNode.Text), (uint)CbListOfNodes.SelectedIndex);
+            updateDisplay();
         }
     }
 }
