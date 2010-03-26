@@ -80,6 +80,9 @@ namespace UnitTesting
             Assert.Inconclusive("Verify the correctness of this test method.");
         }
 
+        /// <summary>
+        /// "Get the proxy" test.
+        /// </summary>
         [TestMethod()]
         public void GetProxyTest()
         {

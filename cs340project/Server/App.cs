@@ -42,7 +42,13 @@ namespace cs340project
 
         #endregion
 
+        /// <summary>
+        /// The newtork hub for the current App
+        /// </summary>
         public NetworkHub Network;
+        /// <summary>
+        /// The current App's Name
+        /// </summary>
         public string Name;
 
         /// <summary>
@@ -80,9 +86,21 @@ namespace cs340project
         [Serializable]
         public class Command
         {
+            /// <summary>
+            /// The Object's Id
+            /// </summary>
             public int? ObjectId;
+            /// <summary>
+            /// The Command's Name
+            /// </summary>
             public string Name;
+            /// <summary>
+            /// The parameters for the Command being sent
+            /// </summary>
             public object[] Parameters;
+            /// <summary>
+            /// The Id of the Command
+            /// </summary>
             public string Id;
 
             /// <summary>
@@ -106,7 +124,13 @@ namespace cs340project
         [Serializable]
         public class Response
         {
+            /// <summary>
+            /// The Response Id
+            /// </summary>
             public string Id;
+            /// <summary>
+            /// The Response's Return Value
+            /// </summary>
             public object ReturnValue;
 
             /// <summary>

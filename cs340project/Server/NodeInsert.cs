@@ -167,12 +167,12 @@ namespace Server
         /// <summary>
         /// Goes from any node in the web and "goes right" based on node state.
         /// 
-        /// If the Node State is Up, returns the <see cref="searchRange()"/> of the smallest neighbor
+        /// If the Node State is Up, returns the <see cref="searchRange"/> of the smallest neighbor
         /// and the largest Up node
         /// 
-        /// if Down node, return the <see cref="searchRange()"/> of parent and smallest Down node
+        /// if Down node, return the <see cref="searchRange"/> of parent and smallest Down node
         /// 
-        /// if Largest, check for <see cref="perfectCube()"/> and if it is, returns <see cref="searchRange()"/> 
+        /// if Largest, check for <see cref="perfectCube"/> and if it is, returns <see cref="searchRange()"/> 
         /// with 1 and 2 being the root node.  Else, returns the fold.
         /// 
         /// Else returns the Largest Neighbor

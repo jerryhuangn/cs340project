@@ -107,6 +107,7 @@ namespace cs340project
         /// <typeparam name="T">The type of object to be proxified</typeparam>
         /// <param name="server">The server for the <see cref="Proxy"/>. Can be either IP or Fully Qualified Domain Name</param>
         /// <param name="port">The port the <see cref="Proxy"/> communicates over.</param>
+        /// <param name="AppName">Name of the app.</param>
         /// <param name="id">The id of the <see cref="Proxy"/>.</param>
         /// <returns>A <see cref="Proxy"/> of type T</returns>
         public static T GetProxy<T>(string server, int port, string AppName, int id)
