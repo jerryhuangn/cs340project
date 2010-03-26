@@ -24,6 +24,9 @@ namespace Server
         /// </summary>
         public DateTime Created { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Visitor"/> class.
+        /// </summary>
         public Visitor()
         {
             Id = Guid.NewGuid().ToString();
@@ -40,7 +43,7 @@ namespace Server
         /// Post: Whatever type of visitor the instance is, 
         /// it will correctly do its job
         /// </summary>
-        /// <param name="obj">An object.</param>
+        /// <param name="Payload">The Payload.</param>
         public virtual void Visit(Dictionary<string, object> Payload)
         {
         }
@@ -56,6 +59,10 @@ namespace Server
         /// The message to be delivered by this visitor
         /// </summary>
         public string Message { get; set; }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MessageVisitor"/> class.
+        /// </summary>
+        /// <param name="msg">The MSG.</param>
         public MessageVisitor(string msg)
             : base()
         {

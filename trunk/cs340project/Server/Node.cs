@@ -56,6 +56,10 @@ namespace Server
 
         #region Global set of nodes; debugging
 
+        /// <summary>
+        /// Gets the size of the web.
+        /// </summary>
+        /// <returns>The size of the HypeerWeb</returns>
         public uint HypeerWebSize()
         {
             Node n = Node.insertionPoint(this);

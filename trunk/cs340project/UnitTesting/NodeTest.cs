@@ -374,6 +374,11 @@ namespace UnitTesting
         }
 
 
+        /// <summary>
+        /// Tests the Broadcast method.
+        /// </summary>
+        /// <param name="size">The size.</param>
+        /// <param name="startnode">The startnode.</param>
         public void BroadcastTest(uint size, uint startnode)
         {
             //First, create a hyperweb with 6 nodes in it.

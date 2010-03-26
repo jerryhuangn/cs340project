@@ -36,8 +36,17 @@ namespace cs340project
             listener.BeginAcceptTcpClient(new AsyncCallback(Accept), null);
         }
 
+        /// <summary>
+        /// Delegate for Networking
+        /// </summary>
         public delegate void NetworkHubClientEvent(TcpClient client);
+        /// <summary>
+        /// Occurs when [new connection].
+        /// </summary>
         public event NetworkHubClientEvent NewConnection = null;
+        /// <summary>
+        /// Occurs when [disconnected].
+        /// </summary>
         public event NetworkHubClientEvent Disconnected = null;
 
         /// <summary>
@@ -97,13 +106,31 @@ namespace cs340project
         Dictionary<string, MemoryStream> clientMemoryStreams = new Dictionary<string, MemoryStream>();
         const int clientBufferSize = 1024;
 
+        /// <summary>
+        /// Delegate for the NetworkHub when it sends a command
+        /// </summary>
         public delegate void NetworkHubCommandEvent(TcpClient client, App.Command cmd);
+        /// <summary>
+        /// Occurs when [command received].
+        /// </summary>
         public event NetworkHubCommandEvent CommandReceived = null;
 
+        /// <summary>
+        /// Delegate for the NetworkHub when it receives the Response
+        /// </summary>
         public delegate void NetworkHubResponseEvent(TcpClient client, App.Response cmd);
+        /// <summary>
+        /// Occurs when [response received].
+        /// </summary>
         public event NetworkHubResponseEvent ResponseReceived = null;
 
+        /// <summary>
+        /// Delegate for the NetworkHub when it sends a message
+        /// </summary>
         public delegate void NetworkHubMessageEvent(TcpClient client, string msg);
+        /// <summary>
+        /// Occurs when [message received].
+        /// </summary>
         public event NetworkHubMessageEvent MessageReceived = null;
 
         /// <summary>
