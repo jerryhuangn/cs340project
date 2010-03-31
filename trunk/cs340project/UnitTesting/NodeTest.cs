@@ -182,9 +182,9 @@ namespace UnitTesting
                 AllNodes.Add(root.CreateNode());
 
             //Remove the node they wanted us to.
-            AllNodes[(int)removeFrom].Remove(removeAt);
+            var n = AllNodes[(int)removeFrom].Remove(removeAt);
 
-            string actual = root.DumpAllNodes();
+            string actual = n.DumpAllNodes();
             if (expected != actual)
                 Assert.Fail("Failed on size " + size + ", removeAt " + removeAt);
         }
