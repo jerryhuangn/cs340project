@@ -397,10 +397,10 @@ namespace Server
         /// PreCondition: Current Node is a member of the Hypeerweb
         /// PostCondtion: Current Node is no longer a member of the Hypeerweb
         /// </summary>
-        public void Remove()
+        public Node Remove()
         {
             if (emptyWeb(this))
-                return;
+                return this;
             Node insert = insertionPoint(this);
             uint lastid = insert.NextChildId - 1;
             Node lastnode = getNode(lastid, this);
@@ -411,13 +411,117 @@ namespace Server
             // Me's pointers put into last insert.
             // 
 
-            fixFolds(lastnode, this);
-            redirectNeighbors(lastnode);
-            removeFromNeighbors(this);
-            addNeighbors(lastnode, this);
-            cleanUp(lastnode, this);
+            disconnectDeletionPoint(lastnode);
+
+            deleteNode(this, lastnode);
+
+            if (this == lastnode)
+                return insert;
+            return lastnode;
         }
 
+        private static void deleteNode(Node node, Node lastnode)
+        {
+            if (node != lastnode)
+            {
+                lastnode.Neighbors.Clear();
+                lastnode.Up.Clear();
+                lastnode.Down.Clear();
+
+                foreach (var n in node.Neighbors)
+                {
+                    n.Neighbors.Remove(node);
+                    n.Neighbors.Add(lastnode);
+                    lastnode.Neighbors.Add(n);
+                }
+
+                lastnode.Down = new Dictionary<uint, Node>(node.Down);
+                foreach (var n in node.Down.Values)
+                {
+                    n.Up.Remove(node.Id);
+                    n.Up.Add(node.Id, lastnode);
+                }
+
+                lastnode.Up = new Dictionary<uint, Node>(node.Up);
+                foreach (var n in node.Up.Values)
+                {
+                    n.Down.Remove(node.SurrogateId(n.Id));
+                    n.Down.Add(node.SurrogateId(n.Id), lastnode);
+                }
+
+                lastnode.Fold = node.Fold;
+                lastnode.OldFold = node.OldFold;
+
+                if (node.Fold != null && node.Fold.Fold.Id == node.Id)
+                    node.Fold.Fold = lastnode;
+
+                if (node.OldFold != null && node.OldFold.Fold.Id == node.Id)
+                    node.OldFold.Fold = lastnode;
+
+                if (node.Fold != null && node.Fold.OldFold != null && node.Fold.OldFold.Id == node.Id)
+                    node.Fold.OldFold = lastnode;
+
+                lastnode.Id = node.Id;
+
+            }
+            node.Id = uint.MaxValue;
+        }
+
+        /// <summary>
+        /// 	find pseudoparent => p
+        ///find all neighbors but pseudoparent => np
+
+        ///disconnect p (np, fold)
+        ///    delete dp as neighbor from p
+        ///    set up ointers from p to np
+        ///    if (fold == p.fold)
+        ///        do nothing
+        ///    else
+        ///        old fold = fold
+
+        ///for all np
+        ///    disconnect n (parent, dp)
+        ///        remove dp from n's neighbors
+        ///        add parent to n's neighbors
+
+        ///disconnect from fold
+        ///    disconnect fold (parent)
+        ///        fold's fold = parent
+
+        /// </summary>
+        /// <param name="dp"></param>
+
+        private static void disconnectDeletionPoint(Node dp)
+        {
+            Node p = getNode(dp.ParentId, dp);
+            var np = new List<Node>(dp.Neighbors);
+            np.Remove(p);
+
+            p.Neighbors.Remove(dp);
+
+            foreach (var npNode in np)
+            {
+                npNode.addSurrogate(p);
+                npNode.Neighbors.Remove(dp);
+            }
+            foreach (var dpDown in dp.Down.Values)
+            {
+                dpDown.Up.Remove(dp.Id);
+            }
+
+            if (dp.Fold != p.Fold)
+                p.OldFold = dp.Fold;
+
+            dp.Fold.Fold = p;
+
+            if (dp.Fold.Fold == dp.Fold.OldFold)
+                dp.Fold.OldFold = null;
+
+            if (p.Fold == p)
+                p.Fold = null;
+            if (p.OldFold == p)
+                p.OldFold = null;
+        }
 
         /// <summary>
         /// Effectively finishes the process of removing node from the hypeerweb
@@ -428,20 +532,6 @@ namespace Server
         /// </summary>
         /// <param name="lastnode"> The last inserted Node in the hypeerweb</param>
         /// <param name="node">Node to be removed from the hypeerweb</param>
-        private static void cleanUp(Node lastnode, Node node)
-        {
-            lastnode.Id = node.Id;
-            node.Id = uint.MaxValue;
-            //lastnode.Fold = node.Fold == null? lastnode.Fold : node.Fold;
-
-            if (lastnode == node || lastnode.Fold == null)
-                return;
-
-            if (lastnode.Fold.Id == lastnode.Id)
-                lastnode.Fold = null;
-            if (lastnode.OldFold != null && lastnode.OldFold.Id == lastnode.Id)
-                lastnode.OldFold = null;
-        }
 
         /// <summary>
         /// Modifies the Folds as a result of removing Node from the hypeerweb
@@ -454,58 +544,6 @@ namespace Server
         /// </summary>
         /// <param name="lastnode">Last Node inserted in the hypeerweb</param>
         /// <param name="node">Node to be removed</param>
-        private static void fixFolds(Node lastnode, Node node)
-        {
-            bool swapFold = true;
-            Node lastnodeParent = getNode(lastnode.ParentId, lastnode);
-            Node lastnodeFold = lastnode.Fold;
-
-            if (node.Fold.Fold == node)
-                node.Fold.Fold = lastnode;
-            if (node.OldFold != null && node.OldFold.Fold == node)
-                node.OldFold.Fold = lastnode;
-            if (node.Fold.OldFold != null && node.Fold.OldFold == node)
-                node.Fold.OldFold = lastnode;
-
-            if (node.OldFold != null)
-                lastnode.OldFold = node.OldFold;
-
-            if (lastnodeParent == node)
-            {
-                node.Fold.Fold = lastnode;
-                lastnodeParent = lastnode;
-            }
-            if (lastnodeFold == node)
-            {
-                lastnodeFold = lastnode;
-                swapFold = false;
-            }
-
-            if (lastnode.Fold.OldFold == null)
-                lastnodeParent.OldFold = lastnodeFold;
-            else
-            {
-                if (!swapFold)
-                    lastnodeFold.OldFold.Fold = lastnode;
-                lastnodeFold.OldFold = null;
-            }
-
-            lastnodeFold.Fold = lastnodeParent;
-
-            if (lastnodeParent.Fold.Id == lastnodeParent.Id)
-                lastnodeParent.Fold = null;
-            if (lastnodeParent.OldFold != null && lastnodeParent.OldFold.Id == lastnodeParent.Id)
-                lastnodeParent.OldFold = null;
-
-            //if (getNode(lastnode.ParentId, lastnode) == node)
-            //    lastnode.Fold = node.Fold;
-            //if (lastnode.Fold == node)
-            if (swapFold)
-            {
-                lastnode.Fold = node.Fold;
-                //lastnode.OldFold = node.OldFold;
-            }
-        }
 
         /// <summary>
         /// copy all neighbors from node into lastnode
@@ -518,27 +556,6 @@ namespace Server
         /// </summary>
         /// <param name="lastnode">the last Node inserted in the hypeerweb</param>
         /// <param name="node">Node to be removed from the hypeerweb</param>
-        private static void addNeighbors(Node lastnode, Node node)
-        {
-            foreach (Node n in node.Neighbors)
-            {
-                lastnode.Neighbors.Add(n);
-                n.Neighbors.Add(lastnode);
-            }
-
-            foreach (Node n in node.Down.Values)
-            {
-                lastnode.addSurrogate(n);
-            }
-
-            uint temp = lastnode.Id;
-            lastnode.Id = node.Id;
-            foreach (Node n in node.Up.Values)
-            {
-                n.addSurrogate(lastnode);
-            }
-            lastnode.Id = temp;
-        }
 
         /// <summary>
         /// Updates All the neighbors of the last Node inserted such that upon
@@ -549,28 +566,6 @@ namespace Server
         /// Postcondition: lastnode will hereafter no longer be needed in the hypeerweb.
         /// </summary>
         /// <param name="lastnode">Last Node inserted in the hypeerweb</param>
-        private static void redirectNeighbors(Node lastnode)
-        {
-            Node lastnodeParent = getNode(lastnode.ParentId, lastnode);
-            foreach (Node n in lastnode.Neighbors)
-            {
-                n.Neighbors.Remove(lastnode);
-                if (n.Id != lastnode.ParentId)
-                {
-                    n.addSurrogate(lastnodeParent);
-                }
-            }
-
-            lastnode.Neighbors.Clear();
-
-            foreach (Node n in lastnode.Down.Values)
-            {
-                var key = n.Up.First(n1 => n1.Value.Id == lastnode.Id);
-                n.Up.Remove(key.Key);
-            }
-
-            lastnode.Down.Clear();
-        }
 
         /// <summary>
         /// Removes node as a neighbor from its respective neighbors
@@ -580,24 +575,6 @@ namespace Server
         ///                 will hereafter be removed from the hypeerweb
         /// </summary>
         /// <param name="node">Node to be hereafter removed from the hypeerweb</param>
-        private void removeFromNeighbors(Node node)
-        {
-            foreach (Node n in node.Neighbors)
-            {
-                n.Neighbors.Remove(node);
-            }
-
-            foreach (Node n in node.Up.Values)
-            {
-                n.Down.Remove(node.SurrogateId(n.Id));
-            }
-
-            foreach (Node n in node.Down.Values)
-            {
-                n.Up.Remove(node.Id);
-            }
-
-        }
 
         /// <summary>
         /// remove node n from the hypeerweb
@@ -606,9 +583,9 @@ namespace Server
         /// PostCondtion: Node n is no longer a member of a Hypeerweb
         /// </summary>
         /// <param name="n">node to be removed</param>
-        public void Remove(Node n)
+        public Node Remove(Node n)
         {
-            n.Remove();
+            return n.Remove();
         }
 
         /// <summary>
@@ -618,11 +595,12 @@ namespace Server
         /// PostCondtion: The Node specified by said Id is no longer a member of the Hypeerweb
         /// </summary>
         /// <param name="Id">Id of node to be removed</param>
-        public void Remove(uint Id)
+        public Node Remove(uint Id)
         {
             Node rem = getNode(Id, this);
             if (rem != null)
-                rem.Remove();
+                return rem.Remove();
+            return null;
         }
     }
 }
