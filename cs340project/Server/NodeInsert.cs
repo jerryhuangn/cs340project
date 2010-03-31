@@ -8,6 +8,8 @@ namespace Server
     /// <summary>
     /// Common Extension Methods for the type uint
     /// 
+    /// Domain: All positive 32bit integers
+    /// 
     /// Author: Joel Day
     /// </summary>
     public static class Extensions
@@ -68,6 +70,9 @@ namespace Server
 
     /// <summary>
     /// Part of the Node class that has the static methods for inserts
+    /// 
+    /// Domain: all node of a Hypeerweb
+    /// Invariant: Node must be a valid member of a Hypeerweb
     /// 
     /// Author: Joel Day
     /// </summary>
@@ -284,7 +289,6 @@ namespace Server
         /// send it closer to the insertion point.
         /// 
         /// PreCondition: True
-        /// Domain: none
         /// PostCondtion: The HypeerWeb of the current node will increase by one node
         /// </summary>
         /// <returns>The newly inserted node.</returns>
@@ -311,7 +315,6 @@ namespace Server
         /// Inserts the child node.
         /// 
         /// PreCondition: True
-        /// Domain: none
         /// PostCondtion: Following the logic of the HypeerWeb,
         /// a new node is inserted into the correct place and
         /// all the settings for the Folds, neighbors, and parent
@@ -362,7 +365,6 @@ namespace Server
         /// Adds the node as a neighbor.
         /// 
         /// PreCondition: The node is a member of a HypeerWeb
-        /// Domain: none
         /// PostCondtion: the node is added as a neighbor in the HypeerWeb
         /// </summary>
         /// <param name="n">Any node in the web</param>
@@ -378,7 +380,6 @@ namespace Server
         /// Adds the node as a surrogate.
         /// 
         /// PreCondition: The node is a member of a HypeerWeb
-        /// Domain: none
         /// PostCondtion: The node specified is turned into a
         /// surrogate node for the parameter node
         /// </summary>
@@ -394,7 +395,6 @@ namespace Server
         /// Removes the current node from the hypeerweb
         /// 
         /// PreCondition: Current Node is a member of the Hypeerweb
-        /// Domain: All Nodes in the Hypeerweb
         /// PostCondtion: Current Node is no longer a member of the Hypeerweb
         /// </summary>
         public void Remove()
@@ -424,7 +424,6 @@ namespace Server
         /// 
         /// Precondition: lastnode and node are valid members of the hypeerweb
         ///                 lastnode and node have been preped for removal
-        /// Domain: all nodes in the hypeerweb
         /// Postcondition: node is no longer a member of the hypeerweb and lastnode has taken its place.
         /// </summary>
         /// <param name="lastnode"> The last inserted Node in the hypeerweb</param>
@@ -450,7 +449,6 @@ namespace Server
         /// Precondition: lastnode and node are valid members of the hypeerweb.
         ///                 lastnode is the last node inserted in the hypeerweb.
         ///                  lastnode will hereafter no longer be a member of the hypeerweb.
-        /// Domain: All Nodes in the hypeerweb
         /// Postcondition: The folds are such that the removal of lastnode will result in
         ///                 a valid hypeerweb according to the specifications
         /// </summary>
@@ -515,7 +513,6 @@ namespace Server
         /// Precondition: node and lastnode are both valid members of a hypeerweb
         ///                 node is the Node to be removed from the hypeerweb
         ///                  lastnode is the last inserted Node in the hypeerweb
-        /// Domain: All nodes in the hypeerweb
         /// Postcondition: lastnode and node have effectively traded places
         ///                 with respect to their neighbors.
         /// </summary>
@@ -549,7 +546,6 @@ namespace Server
         /// 
         /// Precondition: lastnode is a valid member of a hypeerweb.
         ///                lastnode is the last inserted Node in the hypeerweb.
-        /// Domain: the Last Node inserted in the hypeerweb.
         /// Postcondition: lastnode will hereafter no longer be needed in the hypeerweb.
         /// </summary>
         /// <param name="lastnode">Last Node inserted in the hypeerweb</param>
@@ -580,7 +576,6 @@ namespace Server
         /// Removes node as a neighbor from its respective neighbors
         /// 
         /// Precondition: node is a valid member of a hypeerweb
-        /// Domain: all Nodes in the hypeerweb
         /// Postcondition: node is no longer associated with its respective neighbors and
         ///                 will hereafter be removed from the hypeerweb
         /// </summary>
@@ -608,7 +603,6 @@ namespace Server
         /// remove node n from the hypeerweb
         /// 
         /// PreCondition: The node is a member of a HypeerWeb
-        /// Domain: All Nodes in the hypeerweb
         /// PostCondtion: Node n is no longer a member of a Hypeerweb
         /// </summary>
         /// <param name="n">node to be removed</param>
@@ -621,7 +615,6 @@ namespace Server
         /// remove node with give Id from the hypeerweb
         /// 
         /// PreCondition: Id is a valid Id for a Node in the HypeerWeb
-        /// Domain: All Positive integers that are Valid Id's in the Hypeerweb
         /// PostCondtion: The Node specified by said Id is no longer a member of the Hypeerweb
         /// </summary>
         /// <param name="Id">Id of node to be removed</param>

@@ -50,6 +50,9 @@ namespace Server
     /// between nodes all while maintaining the proper
     /// struction of th the HypeerWeb
     /// Author: Joel Day
+    /// 
+    /// Domain: All nodes of a Hypeerweb
+    /// Invariant: Node must be a valid member of a Hypeerweb
     /// </summary>
     public partial class Node
     {
@@ -327,7 +330,6 @@ namespace Server
         /// 
         /// PreCondition: The caller's id's <see cref="Server.Extensions.Dimension"/> is 
         /// greater-than or equal to the current node's id's <see cref="Server.Extensions.Dimension"/>
-        /// Domain: All possible Node Ids
         /// PostCondition: The logical child in the same
         /// level of the HypeerWeb as the caller
         /// </summary>
@@ -399,7 +401,6 @@ namespace Server
         /// The binary representation of the node's ID number in the
         /// hyperweb.
         /// 
-        /// Domain: All positive 32 bit numbers
         /// </summary>
         public uint Id { get; private set; }
 
@@ -426,6 +427,9 @@ namespace Server
 
         /// <summary>
         /// Creates a new root node of a hyperweb.
+        /// 
+        /// Precondition: none
+        /// Postcondition: this is the root node of a Hypeerweb
         /// </summary>
         public Node()
             : this(0)
@@ -438,7 +442,13 @@ namespace Server
             node.Accept(v);
         }
 
-        //Send v to all nodes in this node's hyperweb
+        /// <summary>
+        /// Send visitor V to all nodes in the Hypeerweb
+        /// 
+        /// PreCondition: none
+        /// PostCondition: V has visited all nodes in the Hypeerweb
+        /// </summary>
+        /// <param name="v">Visitor to be sent to all nodes</param>
         public void Broadcast(Visitor v)
         {
             //First, run it on this Node.
@@ -450,7 +460,15 @@ namespace Server
             }
         }
 
-        //send v to all nodes and return # of nodes visited
+        /// <summary>
+        /// send visitor V to all nodes and return # of nodes visited
+        /// 
+        /// Precondition: none
+        /// Postcondition: V has visited all nodes and the return value = # of nodes in the hypeerweb
+        /// </summary>
+        /// <param name="v">Visitor to be sent to all nodes</param>
+        /// <param name="num">running count of nodes visited</param>
+        /// <returns>number of nodes visited</returns>
         public uint BroadcastWithAck(Visitor v, uint num)
         {
             //First, run it on this Node.
