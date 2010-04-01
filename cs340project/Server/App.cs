@@ -6,6 +6,8 @@ using System.Runtime.Serialization;
 using System.Net.Sockets;
 using System.Net;
 using System.Reflection;
+using Server;
+using System.Diagnostics;
 
 namespace cs340project
 {
@@ -31,7 +33,7 @@ namespace cs340project
         public static App GetApp(string name)
         {
             App ret;
-            if (apps.TryGetValue(name, out ret))
+            if(apps.TryGetValue(name, out ret))
                 return ret;
 
             ret = new App(name);
@@ -50,7 +52,7 @@ namespace cs340project
         /// The current App's Name
         /// </summary>
         public string Name;
-
+        
         /// <summary>
         /// Initializes a new instance of the <see cref="App"/> class.
         /// </summary>
@@ -70,14 +72,18 @@ namespace cs340project
         /// <param name="cmd">The <see cref="App.Command"/> object that holds the commands to execute.</param>
         void Network_CommandReceived(TcpClient client, App.Command cmd)
         {
-            Response ret = new Response(cmd.Id, RunCommand(cmd));
+            object ReturnValue = RunCommand(cmd);
+            if (ReturnValue is ISerializeMutator && !ReturnValue.GetType().Name.EndsWith("Proxy"))
+                ReturnValue = ((ISerializeMutator)ReturnValue).ObjectToSerialize();
+
+            Response ret = new Response(cmd.Id, ReturnValue);
             Network.SendObject(((IPEndPoint)client.Client.RemoteEndPoint).Address.ToString(), ((IPEndPoint)client.Client.RemoteEndPoint).Port, ret);
         }
 
 
         #region Object/command infrastructure
 
-        List<object> objects = new List<object>();
+        Dictionary<int,object> objects = new Dictionary<int,object>();
 
         /// <summary>
         /// The object that holds the commands to be sent 
@@ -115,6 +121,12 @@ namespace cs340project
                 Name = name;
                 Parameters = p;
                 Id = Guid.NewGuid().ToString();
+
+                for (int i = 0; i < p.Length; i++)
+                {
+                    if (p[i] is ISerializeMutator && !p[i].GetType().Name.EndsWith("Proxy"))
+                        p[i] = ((ISerializeMutator)p[i]).ObjectToSerialize();
+                }
             }
         }
 
@@ -145,6 +157,7 @@ namespace cs340project
             }
         }
 
+
         /// <summary>
         /// Runs the command from the <see cref="App.Command"/> object.
         /// </summary>
@@ -152,17 +165,15 @@ namespace cs340project
         /// <returns></returns>
         public object RunCommand(Command cmd)
         {
-            if (objects.Count <= cmd.ObjectId || objects[(int)cmd.ObjectId] == null)
+            Debug.WriteLine("Running command " + cmd.Name + " on endpoint " + Network.EndPoint.ToString());
+
+            if (!objects.ContainsKey((int)cmd.ObjectId))
                 throw new ArgumentOutOfRangeException("ObjectId");
 
             object target = objects[(int)cmd.ObjectId];
             Type type = target.GetType();
 
-            List<Type> paramTypes = new List<Type>();
-            foreach (object p in cmd.Parameters)
-                paramTypes.Add(p.GetType());
-
-            MethodInfo method = type.GetMethod(cmd.Name, paramTypes.ToArray());
+            MethodInfo method = type.GetMethod(cmd.Name);
             return method.Invoke(target, cmd.Parameters);
         }
 
@@ -172,9 +183,24 @@ namespace cs340project
         /// Adds the object to the List inside of the <see cref="App"/>.
         /// </summary>
         /// <param name="o">The object to be added.</param>
-        public void AddObject(object o)
+        public void AddObject(int i, object o)
         {
-            objects.Add(o);
+            objects[i] = o;
+        }
+
+        public object GetObject(int i)
+        {
+            return objects[i];
+        }
+
+        public int ObjectCount()
+        {
+            return objects.Count;
+        }
+
+        public Dictionary<int,object>.KeyCollection ObjectKeys()
+        {
+            return objects.Keys;
         }
     }
 }

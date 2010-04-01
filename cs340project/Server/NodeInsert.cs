@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Net;
 
 namespace Server
 {
@@ -88,13 +89,10 @@ namespace Server
         /// PostCondtion: The return will answer if the current
         /// HypeerWeb that the node belongs to is empty
         /// </summary>
-        /// <param name="n">Any node in the web</param>
         /// <returns>True if the web is empty, false otherwise</returns>
-        public static bool emptyWeb(Node n)
+        public virtual bool emptyWeb()
         {
-            if (n.Id == 0 && n.Neighbors.Count == 0)
-                return true;
-            return false;
+            return (Id == 0 && Neighbors.Count == 0);
         }
 
         /// <summary>
@@ -200,17 +198,13 @@ namespace Server
 
                     ret.Add(n.SmallestNeighbor);
 
-                    ret.Add((from n1 in n.Up.Values
-                             orderby n1.Id ascending
-                             select n1).Last());
+                    ret.Add(n.SmallestUp);
 
                     break;
                 case NodeState.Down:
-                    ret.Add(n.Neighbors.First(n1 => n1.Id == n.ParentId));
+                    ret.Add(n.Parent);
 
-                    ret.Add((from n1 in n.Down.Values
-                             orderby n1.Id ascending
-                             select n1).First());
+                    ret.Add(n.SmallestDown);
 
                     // My parent and Down min
                     break;
@@ -249,9 +243,7 @@ namespace Server
             if (n.Id == p)
                 return n;
 
-            var nearest = (from node in n.AllNeighbors
-                           orderby node.Id.Distance(p) ascending
-                           select node).First();
+            var nearest = n.ClosestNeighbor(p);
             if (nearest.Id == p)
                 return nearest;
 
@@ -292,23 +284,22 @@ namespace Server
         /// PostCondtion: The HypeerWeb of the current node will increase by one node
         /// </summary>
         /// <returns>The newly inserted node.</returns>
-        public Node CreateNode()
+        public virtual void InsertNode(Node n)
         {
-            if (emptyWeb(this))
+            if (emptyWeb())
             {
-                Node n = new Node(1);
+                n.Id = 1;
 
-                n.Neighbors.Add(this);
-                Neighbors.Add(n);
+                n.addNeighbor(this);
+                addNeighbor(n);
                 this.Fold = n;
                 n.Fold = this;
 
-                return n;
+                return;
             }
 
             var insert = insertionPoint(this);
-
-            return insert.insertChildNode();
+            insert.insertChildNode(n);
         }
 
         /// <summary>
@@ -321,9 +312,9 @@ namespace Server
         /// are modified accordingly.
         /// </summary>
         /// <returns>The newly inserted node</returns>
-        private Node insertChildNode()
+        public virtual void insertChildNode(Node n)
         {
-            Node n = new Node(NextChildId);
+            n.Id = NextChildId;
             foreach (var neighbor in Neighbors)
             {
                 if (!neighbor.HasChild)
@@ -355,10 +346,8 @@ namespace Server
 
             OldFold = null;
 
-            Neighbors.Add(n);
-            n.Neighbors.Add(this);
-
-            return n;
+            addNeighbor(n);
+            n.addNeighbor(this);
         }
 
         /// <summary>
@@ -368,7 +357,7 @@ namespace Server
         /// PostCondtion: the node is added as a neighbor in the HypeerWeb
         /// </summary>
         /// <param name="n">Any node in the web</param>
-        private void addNeighbor(Node n)
+        public virtual void addNeighbor(Node n)
         {
             if (Down.ContainsKey(n.Id))
                 Down.Remove(n.Id);
@@ -385,10 +374,10 @@ namespace Server
         /// </summary>
         /// <param name="n">Any node in the web</param>
         /// <returns></returns>
-        private void addSurrogate(Node n)
+        public virtual void addSurrogate(Node n)
         {
             Down.Add(n.SurrogateId(Id), n);
-            n.Up.Add(Id, this);
+            n.AddUp(Id, this);
         }
 
         /// <summary>
@@ -397,9 +386,9 @@ namespace Server
         /// PreCondition: Current Node is a member of the Hypeerweb
         /// PostCondtion: Current Node is no longer a member of the Hypeerweb
         /// </summary>
-        public Node Remove()
+        public virtual Node Remove()
         {
-            if (emptyWeb(this))
+            if (emptyWeb())
                 return this;
             Node insert = insertionPoint(this);
             uint lastid = insert.NextChildId - 1;
@@ -556,6 +545,14 @@ namespace Server
         /// </summary>
         /// <param name="lastnode">the last Node inserted in the hypeerweb</param>
         /// <param name="node">Node to be removed from the hypeerweb</param>
+        private static void addNeighbors(Node lastnode, Node node)
+        {
+            foreach (Node n in node.Neighbors)
+            {
+                lastnode.addNeighbor(n);
+                n.addNeighbor(lastnode);
+            }
+        }
 
         /// <summary>
         /// Updates All the neighbors of the last Node inserted such that upon
@@ -577,25 +574,13 @@ namespace Server
         /// <param name="node">Node to be hereafter removed from the hypeerweb</param>
 
         /// <summary>
-        /// remove node n from the hypeerweb
-        /// 
-        /// PreCondition: The node is a member of a HypeerWeb
-        /// PostCondtion: Node n is no longer a member of a Hypeerweb
-        /// </summary>
-        /// <param name="n">node to be removed</param>
-        public Node Remove(Node n)
-        {
-            return n.Remove();
-        }
-
-        /// <summary>
         /// remove node with give Id from the hypeerweb
         /// 
         /// PreCondition: Id is a valid Id for a Node in the HypeerWeb
         /// PostCondtion: The Node specified by said Id is no longer a member of the Hypeerweb
         /// </summary>
         /// <param name="Id">Id of node to be removed</param>
-        public Node Remove(uint Id)
+        public virtual Node RemoveById(uint Id)
         {
             Node rem = getNode(Id, this);
             if (rem != null)

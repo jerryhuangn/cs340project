@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Net.Sockets;
 using System;
+using System.Net;
 
 namespace UnitTesting
 {
@@ -74,7 +75,7 @@ namespace UnitTesting
             try
             {
                 App test1 = App.GetApp("test1");
-                test1.Network.Listen(10000);
+                test1.Network.Listen(new IPEndPoint(IPAddress.Any, 10000));
                 Person remote = Proxifier.GetProxy<Person>("127.0.0.1", 10000, "test1", 2);
                 remote.Age = 15;
                 remote.Name = new PersonName("Ben", "Dilts", "Beandog");
@@ -123,7 +124,7 @@ namespace UnitTesting
             PrivateObject param0 = null; // TODO: Initialize to an appropriate value
             App_Accessor target = new App_Accessor(param0); // TODO: Initialize to an appropriate value
             object o = null; // TODO: Initialize to an appropriate value
-            target.AddObject(o);
+            target.AddObject(0, o);
             Assert.Inconclusive("A method that does not return a value cannot be verified.");
         }
 
@@ -138,7 +139,7 @@ namespace UnitTesting
             try
             {
                 App_Accessor target = new App_Accessor(name);
-                target.AddObject(new Person());
+                target.AddObject(0, new Person());
             }
             catch (Exception ex)
             {

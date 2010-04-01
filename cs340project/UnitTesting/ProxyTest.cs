@@ -79,58 +79,5 @@ namespace UnitTesting
             Assert.Inconclusive("A method that does not return a value cannot be verified.");
         }
 
-        /// <summary>
-        ///A test for InvokeAsync
-        ///</summary>
-        [TestMethod()]
-        public void InvokeAsyncTest()
-        {
-            string server = string.Empty; // TODO: Initialize to an appropriate value
-            int port = 0; // TODO: Initialize to an appropriate value
-            int id = 0; // TODO: Initialize to an appropriate value
-            string AppName = "Test";
-            Proxy target = new Proxy(server, port, AppName, id); // TODO: Initialize to an appropriate value
-            string method = string.Empty; // TODO: Initialize to an appropriate value
-            object[] parameters = null; // TODO: Initialize to an appropriate value
-            App.Command expected = null; // TODO: Initialize to an appropriate value
-            App.Command actual;
-            actual = target.InvokeAsync(method, parameters);
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
-        }
-
-        /// <summary>
-        ///A test for Invoke
-        ///</summary>
-        [TestMethod()]
-        public void InvokeTest()
-        {
-            string server = string.Empty; // TODO: Initialize to an appropriate value
-            int port = 0; // TODO: Initialize to an appropriate value
-            int id = 0; // TODO: Initialize to an appropriate value
-            string AppName = "Test";
-            Proxy target = new Proxy(server, port, AppName, id); // TODO: Initialize to an appropriate value
-            string method = string.Empty; // TODO: Initialize to an appropriate value
-            object[] parameters = null; // TODO: Initialize to an appropriate value
-            object expected = null; // TODO: Initialize to an appropriate value
-            object actual;
-            actual = target.Invoke(method, parameters);
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
-        }
-
-        /// <summary>
-        ///A test for Proxy Constructor
-        ///</summary>
-        [TestMethod()]
-        public void ProxyConstructorTest()
-        {
-            string server = string.Empty; // TODO: Initialize to an appropriate value
-            int port = 0; // TODO: Initialize to an appropriate value
-            int id = 0; // TODO: Initialize to an appropriate value
-            string AppName = "Test";
-            Proxy target = new Proxy(server, port, AppName, id);
-            Assert.Inconclusive("TODO: Implement code to verify target");
-        }
     }
 }

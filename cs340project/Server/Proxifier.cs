@@ -9,6 +9,8 @@ using System.Runtime.Serialization;
 using System.Net.Sockets;
 using System.IO;
 using System.Windows.Forms;
+using System.Text.RegularExpressions;
+using System.Diagnostics;
 
 namespace cs340project
 {
@@ -19,14 +21,24 @@ namespace cs340project
     /// to reside on another <see cref="App"/> to be accessed by a local
     /// specific XXXXProxy.
     /// </summary>
+    [Serializable]
     public class Proxy
     {
         string server = null;
         int port = -1;
         int id = -1;
         string app = "Test";
+
+        [NonSerialized]
         Dictionary<string, object> responses = new Dictionary<string, object>();
 
+        [OnDeserialized]
+        void AfterUnserialize(StreamingContext context)
+        {
+            Debug.WriteLine("Listening to ResponseReceived...");
+            App.GetApp(app).Network.ResponseReceived += new NetworkHub.NetworkHubResponseEvent(Network_ResponseReceived);
+            responses = new Dictionary<string, object>();
+        }
 
         class WaitingForResponse { }
         
@@ -44,20 +56,10 @@ namespace cs340project
             this.id = id;
             this.app = appName;
 
-            App.GetApp(app).Network.ResponseReceived += new NetworkHub.NetworkHubResponseEvent(Network_ResponseReceived);
-        }
+            Debug.WriteLine("Proxy created for server " + server + ", port " + port + ", app " + appName + ", id " + id);
 
-        /// <summary>
-        /// Invokes the asynchronous communication of the object on its <see cref="Proxy"/>.
-        /// </summary>
-        /// <param name="method">The method to be invoked.</param>
-        /// <param name="parameters">The parameters for the method being invoked.</param>
-        /// <returns></returns>
-        public App.Command InvokeAsync(string method, params object[] parameters) {
-            App.Command cmd = new App.Command(id, method, parameters);
-            responses[cmd.Id] = new WaitingForResponse();
-            App.GetApp(app).Network.SendObject(server, port, cmd);
-            return cmd;
+            Debug.WriteLine("Listening to ResponseReceived...");
+            App.GetApp(app).Network.ResponseReceived += new NetworkHub.NetworkHubResponseEvent(Network_ResponseReceived);
         }
 
         /// <summary>
@@ -68,7 +70,9 @@ namespace cs340project
         /// <returns></returns>
         public object Invoke(string method, params object[] parameters) {
             //First, just send off our command:
-            App.Command cmd = InvokeAsync(method, parameters);
+            App.Command cmd = new App.Command(id, method, parameters);
+            responses[cmd.Id] = new WaitingForResponse();
+            App.GetApp(app).Network.SendObject(server, port, cmd);
 
             //Wait for a reply to cmd.Id
             while (responses[cmd.Id] is WaitingForResponse)
@@ -112,7 +116,7 @@ namespace cs340project
         /// <returns>A <see cref="Proxy"/> of type T</returns>
         public static T GetProxy<T>(string server, int port, string AppName, int id)
         {
-            Type proxy = Proxifier.CreateProxy(typeof(T));
+            Type proxy = Proxifier.CreateProxyClass(typeof(T));
             return (T)Activator.CreateInstance(proxy, server, port, AppName, id);
         }
 
@@ -122,24 +126,52 @@ namespace cs340project
         /// <param name="original">The original type.</param>
         /// <returns>A new type that contains all the same methods and properties
         /// as the original type, only overridden to utilies the <see cref="Proxy"/> class</returns>
-        static Type CreateProxy(Type original)
+        public static Type CreateProxyClass(Type original)
         {
             Type ret;
             if (!ProxyTypes.TryGetValue(original, out ret))
             {
-                string code = Proxifier.CreateProxyCode(original);
-                System.Diagnostics.Debug.WriteLine(code);
+                List<Assembly> Assemblies = new List<Assembly>();
+
+                string code = Proxifier.CreateProxyCode(original, Assemblies);
+                //System.Diagnostics.Debug.WriteLine(code);
 
                 CodeDomProvider compiler = CodeDomProvider.CreateProvider("C#");
                 CompilerParameters parameters = new CompilerParameters();
-                parameters.GenerateInMemory = true;
+                
+                parameters.GenerateInMemory = false;
+                parameters.OutputAssembly = original.Name + "Proxy.dll";
+
                 parameters.ReferencedAssemblies.Add(Assembly.GetAssembly(original).Location);
                 parameters.ReferencedAssemblies.Add(Assembly.GetExecutingAssembly().Location);
+                foreach (Assembly a in Assemblies)
+                    parameters.ReferencedAssemblies.Add(a.Location);
+
                 CompilerResults result = compiler.CompileAssemblyFromSource(parameters, new string[] { code });
                 ret = result.CompiledAssembly.GetType(original.Namespace + "." + original.Name + "Proxy");
 
                 ProxyTypes[original] = ret;
             }
+            return ret;
+        }
+
+        static string TypeString(Type t)
+        {
+            if (t.Namespace == "System" && t.Name == "Void")
+                return "void";
+
+            string ret = t.Namespace + "." + t.Name;
+            ret = (new Regex("`.*$").Replace(ret, ""));
+
+            if (t.IsGenericType)
+            {
+                List<string> p = new List<string>();
+                foreach (Type arg in t.GetGenericArguments())
+                    p.Add(TypeString(arg));
+
+                ret += '<' + string.Join(",",p.ToArray()) + '>';
+            }
+
             return ret;
         }
 
@@ -149,12 +181,15 @@ namespace cs340project
         /// <param name="original">The original type.</param>
         /// <returns>A string that contains all the source code to create a proxy
         /// class containing the same structure as the original Type.</returns>
-        static string CreateProxyCode(Type original) {
+        static string CreateProxyCode(Type original, List<Assembly> Assemblies)
+        {
             StringBuilder ret = new StringBuilder();
 
             ret.AppendLine("using System;");
+            ret.AppendLine("using System.Runtime.Serialization;");
             ret.AppendLine("namespace " + original.Namespace);
             ret.AppendLine("{");
+            ret.AppendLine("\t[Serializable]");
             ret.AppendLine("\tclass " + original.Name + "Proxy : "+original.Namespace+"."+original.Name);
             ret.AppendLine("\t{");
 
@@ -170,7 +205,8 @@ namespace cs340project
                 if (!property.GetAccessors()[0].IsVirtual)
                     continue;
 
-                ret.AppendLine("\t\tpublic override " + property.PropertyType.Namespace + "." + property.PropertyType.Name+" " + property.Name);
+                Assemblies.Add(Assembly.GetAssembly(property.PropertyType));
+                ret.AppendLine("\t\tpublic override " + TypeString(property.PropertyType)+" " + property.Name);
                 ret.AppendLine("\t\t{");
 
                 foreach (MethodInfo method in property.GetAccessors())
@@ -179,7 +215,9 @@ namespace cs340project
                     {
                         ret.AppendLine("\t\t\tget");
                         ret.AppendLine("\t\t\t{");
-                        ret.Append("\t\t\t\treturn ("+property.PropertyType.Namespace+"."+property.PropertyType.Name+")this.proxy.Invoke(\""+method.Name+"\"");
+
+                        Assemblies.Add(Assembly.GetAssembly(property.PropertyType));
+                        ret.Append("\t\t\t\treturn ("+TypeString(property.PropertyType)+")this.proxy.Invoke(\""+method.Name+"\"");
                         foreach (ParameterInfo parameter in method.GetParameters())
                             ret.Append(", " + parameter.Name);
                         ret.AppendLine(");");
@@ -190,7 +228,7 @@ namespace cs340project
                         
                         ret.AppendLine("\t\t\tset");
                         ret.AppendLine("\t\t\t{");
-                        ret.Append("\t\t\t\tthis.proxy.InvokeAsync(\"" + method.Name + "\"");
+                        ret.Append("\t\t\t\tthis.proxy.Invoke(\"" + method.Name + "\"");
                         foreach (ParameterInfo parameter in method.GetParameters())
                             ret.Append(", " + parameter.Name);
                         ret.AppendLine(");");
@@ -213,10 +251,8 @@ namespace cs340project
                 if (method.IsStatic)
                     ret.Append("static ");
 
-                if (method.ReturnType.Namespace == "System" && method.ReturnType.Name == "Void")
-                    ret.Append("void");
-                else
-                    ret.Append(method.ReturnType.Namespace + "." + method.ReturnType.Name);
+                Assemblies.Add(Assembly.GetAssembly(method.ReturnType));
+                ret.Append(TypeString(method.ReturnType));
 
                 ret.Append(" " + method.Name + "(");
 
@@ -227,7 +263,8 @@ namespace cs340project
                         ret.Append(", ");
                     first = false;
 
-                    ret.Append(parameter.ParameterType.Namespace + "." + parameter.ParameterType.Name);
+                    Assemblies.Add(Assembly.GetAssembly(parameter.ParameterType));
+                    ret.Append(TypeString(parameter.ParameterType));
                     ret.Append(" " + parameter.Name);
                 }
                 ret.AppendLine(")");
@@ -241,7 +278,7 @@ namespace cs340project
                 }
                 else
                 {
-                    ret.Append("\t\t\tthis.proxy.InvokeAsync(\"" + method.Name + "\"");
+                    ret.Append("\t\t\tthis.proxy.Invoke(\"" + method.Name + "\"");
                     foreach (ParameterInfo parameter in method.GetParameters())
                         ret.Append(", " + parameter.Name);
                     ret.AppendLine(");");

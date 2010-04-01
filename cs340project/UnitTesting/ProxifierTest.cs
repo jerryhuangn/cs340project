@@ -97,25 +97,6 @@ namespace UnitTesting
         public void CreateProxyCodeTest()
         {
             Type original = null; // TODO: Initialize to an appropriate value
-            string expected = string.Empty; // TODO: Initialize to an appropriate value
-            string actual;
-            actual = Proxifier_Accessor.CreateProxyCode(original);
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
-        }
-
-        /// <summary>
-        ///A test for CreateProxy
-        ///</summary>
-        [TestMethod()]
-        [DeploymentItem("Server.dll")]
-        public void CreateProxyTest()
-        {
-            Type original = null; // TODO: Initialize to an appropriate value
-            Type expected = null; // TODO: Initialize to an appropriate value
-            Type actual;
-            actual = Proxifier_Accessor.CreateProxy(original);
-            Assert.AreEqual(expected, actual);
             Assert.Inconclusive("Verify the correctness of this test method.");
         }
 
