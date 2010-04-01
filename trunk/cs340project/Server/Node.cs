@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Diagnostics;
+using System.Runtime.Serialization;
+using System.Net;
+using cs340project;
 
 namespace Server
 {
@@ -48,14 +51,16 @@ namespace Server
     /// Nodes have all the built in functionality
     /// to add new nodes, delete nodes, and communicate
     /// between nodes all while maintaining the proper
-    /// struction of th the HypeerWeb
+    /// struction of the HypeerWeb
     /// Author: Joel Day
     /// 
     /// Domain: All nodes of a Hypeerweb
     /// Invariant: Node must be a valid member of a Hypeerweb
     /// </summary>
-    public partial class Node
+    [Serializable]
+    public partial class Node : ISerializeMutator
     {
+     
 
         #region Global set of nodes; debugging
 
@@ -63,7 +68,7 @@ namespace Server
         /// Gets the size of the web.
         /// </summary>
         /// <returns>The size of the HypeerWeb</returns>
-        public uint HypeerWebSize()
+        public virtual uint HypeerWebSize()
         {
             Node n = Node.insertionPoint(this);
             return n.NextChildId;
@@ -77,7 +82,7 @@ namespace Server
         /// is iterated over to produces a string representation of the web
         /// </summary>
         /// <returns>A string representation of the web</returns>
-        public string DumpAllNodes()
+        public virtual string DumpAllNodes()
         {
             StringBuilder ret = new StringBuilder();
 
@@ -151,7 +156,7 @@ namespace Server
         /// Gets the largest neighbor.
         /// </summary>
         /// <value>The largest neighbor.</value>
-        Node LargestNeighbor
+        public virtual Node LargestNeighbor
         {
             get
             {
@@ -166,7 +171,7 @@ namespace Server
         /// </summary>
         /// <value>The smallest neighbor.</value>
         /// <value>The smallest neighbor.</value>
-        Node AbsoluteLargestNeighbor
+        public virtual Node AbsoluteLargestNeighbor
         {
             get
             {
@@ -210,6 +215,14 @@ namespace Server
                 return nodes;
             }
         }
+
+        public virtual Node ClosestNeighbor(uint p)
+        {
+            return (from node in AllNeighbors
+                    orderby node.Id.Distance(p) ascending
+                    select node).First();
+        }
+
         /// <summary>
         /// A list of Neighboring Nodes
         /// </summary>
@@ -218,22 +231,46 @@ namespace Server
         /// A list of Up pointers for Surrogate Nodes
         /// </summary>
         Dictionary<uint, Node> Up = new Dictionary<uint, Node>();
+
+        public virtual void AddUp(uint key, Node n)
+        {
+            Up.Add(key, n);
+        }
+
+        public virtual Node SmallestUp
+        {
+            get
+            {
+                return (from n1 in Up.Values
+                        orderby n1.Id ascending
+                        select n1).Last();
+            }
+        }
         /// <summary>
         /// A list of Down pointers to Surrogate Nodes
         /// </summary>
         Dictionary<uint, Node> Down = new Dictionary<uint, Node>();
+        public virtual Node SmallestDown
+        {
+            get {
+                return (from n1 in Down.Values
+                        orderby n1.Id ascending
+                        select n1).First();
+            }
+        }
+
         /// <summary>
         /// Gets or sets the fold. The Fold is used as a short-cut to
         /// get to the other side of the web quickly
         /// </summary>
         /// <value>The fold.</value>
-        Node Fold { get; set; }
+        public virtual Node Fold { get; set; }
         /// <summary>
         /// Gets or sets the old fold. The Fold is used as a short-cut to
         /// get to the other side of the web quickly
         /// </summary>
         /// <value>The old fold.</value>
-        Node OldFold { get; set; }
+        public virtual Node OldFold { get; set; }
 
         #endregion
 
@@ -243,14 +280,14 @@ namespace Server
         /// actions.
         /// </summary>
         /// <value>The payload.</value>
-        public Dictionary<string, object> Payload { get; set; }
+        public virtual Dictionary<string, object> Payload { get; set; }
 
         /// <summary>
         /// Accept a visitor and run it on this Node if it hasn't already been run here.
         /// </summary>
         /// <param name="v">The visitor to visit this Node</param>
         /// <returns>true if the visitor was called, false if it has already been here.</returns>
-        public bool Accept(Visitor v)
+        public virtual bool Accept(Visitor v)
         {
             //First, quit if the visitor has already been here.
             foreach (Visitor old in RecentVisitors)
@@ -272,7 +309,7 @@ namespace Server
         /// Gets the node's parent Id.
         /// </summary>
         /// <value>The parent's Id.</value>
-        public uint ParentId
+        public virtual uint ParentId
         {
             get
             {
@@ -286,11 +323,18 @@ namespace Server
             }
         }
 
+        public virtual Node Parent
+        {
+            get
+            {
+                return Neighbors.First(n1 => n1.Id == ParentId);
+            }
+        }
         /// <summary>
         /// Gets the next child id based on the current HypeerWeb.
         /// </summary>
         /// <value>The next child id.</value>
-        public uint NextChildId
+        public virtual uint NextChildId
         {
             get
             {
@@ -316,7 +360,7 @@ namespace Server
             }
         }
 
-        public Node GetNode(uint id)
+        public virtual Node GetNode(uint id)
         {
             try
             {
@@ -336,7 +380,7 @@ namespace Server
         /// <param name="callerId">The callers id.</param>
         /// <returns></returns>
         /// <value>The child's Id.</value>
-        public uint ChildId(uint callerId)
+        public virtual uint ChildId(uint callerId)
         {
             uint dim = (uint)(1 << (int)callerId.Dimension());
             return dim + Id;
@@ -348,7 +392,7 @@ namespace Server
         /// </summary>
         /// <param name="callerId">The caller id.</param>
         /// <returns>The logical surrogate id. Same as ChildId</returns>
-        public uint SurrogateId(uint callerId)
+        public virtual uint SurrogateId(uint callerId)
         {
             return ChildId(callerId >> 1);
         }
@@ -357,7 +401,7 @@ namespace Server
         /// Gets a value indicating whether this instance has a child.
         /// </summary>
         /// <value><c>true</c> if this instance has a child; otherwise, <c>false</c>.</value>
-        public bool HasChild
+        public virtual bool HasChild
         {
             get
             {
@@ -377,7 +421,7 @@ namespace Server
         /// Gets or sets the state of the current node.
         /// </summary>
         /// <value>The state of the current.</value>
-        public NodeState CurrentState
+        public virtual NodeState CurrentState
         {
             get
             {
@@ -397,26 +441,47 @@ namespace Server
 
         }
 
+
         /// <summary>
         /// The binary representation of the node's ID number in the
         /// hyperweb.
         /// 
         /// </summary>
-        public uint Id { get; private set; }
+        uint _id = 0;
+        public delegate void IdSet(Node n);
+        public event IdSet OnIdSet = null;
+        public virtual uint Id
+        {
+            get
+            {
+                return _id;
+            }
+            set {
+                _id = value;
+                if (OnIdSet != null)
+                    OnIdSet(this);
+            }
+        }
 
         /// <summary>
         /// Visitors who recently visited this Node.
         /// 
         /// Used to prevent duplicate visits.
         /// </summary>
-        public List<Visitor> RecentVisitors;
+        public virtual List<Visitor> RecentVisitors { get; private set; }
 
         /// <summary>
         /// Construct a new Node in the hyperweb.
         /// </summary>
         /// <param name="id">The new node's ID number.</param>
-        public Node(uint id)
+        public Node(uint id, IPEndPoint ep)
         {
+            //IMPORTANT: For proxy to work, no public methods can be called from the default constructor.
+            if(id == uint.MaxValue)
+                return;
+
+            EndPoint = ep;
+
             Payload = new Dictionary<string, object>();
             Payload["Messages"] = new List<string>();
 
@@ -425,18 +490,30 @@ namespace Server
             Id = id;
         }
 
+        public IPEndPoint EndPoint { get; private set; }
+
         /// <summary>
-        /// Creates a new root node of a hyperweb.
+        /// ONLY to be used by the proxy class.
         /// 
         /// Precondition: none
         /// Postcondition: this is the root node of a Hypeerweb
         /// </summary>
         public Node()
-            : this(0)
+            : this(uint.MaxValue, null)
+        {
+            if(this.GetType().Name != "NodeProxy")
+                throw new Exception("Default constructor only to be used from proxy.");
+        }
+
+        /// <summary>
+        /// Creates a new root node of a hyperweb.
+        /// </summary>
+        public Node(IPEndPoint ep)
+            : this(0, ep)
         {
         }
 
-        public void Send(Visitor v, uint id)
+        public virtual void Send(Visitor v, uint id)
         {
             var node = getNode(id, this);
             node.Accept(v);
@@ -449,7 +526,7 @@ namespace Server
         /// PostCondition: V has visited all nodes in the Hypeerweb
         /// </summary>
         /// <param name="v">Visitor to be sent to all nodes</param>
-        public void Broadcast(Visitor v)
+        public virtual void Broadcast(Visitor v)
         {
             //First, run it on this Node.
             if (this.Accept(v))
@@ -469,7 +546,7 @@ namespace Server
         /// <param name="v">Visitor to be sent to all nodes</param>
         /// <param name="num">running count of nodes visited</param>
         /// <returns>number of nodes visited</returns>
-        public uint BroadcastWithAck(Visitor v, uint num)
+        public virtual uint BroadcastWithAck(Visitor v, uint num)
         {
             //First, run it on this Node.
             if (this.Accept(v))
@@ -481,5 +558,14 @@ namespace Server
             }
             return num;
         }
+
+        #region ISerializeMutator Members
+
+        public virtual object ObjectToSerialize()
+        {
+            return Proxifier.GetProxy<Node>(EndPoint.Address.ToString(), (int)EndPoint.Port, "HypeerWeb", (int)Id);
+        }
+
+        #endregion
     }
 }

@@ -22,7 +22,7 @@ namespace cs340project
             ConsoleWriter consoleWriter = new ConsoleWriter(textBoxConsole, 1024);
             Console.SetOut(consoleWriter);
 
-            root = new Node();
+            root = new Node(null);
             updateDisplay();
         }
 
@@ -112,7 +112,8 @@ namespace cs340project
 
         private void clickAdd(object sender, EventArgs e)
         {
-            Node addedNode = root.CreateNode();
+            Node addedNode = new Node(null);
+            root.InsertNode(addedNode);
             Console.WriteLine("added node " + addedNode.Id + " to root");
 
             updateDisplay();
@@ -120,13 +121,13 @@ namespace cs340project
 
         private void clickRemove(object sender, EventArgs e)
         {
-            if (!Node.emptyWeb(root))
+            if (!root.emptyWeb())
             {
                 Random r = new Random();
 
                 //uint nodeToRemove = (uint)r.Next(0, Node.AllNodes.Count);
                 uint nodeToRemove = (uint)r.Next(1, (int)root.HypeerWebSize());
-                root.Remove(nodeToRemove);
+                root.RemoveById(nodeToRemove);
                 Console.WriteLine("removed node " + nodeToRemove + " from root");
 
                 updateDisplay();
@@ -158,7 +159,8 @@ namespace cs340project
 
         private void BtAddNodeFromNode_Click(object sender, EventArgs e)
         {
-            var addedNode = selected.CreateNode();
+            Node addedNode = new Node(null);
+            selected.InsertNode(addedNode);
             Console.WriteLine("added node " + addedNode.Id + " to " + selected.Id);
             updateDisplay();
         }
@@ -188,7 +190,7 @@ namespace cs340project
             if (CbListOfNodes.SelectedIndex < 0)
                 MessageBox.Show("Please select a node from the dropdown");
             else
-                selected.Remove((uint)CbListOfNodes.SelectedIndex);
+                selected.RemoveById((uint)CbListOfNodes.SelectedIndex);
             selected = null;
 
             TcNodeTabs.Enabled = false;

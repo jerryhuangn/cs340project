@@ -6,6 +6,7 @@ using System.Net.Sockets;
 using System.Net;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Diagnostics;
 
 namespace cs340project
 {
@@ -14,23 +15,27 @@ namespace cs340project
     /// </summary>
     public class NetworkHub
     {
-        Dictionary<string, TcpClient> clients = new Dictionary<string, TcpClient>();
+        Dictionary<IPEndPoint, TcpClient> clients = new Dictionary<IPEndPoint, TcpClient>();
 
         #region Accepting new connections
 
-        int port = 0;
+        public IPEndPoint EndPoint { get; private set; }
         TcpListener listener = null;
         const int listenBacklogLength = 32;
 
-        /// <summary>
-        /// Listens on the specified port.
-        /// </summary>
-        /// <param name="port">The port to attach a <see cref="TcpListener"/>.</param>
-        public void Listen(int port)
+        public NetworkHub()
         {
-            this.port = port;
+            Debug.WriteLine("Created a network hub");
+        }
 
-            listener = new TcpListener(IPAddress.Any, port);
+        /// <summary>
+        /// Listens on the specified IP endpoint.
+        /// </summary>
+        public void Listen(IPEndPoint ep)
+        {
+            EndPoint = ep;
+
+            listener = new TcpListener(EndPoint);
             listener.Start(listenBacklogLength);
 
             listener.BeginAcceptTcpClient(new AsyncCallback(Accept), null);
@@ -49,6 +54,17 @@ namespace cs340project
         /// </summary>
         public event NetworkHubClientEvent Disconnected = null;
 
+        class BeginReadData
+        {
+            public TcpClient client;
+            public byte[] buffer = new byte[1024];
+
+            public BeginReadData(TcpClient c)
+            {
+                client = c;
+            }
+        }
+
         /// <summary>
         /// Setups the <see cref="TcpClient"/>.
         /// </summary>
@@ -56,9 +72,10 @@ namespace cs340project
         void SetupClient(TcpClient client)
         {
             string IP = GetClientIP(client);
-            clientBuffers[IP] = new byte[clientBufferSize];
             clientMemoryStreams[IP] = new MemoryStream();
-            client.GetStream().BeginRead(clientBuffers[IP], 0, clientBufferSize, new AsyncCallback(OnRead), client);
+
+            BeginReadData data = new BeginReadData(client);
+            client.GetStream().BeginRead(data.buffer, 0, data.buffer.Length, new AsyncCallback(OnRead), data);
 
             if (NewConnection != null)
                 NewConnection(client);
@@ -84,7 +101,7 @@ namespace cs340project
             {
                 //Accept the one incoming client:
                 TcpClient client = listener.EndAcceptTcpClient(result);
-                clients[GetClientIP(client)] = client;
+                clients[(IPEndPoint)client.Client.RemoteEndPoint] = client;
                 SetupClient(client);
             }
             catch
@@ -102,9 +119,7 @@ namespace cs340project
 
         #region Sending/Receiving Objects
 
-        Dictionary<string, byte[]> clientBuffers = new Dictionary<string, byte[]>();
         Dictionary<string, MemoryStream> clientMemoryStreams = new Dictionary<string, MemoryStream>();
-        const int clientBufferSize = 1024;
 
         /// <summary>
         /// Delegate for the NetworkHub when it sends a command
@@ -158,7 +173,8 @@ namespace cs340project
         /// <param name="result">The result of the [read].</param>
         void OnRead(IAsyncResult result)
         {
-            TcpClient client = (TcpClient)result.AsyncState;
+            BeginReadData data = (BeginReadData)result.AsyncState;
+            TcpClient client = data.client;
             string IP = GetClientIP(client);
 
             try
@@ -166,11 +182,35 @@ namespace cs340project
                 MemoryStream stream = clientMemoryStreams[IP];
                 int bytesRead = client.GetStream().EndRead(result);
                 stream.Seek(0, SeekOrigin.End);
-                stream.Write(clientBuffers[IP], 0, bytesRead);
+                stream.Write(data.buffer, 0, bytesRead);
 
-                while (CheckForMessage(client, IP)) ;
+                List<object> commands = new List<object>();
+                object o;
+                while ((o = CheckForMessage(client, IP)) != null)
+                    commands.Add(o);
 
-                client.GetStream().BeginRead(clientBuffers[IP], 0, clientBufferSize, new AsyncCallback(OnRead), client);
+                (new BinaryWriter(new MemoryStream(data.buffer))).Write((int)1);
+                BeginReadData next = new BeginReadData(client);
+                client.GetStream().BeginRead(next.buffer, 0, data.buffer.Length, new AsyncCallback(OnRead), next);
+
+                foreach (object cmd in commands)
+                {
+                    if (cmd is App.Command)
+                    {
+                        if (CommandReceived != null)
+                            CommandReceived(client, (App.Command)cmd);
+                    }
+                    else if (cmd is App.Response)
+                    {
+                        if (ResponseReceived != null)
+                            ResponseReceived(client, (App.Response)cmd);
+                    }
+                    else if (cmd is string)
+                    {
+                        if (MessageReceived != null)
+                            MessageReceived(client, (string)cmd);
+                    }
+                }
             }
             catch
             {
@@ -184,7 +224,7 @@ namespace cs340project
         /// <param name="client">The <see cref="TcpClient"/>.</param>
         /// <param name="IP">The IP.</param>
         /// <returns></returns>
-        private bool CheckForMessage(TcpClient client, string IP)
+        private object CheckForMessage(TcpClient client, string IP)
         {
             int? length = ObjectReadyToRead(IP);
             if (length != null)
@@ -204,26 +244,9 @@ namespace cs340project
 
                 BinaryFormatter bf = new BinaryFormatter();
                 object cmd = bf.Deserialize(new MemoryStream(rawData));
-
-                if (cmd is App.Command)
-                {
-                    if (CommandReceived != null)
-                        CommandReceived(client, (App.Command)cmd);
-                }
-                else if (cmd is App.Response)
-                {
-                    if (ResponseReceived != null)
-                        ResponseReceived(client, (App.Response)cmd);
-                }
-                else if (cmd is string)
-                {
-                    if (MessageReceived != null)
-                        MessageReceived(client, (string)cmd);
-                }
-
-                return true;
+                return cmd;
             }
-            return false;
+            return null;
         }
 
         /// <summary>
@@ -270,7 +293,7 @@ namespace cs340project
             IP = ep.Address.ToString();
 
             //If we're already connected to them, just return the existing socket.
-            if (clients.TryGetValue(IP, out client))
+            if (clients.TryGetValue(ep, out client))
             {
                 if (client.Connected)
                     return client;
@@ -283,7 +306,7 @@ namespace cs340project
             try
             {
                 client.Connect(IP, port);
-                clients[IP] = client;
+                clients[ep] = client;
                 SetupClient(client);
                 return client;
             }
@@ -303,6 +326,8 @@ namespace cs340project
         /// <param name="client">The client.</param>
         private void Disconnect(TcpClient client)
         {
+            Debug.WriteLine("Disconnected");
+
             string IP = ((IPEndPoint)client.Client.RemoteEndPoint).Address.ToString();
             if (client.Connected)
             {
@@ -310,7 +335,7 @@ namespace cs340project
                 client.Close();
             }
 
-            clients.Remove(IP);
+            clients.Remove((IPEndPoint)client.Client.RemoteEndPoint);
 
             if (Disconnected != null)
                 Disconnected(client);

@@ -109,14 +109,14 @@ namespace UnitTesting
         private void InsertNodeTestCreate(uint size)
         {
             //Refresh the whole hyperweb to size+1 nodes (including root)
-            Node root = new Node();
+            Node root = new Node(null);
 
             var curStat = root.CurrentState;
             for (uint j = 0; j < size; j++)
-                root.CreateNode();
+                root.InsertNode(new Node(null));
 
             //And add the node n+2, at insertion point i.
-            root.CreateNode();
+            root.InsertNode(new Node(null));
 
             string actual = root.DumpAllNodes();
 
@@ -137,15 +137,19 @@ namespace UnitTesting
         private static void InsertNodeTest(uint size, uint insertAt, string expected)
         {
             //Refresh the whole hyperweb to size+1 nodes (including root)
-            Node root = new Node();
+            Node root = new Node(null);
 
             var curStat = root.CurrentState;
             List<Node> AllNodes = new List<Node>(new Node[] { root });
-            for (uint j = 0; j < size; j++)
-                AllNodes.Add(root.CreateNode());
+            for (uint j = 0; j < size; j++) {
+                Node n = new Node(null);
+                root.InsertNode(n);
+                AllNodes.Add(n);
+            }
 
             //And add the node n+2, at insertion point i.
-            AllNodes[(int)insertAt].CreateNode();
+            Node n2 = new Node(null);
+            AllNodes[(int)insertAt].InsertNode(n2);
 
             string actual = root.DumpAllNodes();
             if (expected != actual)
@@ -176,13 +180,17 @@ namespace UnitTesting
         private static void RemoveNodeTest(uint size, uint removeFrom, uint removeAt, string expected)
         {
             //Refresh the whole hyperweb to size+1 nodes (including root)
-            Node root = new Node();
-            List<Node> AllNodes = new List<Node>(new Node[] { root }); 
+            Node root = new Node(null);
+            List<Node> AllNodes = new List<Node>(new Node[] { root });
             for (uint j = 0; j < size; j++)
-                AllNodes.Add(root.CreateNode());
+            {
+                Node n2 = new Node(null);
+                root.InsertNode(n2);
+                AllNodes.Add(n2);
+            }
 
             //Remove the node they wanted us to.
-            var n = AllNodes[(int)removeFrom].Remove(removeAt);
+            var n = AllNodes[(int)removeFrom].RemoveById(removeAt);
 
             string actual = n.DumpAllNodes();
             if (expected != actual)
@@ -200,25 +208,25 @@ namespace UnitTesting
         public void ChildIdTest()
         {
             // Target 1
-            Node target = new Node(1406); // TODO: Initialize to an appropriate value
+            Node target = new Node(1406, null); // TODO: Initialize to an appropriate value
             uint actual;
             actual = target.ChildId(1406);
             Assert.AreEqual<uint>(actual, 3454);
 
             // Target 2         
-            Node target2 = new Node(0); // TODO: Initialize to an appropriate value
+            Node target2 = new Node(0, null); // TODO: Initialize to an appropriate value
             uint actual2;
             actual2 = target2.ChildId(0);
             Assert.AreEqual<uint>(actual2, 1);
 
             // Target 3         
-            Node target3 = new Node(0); // TODO: Initialize to an appropriate value
+            Node target3 = new Node(0, null); // TODO: Initialize to an appropriate value
             uint actual3;
             actual3 = target3.ChildId(1406);
             Assert.AreEqual<uint>(actual3, 2048);
 
             // Target 4         
-            Node target4 = new Node(0); // TODO: Initialize to an appropriate value
+            Node target4 = new Node(0, null); // TODO: Initialize to an appropriate value
             uint actual4;
             actual4 = target4.ChildId(1);
             Assert.AreEqual<uint>(actual4, 2);
@@ -235,25 +243,25 @@ namespace UnitTesting
         public void ParentIdTest()
         {
             // Target 1
-            Node target = new Node(3454); // TODO: Initialize to an appropriate value
+            Node target = new Node(3454, null); // TODO: Initialize to an appropriate value
             uint actual;
             actual = target.ParentId;
             Assert.AreEqual<uint>(actual, 1406);
 
             // Target 2         
-            Node target2 = new Node(1); // TODO: Initialize to an appropriate value
+            Node target2 = new Node(1, null); // TODO: Initialize to an appropriate value
             uint actual2;
             actual2 = target2.ParentId;
             Assert.AreEqual<uint>(actual2, 0);
 
             // Target 3         
-            Node target3 = new Node(2048); // TODO: Initialize to an appropriate value
+            Node target3 = new Node(2048, null); // TODO: Initialize to an appropriate value
             uint actual3;
             actual3 = target3.ParentId;
             Assert.AreEqual<uint>(actual3, 0);
 
             // Target 4         
-            Node target4 = new Node(2); // TODO: Initialize to an appropriate value
+            Node target4 = new Node(2, null); // TODO: Initialize to an appropriate value
             uint actual4;
             actual4 = target4.ParentId;
             Assert.AreEqual<uint>(actual4, 0);
@@ -271,19 +279,19 @@ namespace UnitTesting
         public void SurrogateIdTest()
         {
             // Target 1
-            Node target = new Node(1406); // TODO: Initialize to an appropriate value
+            Node target = new Node(1406, null); // TODO: Initialize to an appropriate value
             uint actual;
             actual = target.SurrogateId(2450);
             Assert.AreEqual<uint>(actual, 3454);
 
             // Target 2         
-            Node target2 = new Node(1); // TODO: Initialize to an appropriate value
+            Node target2 = new Node(1, null); // TODO: Initialize to an appropriate value
             uint actual2;
             actual2 = target2.SurrogateId(2);
             Assert.AreEqual<uint>(actual2, 3);
 
             // Target 3         
-            Node target3 = new Node(1); // TODO: Initialize to an appropriate value
+            Node target3 = new Node(1, null); // TODO: Initialize to an appropriate value
             uint actual3;
             actual3 = target3.SurrogateId(1406);
             Assert.AreEqual<uint>(actual3, 1025);
@@ -299,13 +307,17 @@ namespace UnitTesting
      .GetManifestResourceStream("UnitTesting.TestNodeData.2Nodes.txt"));
             string expected = tr.ReadToEnd();
 
-            Node root = new Node();
-            List<Node> AllNodes = new List<Node>(new Node[] { root }); 
+            Node root = new Node(null);
+            List<Node> AllNodes = new List<Node>(new Node[] { root });
             for (uint j = 0; j < 3; j++)
-                AllNodes.Add(root.CreateNode());
+            {
+                Node n = new Node(null);
+                root.InsertNode(n);
+                AllNodes.Add(n);
+            }
 
             //Remove the node they wanted us to.
-            AllNodes[3].Remove(3);
+            AllNodes[3].RemoveById(3);
 
             string actual = root.DumpAllNodes();
             if (expected != actual)
@@ -333,10 +345,14 @@ namespace UnitTesting
         public void VisitTest(uint size, uint startnode)
         {
             //First, create a hyperweb with 6 nodes in it.
-            Node root = new Node();
-            List<Node> AllNodes = new List<Node>(new Node[] { root }); 
+            Node root = new Node(null);
+            List<Node> AllNodes = new List<Node>(new Node[] { root });
             for (int i = 0; i < size; i++)
-                AllNodes.Add(root.CreateNode());
+            {
+                Node n = new Node(null);
+                root.InsertNode(n);
+                AllNodes.Add(n);
+            }
 
             //Now create a message visitor and broadcast it.
             MessageVisitor v = new MessageVisitor("First");
@@ -382,10 +398,14 @@ namespace UnitTesting
         public void BroadcastTest(uint size, uint startnode)
         {
             //First, create a hyperweb with 6 nodes in it.
-            Node root = new Node();
-            List<Node> AllNodes = new List<Node>(new Node[] { root }); 
+            Node root = new Node(null);
+            List<Node> AllNodes = new List<Node>(new Node[] { root });
             for (int i = 0; i < size; i++)
-                AllNodes.Add(root.CreateNode());
+            {
+                Node n = new Node(null);
+                root.InsertNode(n);
+                AllNodes.Add(n);
+            }
 
             //Now create a message visitor and broadcast it.
             MessageVisitor v = new MessageVisitor("First");
@@ -406,10 +426,14 @@ namespace UnitTesting
         public void BroadcastWithAckTest(uint size, uint startnode)
         {
             //First, create a hyperweb with 6 nodes in it.
-            Node root = new Node();
-            List<Node> AllNodes = new List<Node>(new Node[] { root }); 
+            Node root = new Node(null);
+            List<Node> AllNodes = new List<Node>(new Node[] { root });
             for (int i = 0; i < size; i++)
-                AllNodes.Add(root.CreateNode());
+            {
+                Node n = new Node(null);
+                root.InsertNode(n);
+                AllNodes.Add(n);
+            }
 
             //Now create a message visitor and broadcast it.
             MessageVisitor v = new MessageVisitor("First");
