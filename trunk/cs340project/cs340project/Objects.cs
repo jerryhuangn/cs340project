@@ -60,6 +60,11 @@ namespace cs340project
         /// <value>The age.</value>
         public virtual uint Age { get; set; }
 
+        /// <summary>
+        /// Test for an array.
+        /// </summary>
+        /// <param name="v">The v.</param>
+        /// <returns></returns>
         public virtual int[] DoubleArray(int[] v)
         {
             for (var i = 0; i < v.Length; i++)

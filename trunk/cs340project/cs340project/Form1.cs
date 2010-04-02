@@ -12,10 +12,16 @@ using System.Threading;
 
 namespace cs340project
 {
+    /// <summary>
+    /// Form 1 Description
+    /// </summary>
     public partial class Form1 : Form
     {
         App App = App.GetApp("Test");
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Form1"/> class.
+        /// </summary>
         public Form1()
         {
             InitializeComponent();

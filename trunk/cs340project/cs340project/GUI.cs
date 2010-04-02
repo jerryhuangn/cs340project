@@ -16,6 +16,9 @@ namespace cs340project
         Node root;
         Node selected;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GUI"/> class.
+        /// </summary>
         public GUI()
         {
             InitializeComponent();
