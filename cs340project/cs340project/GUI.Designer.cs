@@ -1,5 +1,8 @@
 ﻿namespace cs340project
 {
+    /// <summary>
+    /// GUI class
+    /// </summary>
     partial class GUI
     {
         /// <summary>
