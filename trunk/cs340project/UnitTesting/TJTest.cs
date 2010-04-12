@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Server;
+using System;
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
@@ -58,48 +59,46 @@ namespace UnitTesting
         #endregion
         #endregion
         #region White Box testing
-        [TestMethod]
-        public void LoopTest()
-        {
-            /*
-            
-             * If a loop, definite or indefinite, is intended to iterate n times then the test 
-             * plan should include the following seven considerations and possible faults.
 
-That the loop might iterate zero times.
-That the loop might iterate once
-That the loop might iterate twice
-That the loop might iterate several times
-That the loop might iterate n - 1 times
-That the loop might iterate n times
-That the loop might iterate n + 1 times
-That the loop might iterate infinite times
-            
-            */
+        /// <summary>
+        /// Test covers loop testing, path, relational, and internal boundary coverage for broadcast.
+        /// </summary>
+        [TestMethod()]
+        public void TestBroadcast()
+        {
+            for (int i = 0; i < 64; i++)
+            {
+                for (int j = 0; j < i; j++)
+                {
+                    BroadcastWithAckTest((uint)i, (uint)j);
+                }
+            }
         }
-
-        [TestMethod]
-        public void RelationalTest()
+        public void BroadcastWithAckTest(uint size, uint startnode)
         {
-            //
-            // Test all forms of each if statement in the code
-            //
-        }
+            //First, create a hyperweb with 6 nodes in it.
+            Node root = new Node(null);
+            List<Node> AllNodes = new List<Node>(new Node[] { root });
+            for (int i = 0; i < size; i++)
+            {
+                Node n = new Node(null);
+                root.InsertNode(n);
+                AllNodes.Add(n);
+            }
 
-        [TestMethod]
-        public void PathTest()
-        {
-            //
-            // design tests to go through each path of the code (good coverage)
-            //
-        }
+            //Now create a message visitor and broadcast it.
+            MessageVisitor v = new MessageVisitor("First");
+            uint Retval = AllNodes[(int)startnode].BroadcastWithAck(v, 0);
+            uint Expected = (uint)AllNodes.Count;
 
-        [TestMethod]
-        public void InternalBoundaryTest()
-        {
-            //
-            // Test all the extremes for the domain of the classes
-            //
+            //Now make sure that all nodes have exactly one copy of that message.
+            foreach (Node n in AllNodes)
+            {
+                List<string> Messages = (List<string>)n.Payload["Messages"];
+                Assert.AreEqual(1, Messages.Count);
+                Assert.AreEqual("First", Messages[0]);
+                Assert.AreEqual(Expected, Retval);
+            }
         }
 #endregion
         #region Black Box testing
@@ -108,7 +107,22 @@ That the loop might iterate infinite times
         {
             //
             // http://www.softwaretestinghelp.com/what-is-boundary-value-analysis-and-equivalence-partitioning/
-            //
+            //Equivalence class 1: valid values
+            uint test1 = 4;
+            uint expected1 = 3;
+            uint test2 = 254;
+            uint expected2 = 8;
+
+
+            //Equivalence class 2: invalid low
+            int test3 = -1;
+            uint expected3=0;
+
+            uint actual1 = Extensions.Dimension(test1);
+            uint actual2 = Extensions.Dimension(test2);
+
+            Assert.AreEqual(expected1, actual1);
+            Assert.AreEqual(expected2, actual2);
         }
 
         [TestMethod]
