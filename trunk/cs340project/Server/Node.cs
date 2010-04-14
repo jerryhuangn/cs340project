@@ -60,7 +60,7 @@ namespace Server
     [Serializable]
     public partial class Node : ISerializeMutator
     {
-     
+
 
         #region Global set of nodes; debugging
 
@@ -252,7 +252,8 @@ namespace Server
         Dictionary<uint, Node> Down = new Dictionary<uint, Node>();
         public virtual Node SmallestDown
         {
-            get {
+            get
+            {
                 return (from n1 in Down.Values
                         orderby n1.Id ascending
                         select n1).First();
@@ -364,6 +365,8 @@ namespace Server
         {
             try
             {
+                if (AbsoluteLargestNeighbor.Id < id)
+                    return null;
                 return Node.getNode(id, this);
             }
             catch { return null; }
@@ -456,7 +459,8 @@ namespace Server
             {
                 return _id;
             }
-            set {
+            set
+            {
                 _id = value;
                 if (OnIdSet != null)
                     OnIdSet(this);
@@ -477,7 +481,7 @@ namespace Server
         public Node(uint id, IPEndPoint ep)
         {
             //IMPORTANT: For proxy to work, no public methods can be called from the default constructor.
-            if(id == uint.MaxValue)
+            if (id == uint.MaxValue)
                 return;
 
             EndPoint = ep;
@@ -501,7 +505,7 @@ namespace Server
         public Node()
             : this(uint.MaxValue, null)
         {
-            if(this.GetType().Name != "NodeProxy")
+            if (this.GetType().Name != "NodeProxy")
                 throw new Exception("Default constructor only to be used from proxy.");
         }
 
