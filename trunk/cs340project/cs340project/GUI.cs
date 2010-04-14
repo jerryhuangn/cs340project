@@ -8,24 +8,42 @@ using System.Text;
 using System.Windows.Forms;
 using System.Reflection;
 using Server;
+using System.Net;
 
 namespace cs340project
 {
     public partial class GUI : Form
     {
-        Node root;
         Node selected;
+        App HypeerWeb;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GUI"/> class.
         /// </summary>
         public GUI()
         {
+            HypeerWeb = App.GetApp("HypeerWeb");
+
             InitializeComponent();
             ConsoleWriter consoleWriter = new ConsoleWriter(textBoxConsole, 1024);
             Console.SetOut(consoleWriter);
 
-            root = new Node(null);
+            IPAddress addr;
+            string address = TextPrompt.Show("Which address to listen on?", "127.0.0.1");
+            if (address == null || !IPAddress.TryParse(address, out addr))
+            {
+                throw new Exception("ARGH");
+            }
+
+            int iPort;
+            string port = TextPrompt.Show("Which port to listen on?", "30000");
+            if (port == null || !int.TryParse(port, out iPort) || iPort < 1000 || iPort > (1 << 16))
+            {
+                throw new Exception("ARGH");
+            }
+
+            HypeerWeb.Network.Listen(new IPEndPoint(addr, iPort));
+
             updateDisplay();
         }
 
@@ -68,6 +86,9 @@ namespace cs340project
 
         private void updateDisplay()
         {
+            Node root = getANode();
+            if (root == null)
+                return;
             textBoxDisplay.Text = root.DumpAllNodes();
 
             SplitDisplay.Panel1.Controls.Clear();
@@ -84,7 +105,7 @@ namespace cs340project
 
                 int tempLeng = (SplitDisplay.Panel1.Width) / 35;
                 int tempId = (int)i;
-                int y = 0;
+                int y = menuStrip1.Height + 5;
 
                 while (tempId >= tempLeng)
                 {
@@ -107,7 +128,7 @@ namespace cs340project
         void c_Click(object sender, EventArgs e)
         {
             var b = (Button)sender;
-            selected = root.GetNode(uint.Parse(b.Text));
+            selected = (Node)HypeerWeb.GetObject(int.Parse(b.Text));
             TbNodeInfo.Text = selected.ToString();
 
             TcNodeTabs.Enabled = true;
@@ -115,8 +136,15 @@ namespace cs340project
 
         private void clickAdd(object sender, EventArgs e)
         {
-            Node addedNode = new Node(null);
-            root.InsertNode(addedNode);
+            Node addedNode = null;
+
+            foreach (int Id in HypeerWeb.ObjectKeys())
+            {
+                addedNode = createNode((Node)HypeerWeb.GetObject(Id));
+                break;
+            }
+            if (addedNode == null)
+                return;
             Console.WriteLine("added node " + addedNode.Id + " to root");
 
             updateDisplay();
@@ -124,8 +152,13 @@ namespace cs340project
 
         private void clickRemove(object sender, EventArgs e)
         {
-            if (!root.emptyWeb())
+            if (HypeerWeb.ObjectCount() > 1)
             {
+                Node root = getANode();
+
+                if (root == null)
+                    return;
+
                 Random r = new Random();
 
                 //uint nodeToRemove = (uint)r.Next(0, Node.AllNodes.Count);
@@ -143,6 +176,11 @@ namespace cs340project
 
         private void clickBroadcast(object sender, EventArgs e)
         {
+            Node root = getANode();
+
+            if (root == null)
+                return;
+
             //Console.WriteLine("message not broadcast: is this method implemented?");
             uint numberVisited = root.BroadcastWithAck(new MessageVisitor(textBoxMessage.Text), 0);
             Console.WriteLine("message: " + textBoxMessage.Text + " broadcasted to " + numberVisited + "  nodes");
@@ -150,6 +188,11 @@ namespace cs340project
 
         private void clickSend(object sender, EventArgs e)
         {
+            Node root = getANode();
+
+            if (root == null)
+                return;
+
             //Console.WriteLine("message not sent: textBoxMessage.Text");
             root.Send(new MessageVisitor(textBoxMessage.Text), 0);
             Console.WriteLine("sending message: " + textBoxMessage.Text);
@@ -162,8 +205,7 @@ namespace cs340project
 
         private void BtAddNodeFromNode_Click(object sender, EventArgs e)
         {
-            Node addedNode = new Node(null);
-            selected.InsertNode(addedNode);
+            Node addedNode = createNode(selected);
             Console.WriteLine("added node " + addedNode.Id + " to " + selected.Id);
             updateDisplay();
         }
@@ -208,6 +250,83 @@ namespace cs340project
             else
                 selected.Send(new MessageVisitor(tbMessageFromNode.Text), (uint)CbListOfNodes.SelectedIndex);
             updateDisplay();
+        }
+
+        private void connectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string host = TextPrompt.Show("Which host?", "127.0.0.1");
+            if (host == null)
+                return;
+
+            int iPort;
+            string port = TextPrompt.Show("Which port?", "30000");
+            if (port == null || !int.TryParse(port, out iPort) || iPort < 1000 || iPort > (1 << 16))
+                return;
+
+            uint iNode;
+            string node = TextPrompt.Show("Which node to connect to (and call Create on)?", "0");
+            if (node == null || !uint.TryParse(node, out iNode))
+                return;
+
+            Node root = Proxifier.GetProxy<Node>(host, iPort, "HypeerWeb", (int)iNode);
+
+            createNode(root);
+        }
+
+        private Node createNode(Node remote)
+        {
+            Node local = new Node(HypeerWeb.Network.EndPoint);
+
+            //Grab a (temporary) unique ID for this node, so the calls to this
+            //node during the remote InsertNode call can work.
+            local.Id = 25000;
+            while (HypeerWeb.ObjectKeys().Contains((int)local.Id))
+                local.Id++;
+            HypeerWeb.AddObject((int)local.Id, local);
+
+            local.OnIdSet += new Node.IdSet(local_OnIdSet);
+            remote.InsertNode(local);
+
+            refreshHypeerwebDumpToolStripMenuItem_Click(null, null);
+
+            return local;
+        }
+
+        void local_OnIdSet(Node n)
+        {
+            HypeerWeb.AddObject((int)n.Id, n);
+        }
+
+        private void createLocalNodeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (HypeerWeb.ObjectCount() == 0)
+            {
+                Node root = new Node(HypeerWeb.Network.EndPoint);
+                HypeerWeb.AddObject((int)root.Id, root);
+                refreshHypeerwebDumpToolStripMenuItem_Click(null, null);
+            }
+            else
+            {
+                foreach (int Id in HypeerWeb.ObjectKeys())
+                {
+                    createNode((Node)HypeerWeb.GetObject(Id));
+                    break;
+                }
+            }
+        }
+
+        private void refreshHypeerwebDumpToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            updateDisplay();
+        }
+
+        private Node getANode()
+        {
+            foreach (int Id in HypeerWeb.ObjectKeys())
+            {
+                return (Node)HypeerWeb.GetObject(Id);
+            }
+            return null;
         }
     }
 }

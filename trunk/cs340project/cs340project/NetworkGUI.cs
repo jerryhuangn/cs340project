@@ -17,33 +17,77 @@ namespace cs340project
 
         public NetworkGUI()
         {
+
             HypeerWeb = App.GetApp("HypeerWeb");
 
             InitializeComponent();
 
             IPAddress addr;
             string address = TextPrompt.Show("Which address to listen on?", "127.0.0.1");
-            if (address == null || !IPAddress.TryParse(address, out addr)) {
+            if (address == null || !IPAddress.TryParse(address, out addr))
+            {
                 throw new Exception("ARGH");
                 return;
             }
 
             int iPort;
             string port = TextPrompt.Show("Which port to listen on?", "30000");
-            if (port == null || !int.TryParse(port, out iPort) || iPort < 1000 || iPort > (1 << 16)) {
+            if (port == null || !int.TryParse(port, out iPort) || iPort < 1000 || iPort > (1 << 16))
+            {
                 throw new Exception("ARGH");
                 return;
             }
 
             HypeerWeb.Network.Listen(new IPEndPoint(addr, iPort));
-            
+
+            lbl_ip.Text = port;
+        }
+
+        public NetworkGUI(string address, string port, bool first)
+        {
+
+            HypeerWeb = App.GetApp("HypeerWeb");
+
+            InitializeComponent();
+
+            IPAddress addr;
+            //string address = TextPrompt.Show("Which address to listen on?", "127.0.0.1");
+            if (address == null || !IPAddress.TryParse(address, out addr))
+            {
+                throw new Exception("ARGH");
+                return;
+            }
+
+            int iPort;
+            //string port = TextPrompt.Show("Which port to listen on?", "30000");
+            if (port == null || !int.TryParse(port, out iPort) || iPort < 1000 || iPort > (1 << 16))
+            {
+                throw new Exception("ARGH");
+                return;
+            }
+
+            HypeerWeb.Network.Listen(new IPEndPoint(addr, iPort));
+
+            if (first)
+            {
+
+                var menu1= new NetworkGUI(address, "3001", false);
+                var menu2 = new NetworkGUI(address, "3002", false);
+                var menu3 = new NetworkGUI(address, "3003", false);
+
+                menu1.Show();
+                menu2.Show();
+                menu3.Show();
+            }
+
+            lbl_ip.Text = port;
         }
 
 
         private void connectToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string host = TextPrompt.Show("Which host?", "127.0.0.1");
-            if (host == null) 
+            if (host == null)
                 return;
 
             int iPort;
@@ -110,6 +154,45 @@ namespace cs340project
                 txtDump.Text = existing.DumpAllNodes();
                 break;
             }
+        }
+
+        private void sendMessageToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (HypeerWeb.ObjectCount() != 0)
+            {
+                foreach (int Id in HypeerWeb.ObjectKeys())
+                {
+                    sendMessage((Node)HypeerWeb.GetObject(Id));
+                    break;
+                }
+            }
+            refreshHypeerwebDumpToolStripMenuItem_Click(null, null);
+        }
+
+        private void sendMessage(Node node)
+        {
+            uint numb = 0;
+            Random r = new Random(4356);
+            numb = (uint)r.Next(0, HypeerWeb.ObjectCount());
+            node.Send(new MessageVisitor("This is a message!"), numb);
+        }
+
+        private void BroadcastMessage(Node node)
+        {
+            node.Broadcast(new MessageVisitor("This is a Broadcast!"));
+        }
+
+        private void broadCastToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (HypeerWeb.ObjectCount() != 0)
+            {
+                foreach (int Id in HypeerWeb.ObjectKeys())
+                {
+                    BroadcastMessage((Node)HypeerWeb.GetObject(Id));
+                    break;
+                }
+            }
+            refreshHypeerwebDumpToolStripMenuItem_Click(null, null);
         }
     }
 }
