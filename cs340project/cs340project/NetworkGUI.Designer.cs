@@ -35,6 +35,9 @@
             this.createLocalNodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.refreshHypeerwebDumpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.txtDump = new System.Windows.Forms.TextBox();
+            this.sendMessageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.broadCastToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lbl_ip = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -68,7 +71,9 @@
             // 
             this.nodesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.createLocalNodeToolStripMenuItem,
-            this.refreshHypeerwebDumpToolStripMenuItem});
+            this.refreshHypeerwebDumpToolStripMenuItem,
+            this.sendMessageToolStripMenuItem,
+            this.broadCastToolStripMenuItem});
             this.nodesToolStripMenuItem.Name = "nodesToolStripMenuItem";
             this.nodesToolStripMenuItem.Size = new System.Drawing.Size(53, 20);
             this.nodesToolStripMenuItem.Text = "Nodes";
@@ -96,11 +101,35 @@
             this.txtDump.Size = new System.Drawing.Size(559, 378);
             this.txtDump.TabIndex = 1;
             // 
+            // sendMessageToolStripMenuItem
+            // 
+            this.sendMessageToolStripMenuItem.Name = "sendMessageToolStripMenuItem";
+            this.sendMessageToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+            this.sendMessageToolStripMenuItem.Text = "Send Message";
+            this.sendMessageToolStripMenuItem.Click += new System.EventHandler(this.sendMessageToolStripMenuItem_Click);
+            // 
+            // broadCastToolStripMenuItem
+            // 
+            this.broadCastToolStripMenuItem.Name = "broadCastToolStripMenuItem";
+            this.broadCastToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+            this.broadCastToolStripMenuItem.Text = "BroadCast";
+            this.broadCastToolStripMenuItem.Click += new System.EventHandler(this.broadCastToolStripMenuItem_Click);
+            // 
+            // lbl_ip
+            // 
+            this.lbl_ip.AutoSize = true;
+            this.lbl_ip.Location = new System.Drawing.Point(58, 59);
+            this.lbl_ip.Name = "lbl_ip";
+            this.lbl_ip.Size = new System.Drawing.Size(35, 13);
+            this.lbl_ip.TabIndex = 2;
+            this.lbl_ip.Text = "label1";
+            // 
             // NetworkGUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(583, 516);
+            this.Controls.Add(this.lbl_ip);
             this.Controls.Add(this.txtDump);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
@@ -122,5 +151,8 @@
         private System.Windows.Forms.ToolStripMenuItem createLocalNodeToolStripMenuItem;
         private System.Windows.Forms.TextBox txtDump;
         private System.Windows.Forms.ToolStripMenuItem refreshHypeerwebDumpToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem sendMessageToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem broadCastToolStripMenuItem;
+        private System.Windows.Forms.Label lbl_ip;
     }
 }

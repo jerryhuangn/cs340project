@@ -43,21 +43,27 @@
             this.TabTextView = new System.Windows.Forms.TabPage();
             this.SplitMain = new System.Windows.Forms.SplitContainer();
             this.SplitDisplay = new System.Windows.Forms.SplitContainer();
-            this.TbNodeInfo = new System.Windows.Forms.TextBox();
-            this.SplitLower = new System.Windows.Forms.SplitContainer();
-            this.BtAddNodeFromNode = new System.Windows.Forms.Button();
-            this.BtRemoveThisNode = new System.Windows.Forms.Button();
-            this.CbListOfNodes = new System.Windows.Forms.ComboBox();
             this.TcNodeTabs = new System.Windows.Forms.TabControl();
             this.TpThisNode = new System.Windows.Forms.TabPage();
-            this.TpFromThisNode = new System.Windows.Forms.TabPage();
-            this.lblToNode = new System.Windows.Forms.Label();
-            this.BtRmove = new System.Windows.Forms.Button();
-            this.tbMessageFromNode = new System.Windows.Forms.TextBox();
-            this.btSendMessageFromNode = new System.Windows.Forms.Button();
+            this.cbAckBroadcastFrom = new System.Windows.Forms.CheckBox();
             this.btBroadcastMessageFromNode = new System.Windows.Forms.Button();
             this.tbBroadCastFromNode = new System.Windows.Forms.TextBox();
-            this.cbAckBroadcastFrom = new System.Windows.Forms.CheckBox();
+            this.BtAddNodeFromNode = new System.Windows.Forms.Button();
+            this.BtRemoveThisNode = new System.Windows.Forms.Button();
+            this.TpFromThisNode = new System.Windows.Forms.TabPage();
+            this.btSendMessageFromNode = new System.Windows.Forms.Button();
+            this.tbMessageFromNode = new System.Windows.Forms.TextBox();
+            this.BtRmove = new System.Windows.Forms.Button();
+            this.lblToNode = new System.Windows.Forms.Label();
+            this.CbListOfNodes = new System.Windows.Forms.ComboBox();
+            this.TbNodeInfo = new System.Windows.Forms.TextBox();
+            this.SplitLower = new System.Windows.Forms.SplitContainer();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.listenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.connectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.nodesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.createLocalNodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.refreshHypeerwebDumpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Tabs.SuspendLayout();
             this.TabDebugConsole.SuspendLayout();
             this.TabTextView.SuspendLayout();
@@ -66,12 +72,13 @@
             this.SplitMain.SuspendLayout();
             this.SplitDisplay.Panel2.SuspendLayout();
             this.SplitDisplay.SuspendLayout();
-            this.SplitLower.Panel1.SuspendLayout();
-            this.SplitLower.Panel2.SuspendLayout();
-            this.SplitLower.SuspendLayout();
             this.TcNodeTabs.SuspendLayout();
             this.TpThisNode.SuspendLayout();
             this.TpFromThisNode.SuspendLayout();
+            this.SplitLower.Panel1.SuspendLayout();
+            this.SplitLower.Panel2.SuspendLayout();
+            this.SplitLower.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // buttonAdd
@@ -145,7 +152,7 @@
             this.textBoxDisplay.Multiline = true;
             this.textBoxDisplay.Name = "textBoxDisplay";
             this.textBoxDisplay.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBoxDisplay.Size = new System.Drawing.Size(655, 204);
+            this.textBoxDisplay.Size = new System.Drawing.Size(699, 204);
             this.textBoxDisplay.TabIndex = 6;
             // 
             // Tabs
@@ -176,7 +183,7 @@
             this.TabTextView.Location = new System.Drawing.Point(4, 22);
             this.TabTextView.Name = "TabTextView";
             this.TabTextView.Padding = new System.Windows.Forms.Padding(3);
-            this.TabTextView.Size = new System.Drawing.Size(661, 210);
+            this.TabTextView.Size = new System.Drawing.Size(705, 210);
             this.TabTextView.TabIndex = 1;
             this.TabTextView.Text = "Nodes String";
             this.TabTextView.UseVisualStyleBackColor = true;
@@ -217,6 +224,148 @@
             this.SplitDisplay.SplitterDistance = 437;
             this.SplitDisplay.TabIndex = 0;
             // 
+            // TcNodeTabs
+            // 
+            this.TcNodeTabs.Controls.Add(this.TpThisNode);
+            this.TcNodeTabs.Controls.Add(this.TpFromThisNode);
+            this.TcNodeTabs.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.TcNodeTabs.Enabled = false;
+            this.TcNodeTabs.Location = new System.Drawing.Point(0, 0);
+            this.TcNodeTabs.Name = "TcNodeTabs";
+            this.TcNodeTabs.SelectedIndex = 0;
+            this.TcNodeTabs.Size = new System.Drawing.Size(272, 149);
+            this.TcNodeTabs.TabIndex = 0;
+            // 
+            // TpThisNode
+            // 
+            this.TpThisNode.Controls.Add(this.cbAckBroadcastFrom);
+            this.TpThisNode.Controls.Add(this.btBroadcastMessageFromNode);
+            this.TpThisNode.Controls.Add(this.tbBroadCastFromNode);
+            this.TpThisNode.Controls.Add(this.BtAddNodeFromNode);
+            this.TpThisNode.Controls.Add(this.BtRemoveThisNode);
+            this.TpThisNode.Location = new System.Drawing.Point(4, 22);
+            this.TpThisNode.Name = "TpThisNode";
+            this.TpThisNode.Padding = new System.Windows.Forms.Padding(3);
+            this.TpThisNode.Size = new System.Drawing.Size(264, 123);
+            this.TpThisNode.TabIndex = 0;
+            this.TpThisNode.Text = "Act On";
+            this.TpThisNode.UseVisualStyleBackColor = true;
+            // 
+            // cbAckBroadcastFrom
+            // 
+            this.cbAckBroadcastFrom.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbAckBroadcastFrom.AutoSize = true;
+            this.cbAckBroadcastFrom.Location = new System.Drawing.Point(205, 100);
+            this.cbAckBroadcastFrom.Name = "cbAckBroadcastFrom";
+            this.cbAckBroadcastFrom.Size = new System.Drawing.Size(51, 17);
+            this.cbAckBroadcastFrom.TabIndex = 10;
+            this.cbAckBroadcastFrom.Text = "Ack?";
+            this.cbAckBroadcastFrom.UseVisualStyleBackColor = true;
+            // 
+            // btBroadcastMessageFromNode
+            // 
+            this.btBroadcastMessageFromNode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btBroadcastMessageFromNode.Location = new System.Drawing.Point(87, 94);
+            this.btBroadcastMessageFromNode.Name = "btBroadcastMessageFromNode";
+            this.btBroadcastMessageFromNode.Size = new System.Drawing.Size(95, 23);
+            this.btBroadcastMessageFromNode.TabIndex = 9;
+            this.btBroadcastMessageFromNode.Text = "Broadcast";
+            this.btBroadcastMessageFromNode.UseVisualStyleBackColor = true;
+            this.btBroadcastMessageFromNode.Click += new System.EventHandler(this.btBroadcastMessageFromNode_Click);
+            // 
+            // tbBroadCastFromNode
+            // 
+            this.tbBroadCastFromNode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbBroadCastFromNode.Location = new System.Drawing.Point(8, 68);
+            this.tbBroadCastFromNode.Name = "tbBroadCastFromNode";
+            this.tbBroadCastFromNode.Size = new System.Drawing.Size(250, 20);
+            this.tbBroadCastFromNode.TabIndex = 8;
+            // 
+            // BtAddNodeFromNode
+            // 
+            this.BtAddNodeFromNode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.BtAddNodeFromNode.Location = new System.Drawing.Point(6, 94);
+            this.BtAddNodeFromNode.Name = "BtAddNodeFromNode";
+            this.BtAddNodeFromNode.Size = new System.Drawing.Size(75, 23);
+            this.BtAddNodeFromNode.TabIndex = 1;
+            this.BtAddNodeFromNode.Text = "Add Node";
+            this.BtAddNodeFromNode.UseVisualStyleBackColor = true;
+            this.BtAddNodeFromNode.Click += new System.EventHandler(this.BtAddNodeFromNode_Click);
+            // 
+            // BtRemoveThisNode
+            // 
+            this.BtRemoveThisNode.Location = new System.Drawing.Point(6, 6);
+            this.BtRemoveThisNode.Name = "BtRemoveThisNode";
+            this.BtRemoveThisNode.Size = new System.Drawing.Size(113, 23);
+            this.BtRemoveThisNode.TabIndex = 2;
+            this.BtRemoveThisNode.Text = "Remove This Node";
+            this.BtRemoveThisNode.UseVisualStyleBackColor = true;
+            this.BtRemoveThisNode.Click += new System.EventHandler(this.BtRemoveThisNode_Click);
+            // 
+            // TpFromThisNode
+            // 
+            this.TpFromThisNode.Controls.Add(this.btSendMessageFromNode);
+            this.TpFromThisNode.Controls.Add(this.tbMessageFromNode);
+            this.TpFromThisNode.Controls.Add(this.BtRmove);
+            this.TpFromThisNode.Controls.Add(this.lblToNode);
+            this.TpFromThisNode.Controls.Add(this.CbListOfNodes);
+            this.TpFromThisNode.Location = new System.Drawing.Point(4, 22);
+            this.TpFromThisNode.Name = "TpFromThisNode";
+            this.TpFromThisNode.Padding = new System.Windows.Forms.Padding(3);
+            this.TpFromThisNode.Size = new System.Drawing.Size(264, 123);
+            this.TpFromThisNode.TabIndex = 1;
+            this.TpFromThisNode.Text = "Act From";
+            this.TpFromThisNode.UseVisualStyleBackColor = true;
+            // 
+            // btSendMessageFromNode
+            // 
+            this.btSendMessageFromNode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btSendMessageFromNode.Location = new System.Drawing.Point(161, 94);
+            this.btSendMessageFromNode.Name = "btSendMessageFromNode";
+            this.btSendMessageFromNode.Size = new System.Drawing.Size(95, 23);
+            this.btSendMessageFromNode.TabIndex = 7;
+            this.btSendMessageFromNode.Text = "Send Message";
+            this.btSendMessageFromNode.UseVisualStyleBackColor = true;
+            this.btSendMessageFromNode.Click += new System.EventHandler(this.btSendMessageFromNode_Click);
+            // 
+            // tbMessageFromNode
+            // 
+            this.tbMessageFromNode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbMessageFromNode.Location = new System.Drawing.Point(6, 68);
+            this.tbMessageFromNode.Name = "tbMessageFromNode";
+            this.tbMessageFromNode.Size = new System.Drawing.Size(250, 20);
+            this.tbMessageFromNode.TabIndex = 6;
+            // 
+            // BtRmove
+            // 
+            this.BtRmove.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.BtRmove.Location = new System.Drawing.Point(3, 94);
+            this.BtRmove.Name = "BtRmove";
+            this.BtRmove.Size = new System.Drawing.Size(75, 23);
+            this.BtRmove.TabIndex = 5;
+            this.BtRmove.Text = "Remove";
+            this.BtRmove.UseVisualStyleBackColor = true;
+            this.BtRmove.Click += new System.EventHandler(this.BtRmove_Click);
+            // 
+            // lblToNode
+            // 
+            this.lblToNode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblToNode.AutoSize = true;
+            this.lblToNode.Location = new System.Drawing.Point(12, 9);
+            this.lblToNode.Name = "lblToNode";
+            this.lblToNode.Size = new System.Drawing.Size(119, 13);
+            this.lblToNode.TabIndex = 4;
+            this.lblToNode.Text = "Node to receive Action:";
+            // 
+            // CbListOfNodes
+            // 
+            this.CbListOfNodes.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.CbListOfNodes.FormattingEnabled = true;
+            this.CbListOfNodes.Location = new System.Drawing.Point(137, 6);
+            this.CbListOfNodes.Name = "CbListOfNodes";
+            this.CbListOfNodes.Size = new System.Drawing.Size(121, 21);
+            this.CbListOfNodes.TabIndex = 3;
+            // 
             // TbNodeInfo
             // 
             this.TbNodeInfo.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -251,153 +400,61 @@
             this.SplitLower.SplitterDistance = 236;
             this.SplitLower.TabIndex = 0;
             // 
-            // BtAddNodeFromNode
+            // menuStrip1
             // 
-            this.BtAddNodeFromNode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.BtAddNodeFromNode.Location = new System.Drawing.Point(6, 94);
-            this.BtAddNodeFromNode.Name = "BtAddNodeFromNode";
-            this.BtAddNodeFromNode.Size = new System.Drawing.Size(75, 23);
-            this.BtAddNodeFromNode.TabIndex = 1;
-            this.BtAddNodeFromNode.Text = "Add Node";
-            this.BtAddNodeFromNode.UseVisualStyleBackColor = true;
-            this.BtAddNodeFromNode.Click += new System.EventHandler(this.BtAddNodeFromNode_Click);
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.listenToolStripMenuItem,
+            this.nodesToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(713, 24);
+            this.menuStrip1.TabIndex = 9;
+            this.menuStrip1.Text = "menuStrip1";
             // 
-            // BtRemoveThisNode
+            // listenToolStripMenuItem
             // 
-            this.BtRemoveThisNode.Location = new System.Drawing.Point(6, 6);
-            this.BtRemoveThisNode.Name = "BtRemoveThisNode";
-            this.BtRemoveThisNode.Size = new System.Drawing.Size(113, 23);
-            this.BtRemoveThisNode.TabIndex = 2;
-            this.BtRemoveThisNode.Text = "Remove This Node";
-            this.BtRemoveThisNode.UseVisualStyleBackColor = true;
-            this.BtRemoveThisNode.Click += new System.EventHandler(this.BtRemoveThisNode_Click);
+            this.listenToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.connectToolStripMenuItem});
+            this.listenToolStripMenuItem.Name = "listenToolStripMenuItem";
+            this.listenToolStripMenuItem.Size = new System.Drawing.Size(64, 20);
+            this.listenToolStripMenuItem.Text = "Network";
             // 
-            // CbListOfNodes
+            // connectToolStripMenuItem
             // 
-            this.CbListOfNodes.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.CbListOfNodes.FormattingEnabled = true;
-            this.CbListOfNodes.Location = new System.Drawing.Point(137, 6);
-            this.CbListOfNodes.Name = "CbListOfNodes";
-            this.CbListOfNodes.Size = new System.Drawing.Size(121, 21);
-            this.CbListOfNodes.TabIndex = 3;
+            this.connectToolStripMenuItem.Name = "connectToolStripMenuItem";
+            this.connectToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
+            this.connectToolStripMenuItem.Text = "Connect && Create Local Node";
+            this.connectToolStripMenuItem.Click += new System.EventHandler(this.connectToolStripMenuItem_Click);
             // 
-            // TcNodeTabs
+            // nodesToolStripMenuItem
             // 
-            this.TcNodeTabs.Controls.Add(this.TpThisNode);
-            this.TcNodeTabs.Controls.Add(this.TpFromThisNode);
-            this.TcNodeTabs.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TcNodeTabs.Enabled = false;
-            this.TcNodeTabs.Location = new System.Drawing.Point(0, 0);
-            this.TcNodeTabs.Name = "TcNodeTabs";
-            this.TcNodeTabs.SelectedIndex = 0;
-            this.TcNodeTabs.Size = new System.Drawing.Size(272, 149);
-            this.TcNodeTabs.TabIndex = 0;
+            this.nodesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.createLocalNodeToolStripMenuItem,
+            this.refreshHypeerwebDumpToolStripMenuItem});
+            this.nodesToolStripMenuItem.Name = "nodesToolStripMenuItem";
+            this.nodesToolStripMenuItem.Size = new System.Drawing.Size(53, 20);
+            this.nodesToolStripMenuItem.Text = "Nodes";
             // 
-            // TpThisNode
+            // createLocalNodeToolStripMenuItem
             // 
-            this.TpThisNode.Controls.Add(this.cbAckBroadcastFrom);
-            this.TpThisNode.Controls.Add(this.btBroadcastMessageFromNode);
-            this.TpThisNode.Controls.Add(this.tbBroadCastFromNode);
-            this.TpThisNode.Controls.Add(this.BtAddNodeFromNode);
-            this.TpThisNode.Controls.Add(this.BtRemoveThisNode);
-            this.TpThisNode.Location = new System.Drawing.Point(4, 22);
-            this.TpThisNode.Name = "TpThisNode";
-            this.TpThisNode.Padding = new System.Windows.Forms.Padding(3);
-            this.TpThisNode.Size = new System.Drawing.Size(264, 123);
-            this.TpThisNode.TabIndex = 0;
-            this.TpThisNode.Text = "Act On";
-            this.TpThisNode.UseVisualStyleBackColor = true;
+            this.createLocalNodeToolStripMenuItem.Name = "createLocalNodeToolStripMenuItem";
+            this.createLocalNodeToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+            this.createLocalNodeToolStripMenuItem.Text = "Create local node";
+            this.createLocalNodeToolStripMenuItem.Click += new System.EventHandler(this.createLocalNodeToolStripMenuItem_Click);
             // 
-            // TpFromThisNode
+            // refreshHypeerwebDumpToolStripMenuItem
             // 
-            this.TpFromThisNode.Controls.Add(this.btSendMessageFromNode);
-            this.TpFromThisNode.Controls.Add(this.tbMessageFromNode);
-            this.TpFromThisNode.Controls.Add(this.BtRmove);
-            this.TpFromThisNode.Controls.Add(this.lblToNode);
-            this.TpFromThisNode.Controls.Add(this.CbListOfNodes);
-            this.TpFromThisNode.Location = new System.Drawing.Point(4, 22);
-            this.TpFromThisNode.Name = "TpFromThisNode";
-            this.TpFromThisNode.Padding = new System.Windows.Forms.Padding(3);
-            this.TpFromThisNode.Size = new System.Drawing.Size(264, 123);
-            this.TpFromThisNode.TabIndex = 1;
-            this.TpFromThisNode.Text = "Act From";
-            this.TpFromThisNode.UseVisualStyleBackColor = true;
-            // 
-            // lblToNode
-            // 
-            this.lblToNode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblToNode.AutoSize = true;
-            this.lblToNode.Location = new System.Drawing.Point(12, 9);
-            this.lblToNode.Name = "lblToNode";
-            this.lblToNode.Size = new System.Drawing.Size(119, 13);
-            this.lblToNode.TabIndex = 4;
-            this.lblToNode.Text = "Node to receive Action:";
-            // 
-            // BtRmove
-            // 
-            this.BtRmove.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.BtRmove.Location = new System.Drawing.Point(3, 94);
-            this.BtRmove.Name = "BtRmove";
-            this.BtRmove.Size = new System.Drawing.Size(75, 23);
-            this.BtRmove.TabIndex = 5;
-            this.BtRmove.Text = "Remove";
-            this.BtRmove.UseVisualStyleBackColor = true;
-            this.BtRmove.Click += new System.EventHandler(this.BtRmove_Click);
-            // 
-            // tbMessageFromNode
-            // 
-            this.tbMessageFromNode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbMessageFromNode.Location = new System.Drawing.Point(6, 68);
-            this.tbMessageFromNode.Name = "tbMessageFromNode";
-            this.tbMessageFromNode.Size = new System.Drawing.Size(250, 20);
-            this.tbMessageFromNode.TabIndex = 6;
-            // 
-            // btSendMessageFromNode
-            // 
-            this.btSendMessageFromNode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btSendMessageFromNode.Location = new System.Drawing.Point(161, 94);
-            this.btSendMessageFromNode.Name = "btSendMessageFromNode";
-            this.btSendMessageFromNode.Size = new System.Drawing.Size(95, 23);
-            this.btSendMessageFromNode.TabIndex = 7;
-            this.btSendMessageFromNode.Text = "Send Message";
-            this.btSendMessageFromNode.UseVisualStyleBackColor = true;
-            this.btSendMessageFromNode.Click += new System.EventHandler(this.btSendMessageFromNode_Click);
-            // 
-            // btBroadcastMessageFromNode
-            // 
-            this.btBroadcastMessageFromNode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btBroadcastMessageFromNode.Location = new System.Drawing.Point(87, 94);
-            this.btBroadcastMessageFromNode.Name = "btBroadcastMessageFromNode";
-            this.btBroadcastMessageFromNode.Size = new System.Drawing.Size(95, 23);
-            this.btBroadcastMessageFromNode.TabIndex = 9;
-            this.btBroadcastMessageFromNode.Text = "Broadcast";
-            this.btBroadcastMessageFromNode.UseVisualStyleBackColor = true;
-            this.btBroadcastMessageFromNode.Click += new System.EventHandler(this.btBroadcastMessageFromNode_Click);
-            // 
-            // tbBroadCastFromNode
-            // 
-            this.tbBroadCastFromNode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbBroadCastFromNode.Location = new System.Drawing.Point(8, 68);
-            this.tbBroadCastFromNode.Name = "tbBroadCastFromNode";
-            this.tbBroadCastFromNode.Size = new System.Drawing.Size(250, 20);
-            this.tbBroadCastFromNode.TabIndex = 8;
-            // 
-            // cbAckBroadcastFrom
-            // 
-            this.cbAckBroadcastFrom.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbAckBroadcastFrom.AutoSize = true;
-            this.cbAckBroadcastFrom.Location = new System.Drawing.Point(205, 100);
-            this.cbAckBroadcastFrom.Name = "cbAckBroadcastFrom";
-            this.cbAckBroadcastFrom.Size = new System.Drawing.Size(51, 17);
-            this.cbAckBroadcastFrom.TabIndex = 10;
-            this.cbAckBroadcastFrom.Text = "Ack?";
-            this.cbAckBroadcastFrom.UseVisualStyleBackColor = true;
+            this.refreshHypeerwebDumpToolStripMenuItem.Name = "refreshHypeerwebDumpToolStripMenuItem";
+            this.refreshHypeerwebDumpToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+            this.refreshHypeerwebDumpToolStripMenuItem.Text = "Refresh hypeerweb dump";
+            this.refreshHypeerwebDumpToolStripMenuItem.Click += new System.EventHandler(this.refreshHypeerwebDumpToolStripMenuItem_Click);
             // 
             // GUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(713, 613);
+            this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.SplitMain);
             this.Name = "GUI";
             this.Text = "GUI";
@@ -413,16 +470,19 @@
             this.SplitDisplay.Panel2.ResumeLayout(false);
             this.SplitDisplay.Panel2.PerformLayout();
             this.SplitDisplay.ResumeLayout(false);
-            this.SplitLower.Panel1.ResumeLayout(false);
-            this.SplitLower.Panel2.ResumeLayout(false);
-            this.SplitLower.Panel2.PerformLayout();
-            this.SplitLower.ResumeLayout(false);
             this.TcNodeTabs.ResumeLayout(false);
             this.TpThisNode.ResumeLayout(false);
             this.TpThisNode.PerformLayout();
             this.TpFromThisNode.ResumeLayout(false);
             this.TpFromThisNode.PerformLayout();
+            this.SplitLower.Panel1.ResumeLayout(false);
+            this.SplitLower.Panel2.ResumeLayout(false);
+            this.SplitLower.Panel2.PerformLayout();
+            this.SplitLower.ResumeLayout(false);
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -455,5 +515,11 @@
         private System.Windows.Forms.Button btSendMessageFromNode;
         private System.Windows.Forms.TextBox tbMessageFromNode;
         private System.Windows.Forms.Button BtRmove;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem listenToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem connectToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem nodesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem createLocalNodeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem refreshHypeerwebDumpToolStripMenuItem;
     }
 }
