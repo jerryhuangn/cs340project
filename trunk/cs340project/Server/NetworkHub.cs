@@ -119,7 +119,7 @@ namespace cs340project
 
         #region Sending/Receiving Objects
 
-        Dictionary<string, MemoryStream> clientMemoryStreams = new Dictionary<string, MemoryStream>();
+        public Dictionary<string, MemoryStream> clientMemoryStreams = new Dictionary<string, MemoryStream>();
 
         /// <summary>
         /// Delegate for the NetworkHub when it sends a command
@@ -153,7 +153,7 @@ namespace cs340project
         /// </summary>
         /// <param name="IP">The IP address of the <see cref="App"/> that is sending a <see cref="App.Command"/> object.</param>
         /// <returns>The length of the <see cref="App.Command"/> object being sent over the IP address</returns>
-        int? ObjectReadyToRead(string IP)
+        public int? ObjectReadyToRead(string IP)
         {
             if (clientMemoryStreams[IP].Length >= 4)
             {
@@ -284,7 +284,7 @@ namespace cs340project
         /// <param name="IP">The IP.</param>
         /// <param name="port">The port.</param>
         /// <returns></returns>
-        TcpClient Connect(string IP, int port)
+        public TcpClient Connect(string IP, int port)
         {
             TcpClient client = null;
 
